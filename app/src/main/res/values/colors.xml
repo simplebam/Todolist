@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#2196f3</color>
+    <color name="colorPrimaryDark">#2196f3</color>
+    <color name="colorAccent">#2196f3</color>
+
+
+
+    <color name="switch_thumb_normal_color">#838181</color>
+
+
+
+    <color name="color_a1a1a1">#a1a1a1</color>
+</resources>

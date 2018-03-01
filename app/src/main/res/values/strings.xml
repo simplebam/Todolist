@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name" translatable="false">Todolist</string>
+
+
+    <!--  Version  -->
+
+    <string name="can_not_find_version_name">找不到版本号</string>
+</resources>

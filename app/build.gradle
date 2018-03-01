@@ -1,0 +1,156 @@
+apply plugin: 'com.android.application'
+
+android {
+    def app = rootProject.ext.android
+
+    compileSdkVersion app.compileSdkVersion
+    buildToolsVersion app.buildToolsVersion
+
+    defaultConfig {
+        applicationId app.applicationId
+        minSdkVersion app.minSdkVersion
+        targetSdkVersion app.targetSdkVersion
+        versionCode app.versionCode
+        versionName app.versionName
+        resConfigs app.resConfigs
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "$rootProject.ext.weather.name", "\"$rootProject.ext.weather.value\""
+        buildConfigField "String", "$rootProject.ext.fir.name", "\"$rootProject.ext.fir.value\""
+        buildConfigField "String", "$rootProject.ext.alipay.name", "\"$rootProject.ext.alipay.value\""
+
+        //Error:Execution failed for task ':Todolist:transformClassesAndResourcesWithProguardForRelease'.
+        multiDexEnabled true
+    }
+
+    signingConfigs {
+        release {
+            storeFile file("todolist.jks")
+            storePassword getLocalValue("STORE_PASSWORD")
+            keyAlias getLocalValue("KEY_ALIAS")
+            keyPassword getLocalValue("KEY_PASSWORD")
+        }
+        debug {
+            storeFile file("debug.keystore")
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        debug {
+            signingConfig signingConfigs.debug
+        }
+    }
+
+
+    compileOptions {
+        //使用JAVA8语法解析
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+}
+
+def getLocalValue(String key) {
+    return getLocalValue(key, false)
+}
+
+def getLocalValue(String key, boolean quot) {
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('./app/todolist.properties').newDataInputStream())
+    def value = properties.containsKey(key) ? properties.get(key) : ""
+    if (quot) {
+        value = "\"" + value + "\""
+    }
+    return value
+}
+
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    // 默认 UI
+    implementation "com.android.support:appcompat-v7:$rootProject.ext.support_version"
+    implementation "com.android.support:support-v4:$rootProject.ext.support_version"
+    implementation "com.android.support:design:$rootProject.ext.support_version"
+    implementation "com.android.support:cardview-v7:$rootProject.ext.support_version"
+    implementation "com.android.support:recyclerview-v7:$rootProject.ext.support_version"
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+
+    //数据库
+    implementation files('libs/lite-orm-1.9.2.jar')
+    //定位
+    implementation files('libs/AMap_Location_V3.8.0_20180201.jar')
+
+    // rx
+    //RxJava https://github.com/ReactiveX/RxAndroid
+    compile "io.reactivex.rxjava2:rxandroid:$rootProject.ext.rxandroid_version"
+    compile "io.reactivex.rxjava2:rxjava:$rootProject.ext.rxjava_version"
+
+    //rxpermissions  https://github.com/tbruyelle/RxPermissions
+    compile "com.tbruyelle.rxpermissions2:rxpermissions:$rootProject.ext.rxpermissions2_version"
+
+    //rxlifecycle  https://github.com/trello/RxLifecycle
+    compile "com.trello.rxlifecycle2:rxlifecycle:$rootProject.ext.rxlifecycle_version"
+    compile "com.trello.rxlifecycle2:rxlifecycle-android:$rootProject.ext.rxlifecycle_version"
+    compile "com.trello.rxlifecycle2:rxlifecycle-components:$rootProject.ext.rxlifecycle_version"
+
+    //network
+
+    //gson https://github.com/google/gson
+    compile "com.google.code.gson:gson:$rootProject.ext.gson_version"
+
+    //retrofit https://github.com/square/retrofit
+    compile "com.squareup.retrofit2:retrofit:$rootProject.ext.retrofit_version"
+    compile "com.squareup.retrofit2:adapter-rxjava2:$rootProject.ext.retrofit_version"
+    compile "com.squareup.retrofit2:converter-gson:$rootProject.ext.retrofit_version"
+
+    //okhttp https://github.com/square/okhttp
+    implementation "com.squareup.okhttp3:okhttp:$rootProject.ext.okhttp_version"
+
+    //glide https://github.com/bumptech/glide
+    implementation "com.github.bumptech.glide:glide:$rootProject.ext.glide_version"
+//    annotationProcessor "com.github.bumptech.glide:compiler:$rootProject.ext.glide_version"
+
+    //butterknife https://github.com/JakeWharton/butterknife
+    compile "com.jakewharton:butterknife:$rootProject.ext.butterknife_version"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.butterknife_version"
+
+    //citypicker https://github.com/crazyandcoder/citypicker
+    compile "liji.library.dev:citypickerview:$rootProject.ext.citypickerview_version"
+
+    //AlipayZeroSdk https://github.com/fython/AlipayZeroSdk
+    compile "moe.feng:AlipayZeroSdk:$rootProject.ext.alipayzerosdk_version"
+
+    //assist相关的
+
+    //Blankj/AndroidUtilCode https://github.com/Blankj/AndroidUtilCode
+    compile "com.blankj:utilcode:$rootProject.ext.android_utilcode_version"
+
+    //bugtags https://work.bugtags.com/login.html
+    implementation 'com.bugtags.library:bugtags-lib:latest.integration'
+
+    //cc3641/Watcher https://github.com/xcc3641/Watcher
+    implementation "com.github.xcc3641:watcher:$rootProject.ext.watcher_version"
+
+    //stetho https://github.com/facebook/stetho
+    implementation "com.facebook.stetho:stetho:$rootProject.ext.stetho_version"
+    implementation "com.facebook.stetho:stetho-okhttp3:$rootProject.ext.stetho_version"
+
+    //blockcanary https://github.com/markzhai/AndroidPerformanceMonitor
+    debugCompile "com.github.markzhai:blockcanary-android:$rootProject.ext.blockcanary_version"
+    releaseCompile "com.github.markzhai:blockcanary-no-op:$rootProject.ext.blockcanary_version"
+
+    //leakcanary https://github.com/square/leakcanary
+    debugCompile "com.squareup.leakcanary:leakcanary-android:$rootProject.ext.leakcanary_version"
+    releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:$rootProject.ext.leakcanary_version"
+
+    testImplementation "junit:junit:$rootProject.ext.junit_version"
+    androidTestImplementation "com.android.support.test:runner:$rootProject.ext.test_runner_version"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.ext.espresso_core_version"
+}
