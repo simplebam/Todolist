@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import com.blankj.utilcode.util.Utils;
+import com.yueyue.todolist.component.CachePlanTaskStore;
 import com.yueyue.todolist.component.CrashHandler;
 
 /**
@@ -21,19 +22,16 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         sContext = this;
+
+
         CrashHandler.init(new CrashHandler(this));
+//        Bugtags.start(BuildConfig.BugtagsKey, this, Bugtags.BTGInvocationEventBubble);
 
         //初始化AndroidUtilCode
         Utils.init(this);
-
         ForegroundObserver.init(this);
 
-//        String processName = MyProcessUtil.getProcessName(this);
-//        Log.i(TAG, "onCreate processName : " + processName);
-
-        // FIXME: 2018/3/2 注释了CachePlanTaskStore跟SkinManager
-//        CachePlanTaskStore.initialize(this);
-//        SkinManager.getInstance().init(this);
+        CachePlanTaskStore.initialize(this);
     }
 
 

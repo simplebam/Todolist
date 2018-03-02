@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="settings_preference">
+        <attr name="image" format="integer" />
+        <attr name="title" format="string" />
+        <attr name="summary" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="SkinAttr">
+        <attr name="enable" format="boolean" />
+        <attr name="android:textColor" />
+        <attr name="android:background" />
+        <attr name="android:backgroundTint" />
+        <attr name="android:src" />
+        <attr name="android:windowBackground" />
+        <attr name="commonBackground" format="reference" />
+        <attr name="android:textColorHint" />
+        <attr name="android:drawableTop" />
+        <attr name="android:drawableBottom" />
+        <attr name="android:drawableStart" />
+        <attr name="android:drawableEnd" />
+        <attr name="switchColor" format="color"/>
+        <attr name="android:buttonTint" />
+    </declare-styleable>
+</resources>

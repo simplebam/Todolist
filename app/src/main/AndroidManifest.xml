@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
           package="com.yueyue.todolist">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
         android:name=".base.BaseApplication"
@@ -9,9 +13,11 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".modules.main.MainActivity">
-        </activity>
 
+        <!--
+            Android全屏的两种方法 - 有棱角的圆 - 博客园
+             https://www.cnblogs.com/sunjianfei/p/5855523.html
+        -->
         <activity android:name=".modules.splash.ui.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -19,6 +25,36 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <activity android:name=".modules.main.MainActivity"/>
+        <activity android:name=".modules.avatar.ui.AvatarActivity"/>
+
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+
+        <service
+            android:name=".modules.service.UserActionService"
+            android:enabled="true"
+            android:exported="false"/>
+
+        <provider
+            android:name=".modules.service.db.AbsolutePlanProvider"
+            android:authorities="com.yueyue.todolist"
+            android:exported="false"/>
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"/>
+        </provider>
+
     </application>
 
 </manifest>

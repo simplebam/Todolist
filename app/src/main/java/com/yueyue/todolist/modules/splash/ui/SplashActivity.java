@@ -4,25 +4,32 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
-import android.app.Activity;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.ScreenUtils;
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.yueyue.todolist.R;
 import com.yueyue.todolist.modules.main.MainActivity;
+import com.yueyue.todolist.modules.splash.impl.AnimatorListenerImpl;
 
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
-public class SplashActivity extends Activity {
+public class SplashActivity extends RxAppCompatActivity {
 
     @BindView(R.id.splash_container)
     View container;
@@ -38,6 +45,12 @@ public class SplashActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Android 全屏与沉浸式 - 简书 https://www.jianshu.com/p/474bf29772a5
+        //Android Activity 设置全屏 - CSDN博客
+        //           http://blog.csdn.net/github_2011/article/details/55194212
+        requestWindowFeature(Window.FEATURE_NO_TITLE);  //去除标题栏
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN); //去除状态栏
+
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
         initViews();
@@ -97,27 +110,14 @@ public class SplashActivity extends Activity {
                 .with(scaleY)
                 .with(alpha);
         if (R.id.tv_t2 == textView.getId()) {
-            animatorSet.addListener(new Animator.AnimatorListener() {
-                @Override
-                public void onAnimationStart(Animator animation) {
-
-                }
-
+            animatorSet.addListener(new AnimatorListenerImpl() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
                     onTextAnimFinish();
                 }
-
-                @Override
-                public void onAnimationCancel(Animator animation) {
-
-                }
-
-                @Override
-                public void onAnimationRepeat(Animator animation) {
-
-                }
             });
+
         }
         animatorSet.start();
     }
@@ -132,54 +132,25 @@ public class SplashActivity extends Activity {
         tranY.setDuration(1000);
         ValueAnimator waitTime = ObjectAnimator.ofInt(0, 100);
         waitTime.setDuration(1000);
-        waitTime.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-            }
-
+        waitTime.addListener(new AnimatorListenerImpl() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        launchMainActivity();
-                    }
-                });
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-
+                super.onAnimationEnd(animation);
+                launchMainActivity();
             }
         });
 
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.setInterpolator(new LinearInterpolator());
-        animatorSet.addListener(new Animator.AnimatorListener() {
+        animatorSet.addListener(new AnimatorListenerImpl() {
             @Override
             public void onAnimationStart(Animator animation) {
+                super.onAnimationStart(animation);
                 mIvLogo.setVisibility(View.VISIBLE);
                 mTvName.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-
+                StringBuilder sb = new StringBuilder(getString(R.string.version));
+                sb.append(": V ").append(AppUtils.getAppVersionName());
+                mTvName.setText(sb.toString());
             }
         });
 
@@ -191,8 +162,15 @@ public class SplashActivity extends Activity {
     }
 
     private void launchMainActivity() {
-        MainActivity.launch(SplashActivity.this);
-        finish();
+        //简单的来说, subscribeOn() 指定的是上游发送事件的线程, observeOn() 指定的是下游接收事件的线程.
+        // 当执行onDestory()时， 自动解除订阅
+        Observable.timer(0, TimeUnit.SECONDS)
+                .compose(this.<Long>bindToLifecycle())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(aLong -> {
+                    MainActivity.launch(SplashActivity.this);
+                    finish();
+                });
     }
 
 

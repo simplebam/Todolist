@@ -5,4 +5,23 @@
     <!--  Version  -->
 
     <string name="can_not_find_version_name">找不到版本号</string>
+    <string name="version">版本</string>
+
+
+    <!-- activity_avatar -->
+    <string name="select_gallery">选择图库</string>
+    <string name="take_photo">拍照</string>
+    <string name="change_avatar">更新头像</string>
+    <string name="edit_photo">编辑照片</string>
+    <string name="crop_store_failer">裁剪图片存储失败!!!请稍后再试</string>
+    <string name="crop_store_success">裁剪图片存储成功</string>
+    <string name="unexpected_error">意外错误</string>
+    <string name="request_permission_title">权限申请</string>
+    <string name="open_album_request_permission_explain">打开图库需要文件读取权限,拒绝的话打不开喔</string>
+    <string name="sure">确认</string>
+    <string name="fail_to_get_image">找不到图片</string>
+    <string name="need_storge_permission_to_open_album">需要申请文件读取权限才打开图库喔</string>
+    <string name="cannot_get_crop_pic">无法取回裁剪图片</string>
+
+
 </resources>

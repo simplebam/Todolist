@@ -16,9 +16,15 @@ android {
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
+        ndk {
+            // 设置支持的 SO 库构架，一般而言，取你所有的库支持的构架的`交集`。
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a', 'x86'// 'x86_64', 'mips', 'mips64'
+        }
+
         buildConfigField "String", "$rootProject.ext.weather.name", "\"$rootProject.ext.weather.value\""
         buildConfigField "String", "$rootProject.ext.fir.name", "\"$rootProject.ext.fir.value\""
         buildConfigField "String", "$rootProject.ext.alipay.name", "\"$rootProject.ext.alipay.value\""
+        buildConfigField "String", "$rootProject.ext.bugtags.name", "\"$rootProject.ext.bugtags.value\""
 
         //Error:Execution failed for task ':Todolist:transformClassesAndResourcesWithProguardForRelease'.
         multiDexEnabled true
@@ -39,7 +45,7 @@ android {
     buildTypes {
         release {
             minifyEnabled true
-            shrinkResources true
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
@@ -71,9 +77,16 @@ def getLocalValue(String key, boolean quot) {
     return value
 }
 
+//Bugtags 插件配置
+//bugtags {
+//    appKey "5ff84cf247fb1b4036f535d97796884c"
+//    appSecret "4a0c602f3961e5687eaa7cd96cd6b8ee"
+//    mappingUploadEnabled true
+//}
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
     // 默认 UI
     implementation "com.android.support:appcompat-v7:$rootProject.ext.support_version"
     implementation "com.android.support:support-v4:$rootProject.ext.support_version"
@@ -82,12 +95,17 @@ dependencies {
     implementation "com.android.support:recyclerview-v7:$rootProject.ext.support_version"
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
 
+    //ucrop https://github.com/Yalantis/uCrop
+    compile "com.github.yalantis:ucrop:$rootProject.ext.ucrop_version"
+
     //数据库
     implementation files('libs/lite-orm-1.9.2.jar')
+
     //定位
     implementation files('libs/AMap_Location_V3.8.0_20180201.jar')
 
     // rx
+
     //RxJava https://github.com/ReactiveX/RxAndroid
     compile "io.reactivex.rxjava2:rxandroid:$rootProject.ext.rxandroid_version"
     compile "io.reactivex.rxjava2:rxjava:$rootProject.ext.rxjava_version"
@@ -115,7 +133,6 @@ dependencies {
 
     //glide https://github.com/bumptech/glide
     implementation "com.github.bumptech.glide:glide:$rootProject.ext.glide_version"
-//    annotationProcessor "com.github.bumptech.glide:compiler:$rootProject.ext.glide_version"
 
     //butterknife https://github.com/JakeWharton/butterknife
     compile "com.jakewharton:butterknife:$rootProject.ext.butterknife_version"
@@ -135,22 +152,8 @@ dependencies {
     //bugtags https://work.bugtags.com/login.html
     implementation 'com.bugtags.library:bugtags-lib:latest.integration'
 
-    //cc3641/Watcher https://github.com/xcc3641/Watcher
-    implementation "com.github.xcc3641:watcher:$rootProject.ext.watcher_version"
-
     //stetho https://github.com/facebook/stetho
     implementation "com.facebook.stetho:stetho:$rootProject.ext.stetho_version"
     implementation "com.facebook.stetho:stetho-okhttp3:$rootProject.ext.stetho_version"
 
-    //blockcanary https://github.com/markzhai/AndroidPerformanceMonitor
-    debugCompile "com.github.markzhai:blockcanary-android:$rootProject.ext.blockcanary_version"
-    releaseCompile "com.github.markzhai:blockcanary-no-op:$rootProject.ext.blockcanary_version"
-
-    //leakcanary https://github.com/square/leakcanary
-    debugCompile "com.squareup.leakcanary:leakcanary-android:$rootProject.ext.leakcanary_version"
-    releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:$rootProject.ext.leakcanary_version"
-
-    testImplementation "junit:junit:$rootProject.ext.junit_version"
-    androidTestImplementation "com.android.support.test:runner:$rootProject.ext.test_runner_version"
-    androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.ext.espresso_core_version"
 }
