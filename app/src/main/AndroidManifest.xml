@@ -26,7 +26,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".modules.main.MainActivity"/>
+        <activity android:name=".modules.main.ui.MainActivity"/>
         <activity android:name=".modules.avatar.ui.AvatarActivity"/>
 
         <activity

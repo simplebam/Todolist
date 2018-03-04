@@ -28,12 +28,21 @@ App体验：
   * [Android 探究 LayoutInflater setFactory - CSDN博客](http://blog.csdn.net/lmj623565791/article/details/51503977)
   * [Android主题换肤 无缝切换 - 简书](https://www.jianshu.com/p/af7c0585dd5b)
   * [fengjundev/Android-Skin-Loader: 一个通过动态加载本地皮肤包进行换肤的皮肤框架](https://github.com/fengjundev/Android-Skin-Loader)
+* Android混淆:[Android混淆备忘录 - 简书 ](https://www.jianshu.com/p/a48b49e9e2a8)
+* 拍照以及选择图库:[Android 7.0调用相机拍照，返回后显示拍照照片 - CSDN博客](http://blog.csdn.net/ww897532167/article/details/71525514)
+   以及 [android打开系统图库终极适配 - CSDN博客](http://blog.csdn.net/nbalichaoq/article/details/51992151)
+* 矢量图:[SVG 的 PathData 在 Android 中的使用 - CSDN博客 ](http://blog.csdn.net/zwlove5280/article/details/73196543)
+  以及 [Android：获取并制作矢量图动画 - Android - 掘金](https://juejin.im/entry/5948c1ea8d6d81cc72fd1bbe)
 
 
 ### 项目中的用到的开源框架
 * bugtags-移动时代首选 Bug 管理系统:[Bugtags 使用说明 - CSDN博客](http://blog.csdn.net/ObjectivePLA/article/details/51037804)
 * Blankj/AndroidUtilCode：[终于等到你--权限工具类 - 简书](https://www.jianshu.com/p/333b09b7e000)
 * ButterKnife：[[Android开发] ButterKnife8.5.1 使用方法教程总结 - CSDN博客](http://blog.csdn.net/niubitianping/article/details/54893571)
+* 数据库:
+  * LitePal:[Android数据库高手秘籍(一)——SQLite命令 - 郭霖的专栏 - CSDN博客](http://blog.csdn.net/guolin_blog/article/details/38461239)
+    以及 [LitePal 1.6.0版本来袭，数据加解密功能保障你的应用数据安全](http://mp.weixin.qq.com/s/TSp36cnKLxUmAHjT86UCrQ)
+  * liteOrm
 * Gson-解析Json数据:[你真的会用Gson吗?Gson使用指南（一） - 简书 ](https://www.jianshu.com/p/e740196225a4)
   ,这个作者写的Gson系列教程很好,值得拜读
 * Rx系列
@@ -74,8 +83,8 @@ App体验：
   * [Glide 一个专注于平滑滚动的图片加载和缓存库 - 简书](https://www.jianshu.com/p/4a3177b57949)
   * [Glide V4 框架新特性（Migrating from v3 to v4） - HeXinGen的博客 - CSDN博客](http://blog.csdn.net/hexingen/article/details/72578066)
 * uCrop:[uCrop使用及源码浅析 | 吴小龙同學](http://wuxiaolong.me/2016/06/20/uCrop/)
-* 拍照以及选择图库:[Android 7.0调用相机拍照，返回后显示拍照照片 - CSDN博客](http://blog.csdn.net/ww897532167/article/details/71525514)
-   以及 [android打开系统图库终极适配 - CSDN博客](http://blog.csdn.net/nbalichaoq/article/details/51992151)
+* NewbieGuide:[推荐一个好用小巧的Android引导蒙版（浮层）库 - 简书 ](https://www.jianshu.com/p/5e80c7aee1fc)
+* BaseRecyclerViewAdapterHelper:[BRVAH官方使用指南（持续更新） - 简书](https://www.jianshu.com/p/b343fcff51b0)
 
 
 ### Android 开发Tips && 性能优化
@@ -87,8 +96,6 @@ App体验：
   * [Android 基础1：SparseArray 和 ArrayMap （HashMap替代） - 简书 ](https://www.jianshu.com/p/38b3e72d6fea)
 
 
-
-### 后续计划
-* 将数据库改为LitePal 进行存储
-* 重构MainActivity代码,现在写的很想狗屎一样
-* 去掉换肤功能
+### 项目中的缺点
+* 由于本人理解换肤方面的知识没有透彻,去掉换肤功能
+* 由于天气方面用了两个数据库,准备全线转LitePal

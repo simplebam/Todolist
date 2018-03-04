@@ -95,17 +95,25 @@ dependencies {
     implementation "com.android.support:recyclerview-v7:$rootProject.ext.support_version"
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
 
+    // RecycleViewBaseAdapter  https://github.com/CymChad/BaseRecyclerViewAdapterHelper
+    compile "com.github.CymChad:BaseRecyclerViewAdapterHelper:$rootProject.ext.base_recyclerview_adapter_helper_version"
+
     //ucrop https://github.com/Yalantis/uCrop
     compile "com.github.yalantis:ucrop:$rootProject.ext.ucrop_version"
 
-    //数据库
+    //NewbieGuide https://github.com/huburt-Hu/NewbieGuide
+    compile("com.github.huburt-Hu:NewbieGuide:$rootProject.ext.newbieguide_version") {
+        exclude group: 'com.android.support'
+    }
+
+    //数据库 litepal https://github.com/LitePalFramework/LitePal
+    compile "org.litepal.android:core:$rootProject.ext.litepal_version"
     implementation files('libs/lite-orm-1.9.2.jar')
 
     //定位
     implementation files('libs/AMap_Location_V3.8.0_20180201.jar')
 
     // rx
-
     //RxJava https://github.com/ReactiveX/RxAndroid
     compile "io.reactivex.rxjava2:rxandroid:$rootProject.ext.rxandroid_version"
     compile "io.reactivex.rxjava2:rxjava:$rootProject.ext.rxjava_version"

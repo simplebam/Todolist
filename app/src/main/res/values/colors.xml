@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="common_color">@color/colorPrimary</color>
+    <color name="common_bg_color">#e6e6e6</color>
     <color name="transparent">#00000000</color>//透明
     <color name="translucent">#e0000000</color>//半透明
 
@@ -30,8 +31,7 @@
     <color name="black_20">#33000000</color>
     <color name="black_10">#1a000000</color>
 
-    <color name="main_bg_color">#f1f2f4</color>
-    <color name="side_selected_item_bg_color">#200ac6e7</color>
+    <color name="side_selected_item_bg_color">@color/black_20</color>
 
     <!-- 日历 -->
     <color name="calendar_empty_view_color">#838181</color>
@@ -46,10 +46,19 @@
     <!-- 日历 -->
 
     <color name="guide_bg_color">#b2000000</color>
-    <color name="settings_bg_color">#f1f4f4</color>
+    <color name="side_ic_normal_color">#626360</color>
+    <color name="side_text_normal_color">#222222</color>
 
-    <color name="item_bg_normal">@color/white_80</color>
-    <color name="item_bg_finished">@color/white_40</color>
+    <color name="setting_activity_bg_color">#f1f4f4</color>
+    <color name="skin_activity_bg_color">#f1f4f4</color>
+    <color name="about_activity_bg_color">#f1f4f4</color>
+    <color name="feedback_suggestion_activity_bg_color">#f1f4f4</color>
+    <color name="opensource_activity_bg_color">#f1f4f4</color>
+    <color name="sidetitle_activity_bg_color">#f1f4f4</color>
+    <color name="avatar_activity_bg_color">#f1f4f4</color>
+
+    <color name="item_bg_normal">#fafafa</color>
+    <color name="item_bg_finished">#bababa</color>
 
     <drawable name="item_plantask_normal_bg_state_pressed">@color/black_20</drawable>
     <drawable name="item_plantask_normal_bg_state_normal">@color/transparent</drawable>
@@ -70,7 +79,6 @@
     <color name="switch_thumb_unchecked_color">#838383</color>
     <color name="share_bg_color">#f9f3e7</color>
     <color name="share_other_color">#411d0d</color>
-
 
 
     <color name="color_a1a1a1">#a1a1a1</color>

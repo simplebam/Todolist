@@ -23,5 +23,26 @@
     <string name="need_storge_permission_to_open_album">需要申请文件读取权限才打开图库喔</string>
     <string name="cannot_get_crop_pic">无法取回裁剪图片</string>
 
+    <!-- 侧滑栏-->
+    <string name="note">便签</string>
+    <string name="today">今天</string>
+    <string name="tomorrow">明天</string>
+    <string name="calendar">日历</string>
+    <string name="all">所有</string>
+    <string name="finished">已完成</string>
+
+    <string name="weather">天气</string>
+    <string name="select_city">选择城市</string>
+    <string name="multi_cities_manage">多城市管理</string>
+
+    <string name="setting">设置</string>
+    <string name="about">关于</string>
+
+    <!-- MainActivity -->
+    <string name="click_to_open_slide">点击开启侧边栏</string>
+    <string name="click_to_create_file">点击新建计划</string>
+    <string name="head_view_hint">干嘛戳人家屁股,哼</string>
+    <string name="leave_app">哎呦,真的要离开人家吗？</string>
+
 
 </resources>

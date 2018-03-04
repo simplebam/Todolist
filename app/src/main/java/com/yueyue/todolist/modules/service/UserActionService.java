@@ -38,13 +38,11 @@ public class UserActionService extends IntentService {
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
-        if (intent == null)
+        if (intent == null || intent.getAction() == null)
             return;
 
         String action = intent.getAction();
-        if (action == null) {
-            return;
-        }
+
         switch (action) {
             case INTENT_ACTION_CACHEPLANTASK:
                 cachePlanTask();
@@ -76,7 +74,7 @@ public class UserActionService extends IntentService {
             while (cursor.moveToNext()) {
                 PlanTask planTask = new PlanTask();
 
-                planTask.id = cursor.getString(cursor.getColumnIndex(AbsolutePlanContract.PlanTask.TASK_ID));
+                planTask.taskId = cursor.getString(cursor.getColumnIndex(AbsolutePlanContract.PlanTask.TASK_ID));
                 planTask.priority = cursor.getInt(cursor.getColumnIndex(AbsolutePlanContract.PlanTask.TASK_PRIORITY));
                 planTask.title = cursor.getString(cursor.getColumnIndex(AbsolutePlanContract.PlanTask.TASK_TITLE));
                 planTask.describe = cursor.getString(cursor.getColumnIndex(AbsolutePlanContract.PlanTask.TASK_DESCRIBE));
@@ -105,7 +103,7 @@ public class UserActionService extends IntentService {
 
         ContentValues values = new ContentValues();
         values.clear();
-        values.put(AbsolutePlanContract.PlanTask.TASK_ID, task.id);
+        values.put(AbsolutePlanContract.PlanTask.TASK_ID, task.taskId);
         values.put(AbsolutePlanContract.PlanTask.TASK_PRIORITY, task.priority);
         values.put(AbsolutePlanContract.PlanTask.TASK_TITLE, task.title);
         values.put(AbsolutePlanContract.PlanTask.TASK_DESCRIBE, task.describe);
@@ -115,20 +113,20 @@ public class UserActionService extends IntentService {
         Cursor cursor = null;
         try {
             String where = AbsolutePlanContract.PlanTask.TASK_ID + " = ?";
-            cursor = getContentResolver().query(URI_PLANTASK, null, where, new String[]{task.id}, null);
+            cursor = getContentResolver().query(URI_PLANTASK, null, where, new String[]{task.taskId}, null);
             if (cursor != null && cursor.getCount() > 0) {
-                int updateCount = getContentResolver().update(URI_PLANTASK, values, where, new String[]{task.id});
+                int updateCount = getContentResolver().update(URI_PLANTASK, values, where, new String[]{task.taskId});
                 if (updateCount > 0) {
-                    Log.d(TAG, "update onePlantask success, plantask id : " + task.id);
+                    Log.d(TAG, "update onePlantask success, plantask taskId : " + task.taskId);
                 } else {
-                    Log.e(TAG, "update onePlantask failed, plantask id : " + task.id);
+                    Log.e(TAG, "update onePlantask failed, plantask taskId : " + task.taskId);
                 }
             } else {
                 Uri uri = getContentResolver().insert(URI_PLANTASK, values);
                 if (uri != null) {
-                    Log.d(TAG, "addOnePlantask success, plantask id : " + task.id + ", uri: " + uri);
+                    Log.d(TAG, "addOnePlantask success, plantask taskId : " + task.taskId + ", uri: " + uri);
                 } else {
-                    Log.e(TAG, "addOnePlantask failed, plantask id : " + task.id);
+                    Log.e(TAG, "addOnePlantask failed, plantask taskId : " + task.taskId);
                 }
             }
         } catch (Exception ex) {
@@ -153,7 +151,7 @@ public class UserActionService extends IntentService {
         try {
             where = AbsolutePlanContract.PlanTask.TASK_ID + " = ?";
             cursor = getContentResolver().query(URI_PLANTASK, null, where,
-                    new String[]{task.id}, null);
+                    new String[]{task.taskId}, null);
             if (cursor == null) {
                 return;
             }
@@ -169,7 +167,7 @@ public class UserActionService extends IntentService {
 
         ContentValues values = new ContentValues();
         values.clear();
-        values.put(AbsolutePlanContract.PlanTask.TASK_ID, task.id);
+        values.put(AbsolutePlanContract.PlanTask.TASK_ID, task.taskId);
         values.put(AbsolutePlanContract.PlanTask.TASK_PRIORITY, task.priority);
         values.put(AbsolutePlanContract.PlanTask.TASK_TITLE, task.title);
         values.put(AbsolutePlanContract.PlanTask.TASK_DESCRIBE, task.describe);
@@ -179,18 +177,18 @@ public class UserActionService extends IntentService {
         try {
             if (cursorCount > 0) {
                 int count = getContentResolver().update(URI_PLANTASK, values, where,
-                        new String[]{task.id});
+                        new String[]{task.taskId});
                 if (count > 0) {
-                    Log.d(TAG, "updateOnePlantaskState, update success, plantask id: " + task.id);
+                    Log.d(TAG, "updateOnePlantaskState, update success, plantask taskId: " + task.taskId);
                 } else {
-                    Log.e(TAG, "updateOnePlantaskState, update failed, plantask id: " + task.id);
+                    Log.e(TAG, "updateOnePlantaskState, update failed, plantask taskId: " + task.taskId);
                 }
             } else {
                 Uri uri = getContentResolver().insert(URI_PLANTASK, values);
                 if (uri != null) {
-                    Log.d(TAG, "updateOnePlantaskState insert success, plantask id : " + task.id + ", uri: " + uri);
+                    Log.d(TAG, "updateOnePlantaskState insert success, plantask taskId : " + task.taskId + ", uri: " + uri);
                 } else {
-                    Log.e(TAG, "updateOnePlantaskState insert failed, plantask id : " + task.id);
+                    Log.e(TAG, "updateOnePlantaskState insert failed, plantask taskId : " + task.taskId);
                 }
             }
         } catch (Exception ex) {
@@ -207,11 +205,11 @@ public class UserActionService extends IntentService {
 
         try {
             String where = AbsolutePlanContract.PlanTask.TASK_ID + " = ?";
-            int count = getContentResolver().delete(URI_PLANTASK, where, new String[]{task.id});
+            int count = getContentResolver().delete(URI_PLANTASK, where, new String[]{task.taskId});
             if (count > 0) {
-                Log.d(TAG, "removeOnePlantask success, plantask id : " + task.id);
+                Log.d(TAG, "removeOnePlantask success, plantask taskId : " + task.taskId);
             } else {
-                Log.e(TAG, "removeOnePlantask failed, plantask id : " + task.id);
+                Log.e(TAG, "removeOnePlantask failed, plantask taskId : " + task.taskId);
             }
         } catch (Exception ex) {
             Log.e(TAG, "removeOnePlantask, ex: " + ex);

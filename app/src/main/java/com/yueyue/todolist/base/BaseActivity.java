@@ -12,7 +12,7 @@ import android.view.animation.DecelerateInterpolator;
 
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.yueyue.todolist.R;
-import com.yueyue.todolist.modules.main.MainActivity;
+import com.yueyue.todolist.modules.main.ui.MainActivity;
 
 import butterknife.ButterKnife;
 

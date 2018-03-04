@@ -7,6 +7,8 @@ import com.blankj.utilcode.util.Utils;
 import com.yueyue.todolist.component.CachePlanTaskStore;
 import com.yueyue.todolist.component.CrashHandler;
 
+import org.litepal.LitePal;
+
 /**
  * author : yueyue on 2018/3/2 00:11
  * desc   : App基类
@@ -24,6 +26,7 @@ public class BaseApplication extends Application {
         sContext = this;
 
 
+        LitePal.initialize(this);
         CrashHandler.init(new CrashHandler(this));
 //        Bugtags.start(BuildConfig.BugtagsKey, this, Bugtags.BTGInvocationEventBubble);
 

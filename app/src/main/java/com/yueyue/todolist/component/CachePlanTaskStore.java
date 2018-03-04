@@ -83,7 +83,7 @@ public class CachePlanTaskStore {
                 Iterator iterator = mCachePlanTaskList.iterator();
                 while (iterator.hasNext()) {
                     PlanTask planTask = (PlanTask) iterator.next();
-                    if (planTask.id.equals(task.id)) {
+                    if (planTask.taskId.equals(task.taskId)) {
                         mCachePlanTaskList.remove(planTask);
                         break;
                     }
@@ -104,7 +104,7 @@ public class CachePlanTaskStore {
             Iterator<PlanTask> iterator = mCachePlanTaskList.iterator();
             while (iterator.hasNext()) {
                 PlanTask planTask = iterator.next();
-                if (planTask.id.equals(task.id)) {
+                if (planTask.taskId.equals(task.taskId)) {
                     iterator.remove();
                     break;
                 }
@@ -123,7 +123,7 @@ public class CachePlanTaskStore {
 
             for (int i = 0; i < mCachePlanTaskList.size(); i++) {
                 PlanTask planTask = mCachePlanTaskList.get(i);
-                if (planTask.id.equals(task.id)) {
+                if (planTask.taskId.equals(task.taskId)) {
                     planTask.state = task.state;
                     break;
                 }

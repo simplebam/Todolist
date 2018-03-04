@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="@string/note">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/menu_today"
+                    android:icon="@drawable/ic_menu_today"
+                    android:title="@string/today"/>
+                <item
+                    android:id="@+id/menu_tomorrow"
+                    android:icon="@drawable/ic_menu_tomorrow"
+                    android:title="@string/tomorrow"/>
+                <item
+                    android:id="@+id/menu_calendar"
+                    android:icon="@drawable/ic_menu_calendar"
+                    android:title="@string/calendar"/>
+                <item
+                    android:id="@+id/menu_all"
+                    android:icon="@drawable/ic_menu_all"
+                    android:title="@string/all"/>
+                <item
+                    android:id="@+id/menu_finished"
+                    android:icon="@drawable/ic_menu_finished"
+                    android:title="@string/finished"/>
+
+            </group>
+        </menu>
+    </item>
+
+    <item android:title="@string/weather">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/menu_one_city"
+                    android:icon="@drawable/ic_menu_one_city"
+                    android:title="@string/select_city"/>
+                <item
+                    android:id="@+id/menu_multi_cities"
+                    android:icon="@drawable/ic_menu_multi_cities"
+                    android:title="@string/multi_cities_manage"/>
+            </group>
+        </menu>
+    </item>
+
+    <item android:title="@string/setting">
+        <menu>
+            <item
+                android:id="@+id/menu_setting"
+                android:icon="@drawable/ic_menu_setting"
+                android:title="@string/setting"/>
+            <item
+                android:id="@+id/menu_about"
+                android:icon="@drawable/ic_menu_about"
+                android:title="@string/about"/>
+        </menu>
+    </item>
+
+</menu>
