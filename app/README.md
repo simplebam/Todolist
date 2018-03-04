@@ -42,6 +42,7 @@ App体验：
      * 目前最好的RxJava文章,没有之一:[给初学者的RxJava2.0教程(一) - 简书 ](https://www.jianshu.com/p/464fa025229e)
      * 其他RxJava文章推荐:[RxJava2 学习资料推荐](http://mp.weixin.qq.com/s/UAEgdC2EtqSpEqvog0aoZQ)
      * [RxJava之过滤操作符 - 行云间 - CSDN博客](http://blog.csdn.net/io_field/article/details/51378909)
+     * [RxJava2.0你不知道的事 - 简书](https://www.jianshu.com/p/785d9dfb0a5b)
   * RxLifecycle:[解决RxJava内存泄漏（前篇）：RxLifecycle详解及原理分析 -
     CSDN博客](http://blog.csdn.net/mq2553299/article/details/78927617)
     * 其中 RxLifecycle 已经推荐使用 AutoDispose :[Android架构中添加
