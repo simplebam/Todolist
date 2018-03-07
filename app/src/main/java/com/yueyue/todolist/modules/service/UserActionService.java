@@ -1,18 +1,21 @@
 package com.yueyue.todolist.modules.service;
 
 import android.app.IntentService;
-import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.blankj.utilcode.util.ToastUtils;
+import com.yueyue.todolist.R;
 import com.yueyue.todolist.common.utils.entity.PlanTask;
 import com.yueyue.todolist.component.CachePlanTaskStore;
+import com.yueyue.todolist.component.PLog;
 import com.yueyue.todolist.modules.service.db.AbsolutePlanContract;
 
-import java.util.ArrayList;
+import org.litepal.crud.DataSupport;
+
 import java.util.List;
 
 /**
@@ -36,6 +39,27 @@ public class UserActionService extends IntentService {
         super(TAG);
     }
 
+
+    public static void startService(Context context, String action, PlanTask planTask) {
+        Intent intent = new Intent(context, UserActionService.class);
+        intent.setAction(action);
+        if (planTask != null) {
+            intent.putExtra(UserActionService.EXTRA_PLANTASK, planTask);
+        }
+        context.startService(intent);
+    }
+
+    public static void startService(Context context, String action) {
+        startService(context, action, null);
+    }
+
+//    //绑定服务
+//    public void bindService(Context context,ServiceConnection connection) {
+//        Intent intent = new Intent(context, UserActionService.class);
+//        context.bindService(intent, connection, Service.BIND_AUTO_CREATE);
+//    }
+//
+
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         if (intent == null || intent.getAction() == null)
@@ -45,7 +69,7 @@ public class UserActionService extends IntentService {
 
         switch (action) {
             case INTENT_ACTION_CACHEPLANTASK:
-                cachePlanTask();
+                getCachePlanTask();
                 break;
             case INTENT_ACTION_ADD_ONE_PLANTASK:
                 addOnePlantask(intent);
@@ -62,138 +86,53 @@ public class UserActionService extends IntentService {
 
     }
 
-    private void cachePlanTask() {
-        List<PlanTask> planTaskList = new ArrayList<>();
-        Cursor cursor = null;
-        try {
-            cursor = getContentResolver().query(URI_PLANTASK, null, null, null, null);
-            if (cursor == null) {
-                Log.e(TAG, "cachePlanTask, cursor is null");
-                return;
-            }
-            while (cursor.moveToNext()) {
-                PlanTask planTask = new PlanTask();
-
-                planTask.taskId = cursor.getString(cursor.getColumnIndex(AbsolutePlanContract.PlanTask.TASK_ID));
-                planTask.priority = cursor.getInt(cursor.getColumnIndex(AbsolutePlanContract.PlanTask.TASK_PRIORITY));
-                planTask.title = cursor.getString(cursor.getColumnIndex(AbsolutePlanContract.PlanTask.TASK_TITLE));
-                planTask.describe = cursor.getString(cursor.getColumnIndex(AbsolutePlanContract.PlanTask.TASK_DESCRIBE));
-                planTask.time = cursor.getLong(cursor.getColumnIndex(AbsolutePlanContract.PlanTask.TASK_TIME));
-                planTask.state = cursor.getInt(cursor.getColumnIndex(AbsolutePlanContract.PlanTask.TASK_STATE));
-
-                planTaskList.add(planTask);
-            }
-        } catch (Exception ex) {
-            Log.e(TAG, "cachePlanTask, ex: " + ex);
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-        }
-
+    private void getCachePlanTask() {
+        List<PlanTask> planTaskList = DataSupport.findAll(PlanTask.class);
         CachePlanTaskStore.getInstance().setCachePlanTaskList(planTaskList, true);
     }
 
     private void addOnePlantask(Intent intent) {
         PlanTask task = intent.getParcelableExtra(EXTRA_PLANTASK);
         if (task == null) {
-            Log.e(TAG, "addOnePlantask, task is null");
+            Log.e(TAG, "addOnePlantask: task is null");
             return;
         }
 
-        ContentValues values = new ContentValues();
-        values.clear();
-        values.put(AbsolutePlanContract.PlanTask.TASK_ID, task.taskId);
-        values.put(AbsolutePlanContract.PlanTask.TASK_PRIORITY, task.priority);
-        values.put(AbsolutePlanContract.PlanTask.TASK_TITLE, task.title);
-        values.put(AbsolutePlanContract.PlanTask.TASK_DESCRIBE, task.describe);
-        values.put(AbsolutePlanContract.PlanTask.TASK_TIME, task.time);
-        values.put(AbsolutePlanContract.PlanTask.TASK_STATE, task.state);
-
-        Cursor cursor = null;
+        boolean b = false;
         try {
-            String where = AbsolutePlanContract.PlanTask.TASK_ID + " = ?";
-            cursor = getContentResolver().query(URI_PLANTASK, null, where, new String[]{task.taskId}, null);
-            if (cursor != null && cursor.getCount() > 0) {
-                int updateCount = getContentResolver().update(URI_PLANTASK, values, where, new String[]{task.taskId});
-                if (updateCount > 0) {
-                    Log.d(TAG, "update onePlantask success, plantask taskId : " + task.taskId);
-                } else {
-                    Log.e(TAG, "update onePlantask failed, plantask taskId : " + task.taskId);
-                }
-            } else {
-                Uri uri = getContentResolver().insert(URI_PLANTASK, values);
-                if (uri != null) {
-                    Log.d(TAG, "addOnePlantask success, plantask taskId : " + task.taskId + ", uri: " + uri);
-                } else {
-                    Log.e(TAG, "addOnePlantask failed, plantask taskId : " + task.taskId);
-                }
-            }
-        } catch (Exception ex) {
-            Log.e(TAG, "addOnePlantask, ex: " + ex);
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
+            b = task.saveOrUpdate("taskId=?", task.getTaskId() + "");
+        } catch (Exception e) {
+            b = false;
+            Log.e(TAG, "addOnePlantask:" + e.toString());
+            e.printStackTrace();
         }
+
+        int msgId = b ? R.string.save_success : R.string.save_error;
+        ToastUtils.showShort(getString(msgId));
+
     }
 
     private void updateOnePlantaskState(Intent intent) {
         PlanTask task = intent.getParcelableExtra(EXTRA_PLANTASK);
         if (task == null) {
-            Log.e(TAG, "updateOnePlantaskState, task is null");
+            Log.e(TAG, "updateOnePlantaskState: task is null");
             return;
         }
 
-        Cursor cursor = null;
-        int cursorCount = 0;
-        String where = "";
+        int updateCount = 0;
         try {
-            where = AbsolutePlanContract.PlanTask.TASK_ID + " = ?";
-            cursor = getContentResolver().query(URI_PLANTASK, null, where,
-                    new String[]{task.taskId}, null);
-            if (cursor == null) {
-                return;
-            }
-
-            cursorCount = cursor.getCount();
-        } catch (Exception ex) {
-            Log.e(TAG, "updateOnePlantaskState, 1 ex: " + ex);
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
+            updateCount = task.updateAll("taskId=?", task.getTaskId() + "");
+        } catch (Exception e) {
+            updateCount = 0;
+            PLog.e(TAG, "updateOnePlantaskState:" + e.toString());
+            e.printStackTrace();
         }
 
-        ContentValues values = new ContentValues();
-        values.clear();
-        values.put(AbsolutePlanContract.PlanTask.TASK_ID, task.taskId);
-        values.put(AbsolutePlanContract.PlanTask.TASK_PRIORITY, task.priority);
-        values.put(AbsolutePlanContract.PlanTask.TASK_TITLE, task.title);
-        values.put(AbsolutePlanContract.PlanTask.TASK_DESCRIBE, task.describe);
-        values.put(AbsolutePlanContract.PlanTask.TASK_TIME, task.time);
-        values.put(AbsolutePlanContract.PlanTask.TASK_STATE, task.state);
+        StringBuilder sb = new StringBuilder(getString(R.string.data_update))
+                .append(updateCount)
+                .append(getString(R.string.branch));
+        ToastUtils.showShort(sb.toString());
 
-        try {
-            if (cursorCount > 0) {
-                int count = getContentResolver().update(URI_PLANTASK, values, where,
-                        new String[]{task.taskId});
-                if (count > 0) {
-                    Log.d(TAG, "updateOnePlantaskState, update success, plantask taskId: " + task.taskId);
-                } else {
-                    Log.e(TAG, "updateOnePlantaskState, update failed, plantask taskId: " + task.taskId);
-                }
-            } else {
-                Uri uri = getContentResolver().insert(URI_PLANTASK, values);
-                if (uri != null) {
-                    Log.d(TAG, "updateOnePlantaskState insert success, plantask taskId : " + task.taskId + ", uri: " + uri);
-                } else {
-                    Log.e(TAG, "updateOnePlantaskState insert failed, plantask taskId : " + task.taskId);
-                }
-            }
-        } catch (Exception ex) {
-            Log.e(TAG, "updateOnePlantaskState, 2 ex: " + ex);
-        }
     }
 
     private void removeOnePlantask(Intent intent) {
@@ -203,17 +142,20 @@ public class UserActionService extends IntentService {
             return;
         }
 
+        int deleteCount = 0;
         try {
-            String where = AbsolutePlanContract.PlanTask.TASK_ID + " = ?";
-            int count = getContentResolver().delete(URI_PLANTASK, where, new String[]{task.taskId});
-            if (count > 0) {
-                Log.d(TAG, "removeOnePlantask success, plantask taskId : " + task.taskId);
-            } else {
-                Log.e(TAG, "removeOnePlantask failed, plantask taskId : " + task.taskId);
-            }
-        } catch (Exception ex) {
-            Log.e(TAG, "removeOnePlantask, ex: " + ex);
+            deleteCount = DataSupport.deleteAll(PlanTask.class, "taskId=?", task.getTaskId() + "");
+        } catch (Exception e) {
+            deleteCount = 0;
+            PLog.e(TAG, "removeOnePlantask:" + e.toString());
+            e.printStackTrace();
         }
+
+        StringBuilder sb = new StringBuilder(getString(R.string.data_delete))
+                .append(deleteCount)
+                .append(getString(R.string.branch));
+        ToastUtils.showShort(sb.toString());
+
     }
 }
 

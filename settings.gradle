@@ -1,1 +1,1 @@
-include ':app', ':PonyMusic', ':Beauty', ':timelinelibrary', ':tabpagerindictor', ':H-Express'
+include ':app', ':PonyMusic', ':Beauty', ':testapp'

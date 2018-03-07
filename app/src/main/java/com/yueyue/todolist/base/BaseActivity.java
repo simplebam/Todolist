@@ -5,12 +5,13 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.SparseArray;
+import android.view.MotionEvent;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
-import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.yueyue.todolist.R;
 import com.yueyue.todolist.modules.main.ui.MainActivity;
 
@@ -21,7 +22,7 @@ import butterknife.ButterKnife;
  * desc   : BaseActivity includes a base layoutId, init its toolbar (if the layout has one)
  */
 
-public abstract class BaseActivity extends RxAppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity {
     private static final String TAG = "BaseActivity";
     public Toolbar toolbar;
     private boolean isShowToolbar = true;
@@ -83,24 +84,24 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         }
     }
 
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
+    @Override
+    protected void onResume() {
+        super.onResume();
 //        Bugtags.onResume(this);
-//    }
+    }
 
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
+    @Override
+    protected void onPause() {
+        super.onPause();
 //        Bugtags.onPause(this);
-//    }
+    }
 
 
-//    @Override
-//    public boolean dispatchTouchEvent(MotionEvent ev) {
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
 //        Bugtags.onDispatchTouchEvent(this, ev);
-//        return super.dispatchTouchEvent(ev);
-//    }
+        return super.dispatchTouchEvent(ev);
+    }
 
     @Override
     protected void onDestroy() {

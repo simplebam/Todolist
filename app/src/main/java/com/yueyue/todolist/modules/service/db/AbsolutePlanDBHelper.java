@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  * author : yueyue on 2018/3/3 10:26
  * desc   :
  */
-
+@Deprecated
 public class AbsolutePlanDBHelper extends SQLiteOpenHelper {
     public static final String DB_NAME = "todolist.db";
     public static final int DB_VERSION = 1;

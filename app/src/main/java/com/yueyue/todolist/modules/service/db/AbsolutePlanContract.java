@@ -7,7 +7,7 @@ import android.provider.BaseColumns;
  * author : yueyue on 2018/3/3 10:25
  * desc   :
  */
-
+@Deprecated
 public class AbsolutePlanContract {
     public static final String AUTHORITY = "com.yueyue.todolist";
 

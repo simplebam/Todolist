@@ -12,7 +12,7 @@ APP功能专一、操作简单、界面优美，记录只保存在本地，不�
 ### 项目截图
 
 
-App体验：
+App体验：[Todolist - fir.im ](https://fir.im/tolist)
 
 
 ### 项目中用到的知识
@@ -33,16 +33,29 @@ App体验：
    以及 [android打开系统图库终极适配 - CSDN博客](http://blog.csdn.net/nbalichaoq/article/details/51992151)
 * 矢量图:[SVG 的 PathData 在 Android 中的使用 - CSDN博客 ](http://blog.csdn.net/zwlove5280/article/details/73196543)
   以及 [Android：获取并制作矢量图动画 - Android - 掘金](https://juejin.im/entry/5948c1ea8d6d81cc72fd1bbe)
+* 文本你还可以这样玩:[Android TextView中文字通过SpannableString来设置超链接
+  、颜色、字体等属性- CSDN博客 ](http://blog.csdn.net/snowdream86/article/details/6776629)
 
 
 ### 项目中的用到的开源框架
 * bugtags-移动时代首选 Bug 管理系统:[Bugtags 使用说明 - CSDN博客](http://blog.csdn.net/ObjectivePLA/article/details/51037804)
 * Blankj/AndroidUtilCode：[终于等到你--权限工具类 - 简书](https://www.jianshu.com/p/333b09b7e000)
 * ButterKnife：[[Android开发] ButterKnife8.5.1 使用方法教程总结 - CSDN博客](http://blog.csdn.net/niubitianping/article/details/54893571)
-* 数据库:
-  * LitePal:[Android数据库高手秘籍(一)——SQLite命令 - 郭霖的专栏 - CSDN博客](http://blog.csdn.net/guolin_blog/article/details/38461239)
-    以及 [LitePal 1.6.0版本来袭，数据加解密功能保障你的应用数据安全](http://mp.weixin.qq.com/s/TSp36cnKLxUmAHjT86UCrQ)
-  * liteOrm
+* LitePal:
+   * [Android数据库高手秘籍(一)——SQLite命令 - 郭霖的专栏 - CSDN博客](http://blog.csdn.net/guolin_blog/article/details/38461239)
+     以及 [LitePal 1.6.0版本来袭，数据加解密功能保障你的应用数据安全](http://mp.weixin.qq.com/s/TSp36cnKLxUmAHjT86UCrQ)
+   * LitePal使用心得(这里指的是 1.6.1 版本):
+     * 实体private 、public、 public final 类型,LitePal都会存储,无需生成
+       getter/setter 方法(其实就是默认存储实体中所有的字段/属性,如果不想存储,
+       则设置使用@Column()中的ignore 属性)
+     * 字段/属性 在数据库中一律使用小写存储,所以我们在 crud 时候可以忽略字段大小
+       写操作,不过在查询时候如果where(" name=? ", name),如果 name (这个字段为
+       String) 为 null 就会报错 "org.litepal.exceptions.DataSupportException: the
+       bind value at index 1 is null"
+     * Litepal 的注解 @Column(),里面有 nullable,unique,defaultValue,ignore
+       四种方法
+       * unique: 比如taskId设置了unique,当存储(save()方法)时候,数据库如果已经
+        有该taskId,那就不存储(save() 方法返回 false)
 * Gson-解析Json数据:[你真的会用Gson吗?Gson使用指南（一） - 简书 ](https://www.jianshu.com/p/e740196225a4)
   ,这个作者写的Gson系列教程很好,值得拜读
 * Rx系列
@@ -94,8 +107,21 @@ App体验：
 * Android 性能优化：
   * [Android内存优化（使用SparseArray和ArrayMap代替HashMap） - CSDN博客 ](http://blog.csdn.net/u010687392/article/details/47809295)
   * [Android 基础1：SparseArray 和 ArrayMap （HashMap替代） - 简书 ](https://www.jianshu.com/p/38b3e72d6fea)
+  * [Android布局优化之ViewStub、include、merge使用与源码分析 - CSDN博客 ](http://blog.csdn.net/bboyfeiyu/article/details/45869393)
 
+
+### 开发中遇到的问题
+* 下面这bug解决办法,传送门;[[译文]Android Studio 3.0 发行说明 - CSDN博客](http://blog.csdn.net/guiying712/article/details/78352062)
+  ```
+  Error:(42, 5) error: style attribute '@android:attr/windowEnterAnimation' not found.
+  Error:(42, 5) error: style attribute '@android:attr/windowExitAnimation' not found.
+  ```
+  其实就是@android 前面的"@"去掉就好
 
 ### 项目中的缺点
 * 由于本人理解换肤方面的知识没有透彻,去掉换肤功能
 * 由于天气方面用了两个数据库,准备全线转LitePal
+* 到时需要逐步删除readme.text多余的东西
+* 后续考虑支持md语法,参考:[zeleven/mua](https://github.com/zeleven/mua)
+* 做个懒加载
+* 后期考虑替换Mua软件

@@ -25,5 +25,29 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
+    <style name="NormalDialogStyle">
+        <!--对话框背景 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!--边框 -->
+        <item name="android:windowFrame">@null</item>
+        <!--没有标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 是否浮现在Activity之上 -->
+        <item name="android:windowIsFloating">true</item>
+        <!--背景透明 -->
+        <item name="android:windowIsTranslucent">false</item>
+        <!-- 是否有覆盖 -->
+        <item name="android:windowContentOverlay">@null</item>
+        <!--进出的显示动画 -->
+        <item name="android:windowAnimationStyle">@style/normalDialogAnim</item>
+        <!--背景变暗-->
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+    <!--对话框动画-->
+    <style name="normalDialogAnim" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/up_in</item>
+        <item name="android:windowExitAnimation">@anim/up_out</item>
+    </style>
+
 
 </resources>

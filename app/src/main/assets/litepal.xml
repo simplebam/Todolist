@@ -32,9 +32,7 @@
     	</list>
     -->
     <list>
-        <mapping class="com.yueyue.coolweather.db.City"/>
-        <mapping class="com.yueyue.coolweather.db.County"/>
-        <mapping class="com.yueyue.coolweather.db.Province"/>
+        <mapping class="com.yueyue.todolist.common.utils.entity.PlanTask"/>
     </list>
 
     <!--

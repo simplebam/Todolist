@@ -95,7 +95,7 @@ public class AvatarActivity extends BaseActivity {
     private void initToolbar() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             ViewGroup.LayoutParams layoutParams = toolbar.getLayoutParams();
-            layoutParams.height = BarUtils.getActionBarHeight(this);
+            layoutParams.height = BarUtils.getActionBarHeight();
             toolbar.setLayoutParams(layoutParams);
         }
 

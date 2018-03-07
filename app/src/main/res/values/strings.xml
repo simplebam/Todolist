@@ -45,4 +45,30 @@
     <string name="leave_app">哎呦,真的要离开人家吗？</string>
 
 
+
+    <!-- UserActionService -->
+    <string name="save_success">存储成功</string>
+    <string name="save_error">存储失败</string>
+    <string name="data_update">数据更新</string>
+    <string name="branch">条</string>
+    <string name="data_delete">数据删除</string>
+
+    <!-- PlanTaskActivity -->
+    <string name="create_plan">新建计划</string>
+    <string name="title">标题</string>
+    <string name="particular_to_describe">详细描述一下&#8230;</string>
+    <string name="click_to_set_time">点击设置计划时间</string>
+    <string name="click_to_save_plan">点击保存计划</string>
+    <string name="modify">修改了</string>
+    <string name="title_point">标题、</string>
+    <string name="content_point">内容、</string>
+    <string name="time">时间</string>
+    <string name="not_save_yeah">还没保存呢</string>
+    <string name="modify_plan">修改计划</string>
+    <string name="content">内容</string>
+    <string name="save">保存</string>
+    <string name="year">年</string>
+    <string name="month">月</string>
+    <string name="day">日</string>
+
 </resources>

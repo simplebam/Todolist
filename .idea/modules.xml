@@ -3,12 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Beauty/Beauty.iml" filepath="$PROJECT_DIR$/Beauty/Beauty.iml" />
-      <module fileurl="file://$PROJECT_DIR$/H-Express/H-Express.iml" filepath="$PROJECT_DIR$/H-Express/H-Express.iml" />
       <module fileurl="file://$PROJECT_DIR$/PonyMusic/PonyMusic.iml" filepath="$PROJECT_DIR$/PonyMusic/PonyMusic.iml" />
       <module fileurl="file://$PROJECT_DIR$/Todolist.iml" filepath="$PROJECT_DIR$/Todolist.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/tabpagerindictor/tabpagerindictor.iml" filepath="$PROJECT_DIR$/tabpagerindictor/tabpagerindictor.iml" />
-      <module fileurl="file://$PROJECT_DIR$/timelinelibrary/timelinelibrary.iml" filepath="$PROJECT_DIR$/timelinelibrary/timelinelibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/testapp/testapp.iml" filepath="$PROJECT_DIR$/testapp/testapp.iml" />
     </modules>
   </component>
 </project>

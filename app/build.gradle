@@ -106,6 +106,11 @@ dependencies {
         exclude group: 'com.android.support'
     }
 
+    //MaterialDateTimePicker https://github.com/wdullaer/MaterialDateTimePicker
+    compile("com.wdullaer:materialdatetimepicker:$rootProject.ext.material_datetime_picker_version") {
+        exclude group: 'com.android.support'
+    }
+
     //数据库 litepal https://github.com/LitePalFramework/LitePal
     compile "org.litepal.android:core:$rootProject.ext.litepal_version"
     implementation files('libs/lite-orm-1.9.2.jar')
@@ -147,14 +152,14 @@ dependencies {
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.butterknife_version"
 
     //citypicker https://github.com/crazyandcoder/citypicker
-    compile "liji.library.dev:citypickerview:$rootProject.ext.citypickerview_version"
+//    compile "liji.library.dev:citypickerview:$rootProject.ext.citypickerview_version"
 
     //AlipayZeroSdk https://github.com/fython/AlipayZeroSdk
     compile "moe.feng:AlipayZeroSdk:$rootProject.ext.alipayzerosdk_version"
 
     //assist相关的
 
-    //Blankj/AndroidUtilCode https://github.com/Blankj/AndroidUtilCode
+    //AndroidUtilCode https://github.com/Blankj/AndroidUtilCode
     compile "com.blankj:utilcode:$rootProject.ext.android_utilcode_version"
 
     //bugtags https://work.bugtags.com/login.html
@@ -163,5 +168,6 @@ dependencies {
     //stetho https://github.com/facebook/stetho
     implementation "com.facebook.stetho:stetho:$rootProject.ext.stetho_version"
     implementation "com.facebook.stetho:stetho-okhttp3:$rootProject.ext.stetho_version"
+
 
 }

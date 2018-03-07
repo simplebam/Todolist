@@ -28,6 +28,7 @@ import com.blankj.utilcode.util.SnackbarUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.yueyue.todolist.R;
 import com.yueyue.todolist.base.BaseActivity;
+import com.yueyue.todolist.modules.details.ui.PlanTaskActivity;
 import com.yueyue.todolist.modules.main.impl.OnGuideChangedListenerImpl;
 
 import java.util.Date;
@@ -118,10 +119,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         });
 
         mFab.setOnClickListener(v -> {
-//            Intent intent = new Intent(MainActivity.this, PlanTaskDetailsActivity.class);
-//            intent.putExtra(PlanTaskDetailsActivity.KEY_SHOW_TYPE, PlanTaskDetailsActivity.TYPE_NEW_BUILD);
+//            Intent intent = new Intent(MainActivity.this, PlanTaskActivity.class);
+//            intent.putExtra(PlanTaskActivity.KEY_SHOW_TYPE, PlanTaskActivity.TYPE_NEW_BUILD);
 //            if (mLastSelectedSideId == ID_TOMORROW) {
-//                intent.putExtra(PlanTaskDetailsActivity.KEY_IS_TOMORROW, true);
+//                intent.putExtra(PlanTaskActivity.KEY_IS_TOMORROW, true);
 //            }
 //            startActivity(intent);
         });
@@ -169,6 +170,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         int id = item.getItemId();
         switch (id) {
             case R.id.menu_today:
+                PlanTaskActivity.launch(this, PlanTaskActivity.TYPE_NEW_BUILD, null, false);
                 break;
             case R.id.menu_tomorrow:
                 break;
@@ -270,8 +272,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 .setOnGuideChangedListener(new OnGuideChangedListenerImpl() {
                     @Override
                     public void onRemoved(Controller controller) {
-//                        Intent intent = new Intent(MainActivity.this, PlanTaskDetailsActivity.class);
-//                        intent.putExtra(PlanTaskDetailsActivity.KEY_SHOW_TYPE, PlanTaskDetailsActivity.TYPE_NEW_BUILD);
+//                        Intent intent = new Intent(MainActivity.this, PlanTaskActivity.class);
+//                        intent.putExtra(PlanTaskActivity.KEY_SHOW_TYPE, PlanTaskActivity.TYPE_NEW_BUILD);
 //                        startActivity(intent);
                     }
                 })

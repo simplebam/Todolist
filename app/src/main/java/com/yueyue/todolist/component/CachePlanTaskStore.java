@@ -1,7 +1,6 @@
 package com.yueyue.todolist.component;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 
 import com.yueyue.todolist.common.utils.entity.PlanTask;
@@ -18,140 +17,105 @@ import java.util.List;
  */
 
 public class CachePlanTaskStore {
-    public static final String TAG = "CachePlanTaskStore";
+    public static final String TAG = CachePlanTaskStore.class.getSimpleName();
 
-    private volatile static CachePlanTaskStore sCachePlanTaskStore;
-    private List<PlanTask> mCachePlanTaskList;
-    private boolean mIsPlanTaskInitFinished;
-    private final Object mCachePlanTaskStoreLock = new Object();
-    private HashSet<OnPlanTaskChangedListener> mOnPlanTaskChangedListeners;
+    private List<PlanTask> mCachePlanTaskList = new ArrayList<>();
+    private HashSet<OnPlanTaskChangedListener> mOnPlanTaskChangedListeners = new HashSet<>();
+
+    private CachePlanTaskStore() {
+    }
+
+    public static CachePlanTaskStore getInstance() {
+        return SingletonHolder.sInstance;
+    }
+
+    private static final class SingletonHolder {
+        private static final CachePlanTaskStore sInstance = new CachePlanTaskStore();
+    }
+
+
+    public static void initialize(Context context) {
+        Log.d(TAG, "initialize , start intent service: UserActionService");
+        UserActionService.startService(context, UserActionService.INTENT_ACTION_CACHEPLANTASK);
+    }
+
+
+    public void setCachePlanTaskList(List<PlanTask> list, boolean needNotify) {
+        if (list == null || list.size() == 0) return;
+        mCachePlanTaskList.clear();
+        mCachePlanTaskList.addAll(list);
+        if (needNotify) {
+            notifyPlanTaskChanged();
+        }
+    }
+
+
+    public void addPlanTask(PlanTask task, boolean needNotify) {
+        if (mCachePlanTaskList == null || task == null) {
+            return;
+        }
+
+
+        removePlanTask(task, false);
+
+        mCachePlanTaskList.add(task);
+        if (needNotify) {
+            notifyPlanTaskChanged();
+        }
+    }
+
+    public void removePlanTask(PlanTask task, boolean needNotify) {
+        if (task == null || mCachePlanTaskList == null)
+            return;
+
+        Iterator<PlanTask> iterator = mCachePlanTaskList.iterator();
+        while (iterator.hasNext()) {
+            PlanTask planTask = iterator.next();
+            if (planTask.getTaskId() == task.getTaskId()) {
+                iterator.remove();
+                break;
+            }
+        }
+
+        if (needNotify) {
+            notifyPlanTaskChanged();
+        }
+    }
+
+    public void updatePlanTaskState(PlanTask task, boolean needNotify) {
+        if (mCachePlanTaskList == null || mCachePlanTaskList.size() <= 0)
+            return;
+
+        for (PlanTask planTask : mCachePlanTaskList) {
+            if (planTask.getTaskId() == task.getTaskId()) {
+                planTask.state = task.state;
+                break;
+            }
+        }
+
+        if (needNotify) {
+            notifyPlanTaskChanged();
+        }
+    }
+
+
+    public void reset() {
+        mCachePlanTaskList.clear();
+    }
+
 
     public interface OnPlanTaskChangedListener {
         void onPlanTaskChanged();
     }
 
-    public static CachePlanTaskStore getInstance() {
-        if (sCachePlanTaskStore == null) {
-            synchronized (CachePlanTaskStore.class) {
-                if (sCachePlanTaskStore == null) {
-                    sCachePlanTaskStore = new CachePlanTaskStore();
-                }
-            }
-        }
-        return sCachePlanTaskStore;
-    }
 
-    public static void initialize(Context context) {
-        Log.d(TAG, "initialize , start intent service: UserActionService");
-        Intent intent = new Intent(context, UserActionService.class);
-        intent.setAction(UserActionService.INTENT_ACTION_CACHEPLANTASK);
-        context.startService(intent);
-    }
-
-    private CachePlanTaskStore() {
-        mCachePlanTaskList = new ArrayList<>();
-        mOnPlanTaskChangedListeners = new HashSet<>();
-    }
-
-    public void setCachePlanTaskList(List<PlanTask> list, boolean needNotify) {
-        synchronized (mCachePlanTaskStoreLock) {
-            reset();
-            mCachePlanTaskList = list;
-            mIsPlanTaskInitFinished = true;
-            if (needNotify) {
-                notifyPlanTaskChanged();
-            }
-        }
-    }
-
-    public List<PlanTask> getCachePlanTaskList() {
-        synchronized (mCachePlanTaskStoreLock) {
-            List<PlanTask> planTaskList = new ArrayList<>();
-            if (mCachePlanTaskList == null || mCachePlanTaskList.size() <= 0)
-                return planTaskList;
-
-            return mCachePlanTaskList;
-        }
-    }
-
-    public void addPlanTask(PlanTask task, boolean needNotify) {
-        synchronized (mCachePlanTaskStoreLock) {
-            if (mCachePlanTaskList == null)
-                return;
-
-            if (mCachePlanTaskList.size() > 0) {
-                Iterator iterator = mCachePlanTaskList.iterator();
-                while (iterator.hasNext()) {
-                    PlanTask planTask = (PlanTask) iterator.next();
-                    if (planTask.taskId.equals(task.taskId)) {
-                        mCachePlanTaskList.remove(planTask);
-                        break;
-                    }
-                }
-            }
-            mCachePlanTaskList.add(task);
-            if (needNotify) {
-                notifyPlanTaskChanged();
-            }
-        }
-    }
-
-    public void removePlanTask(PlanTask task, boolean needNotify) {
-        synchronized (mCachePlanTaskStoreLock) {
-            if (mCachePlanTaskList == null || mCachePlanTaskList.size() <= 0)
-                return;
-
-            Iterator<PlanTask> iterator = mCachePlanTaskList.iterator();
-            while (iterator.hasNext()) {
-                PlanTask planTask = iterator.next();
-                if (planTask.taskId.equals(task.taskId)) {
-                    iterator.remove();
-                    break;
-                }
-            }
-
-            if (needNotify) {
-                notifyPlanTaskChanged();
-            }
-        }
-    }
-
-    public void updatePlanTaskState(PlanTask task, boolean needNotify) {
-        synchronized (mCachePlanTaskStoreLock) {
-            if (mCachePlanTaskList == null || mCachePlanTaskList.size() <= 0)
-                return;
-
-            for (int i = 0; i < mCachePlanTaskList.size(); i++) {
-                PlanTask planTask = mCachePlanTaskList.get(i);
-                if (planTask.taskId.equals(task.taskId)) {
-                    planTask.state = task.state;
-                    break;
-                }
-            }
-            if (needNotify) {
-                notifyPlanTaskChanged();
-            }
-        }
-    }
-
-    public boolean isPlanTaskInitializedFinished() {
-        return mIsPlanTaskInitFinished;
-    }
-
-    public void reset() {
-        synchronized (mCachePlanTaskStoreLock) {
-            mCachePlanTaskList.clear();
-        }
-    }
-
-    public void notifyPlanTaskChanged() {
-        if (mOnPlanTaskChangedListeners == null || mOnPlanTaskChangedListeners.size() <= 0)
+    private void notifyPlanTaskChanged() {
+        if (mOnPlanTaskChangedListeners == null) {
             return;
+        }
 
-        synchronized (mCachePlanTaskStoreLock) {
-            for (OnPlanTaskChangedListener listener : mOnPlanTaskChangedListeners) {
-                listener.onPlanTaskChanged();
-            }
+        for (OnPlanTaskChangedListener listener : mOnPlanTaskChangedListeners) {
+            listener.onPlanTaskChanged();
         }
     }
 
@@ -159,7 +123,7 @@ public class CachePlanTaskStore {
         if (listener == null)
             return;
 
-        synchronized (mCachePlanTaskStoreLock) {
+        synchronized (CachePlanTaskStore.class) {
             if (!mOnPlanTaskChangedListeners.contains(listener)) {
                 mOnPlanTaskChangedListeners.add(listener);
             }
@@ -169,8 +133,7 @@ public class CachePlanTaskStore {
     public void removePlanTaskChangedListener(OnPlanTaskChangedListener listener) {
         if (listener == null)
             return;
-
-        synchronized (mCachePlanTaskStoreLock) {
+        synchronized (CachePlanTaskStore.class) {
             mOnPlanTaskChangedListeners.remove(listener);
         }
     }

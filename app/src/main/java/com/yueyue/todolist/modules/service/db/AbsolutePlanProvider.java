@@ -24,7 +24,7 @@ import java.util.ArrayList;
  * author : yueyue on 2018/3/3 13:03
  * desc   :
  */
-
+@Deprecated
 public class AbsolutePlanProvider extends ContentProvider {
     public static final String TAG = AbsolutePlanProvider.class.getSimpleName();
 

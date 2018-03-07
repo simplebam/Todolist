@@ -25,15 +25,16 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
-        <activity android:name=".modules.main.ui.MainActivity"/>
+        <activity
+            android:name=".modules.main.ui.MainActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".modules.avatar.ui.AvatarActivity"/>
-
+        <activity android:name=".modules.details.ui.PlanTaskActivity"/>
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 
         <service
             android:name=".modules.service.UserActionService"
@@ -44,7 +45,6 @@
             android:name=".modules.service.db.AbsolutePlanProvider"
             android:authorities="com.yueyue.todolist"
             android:exported="false"/>
-
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.fileProvider"
@@ -54,6 +54,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths"/>
         </provider>
+
 
     </application>
 

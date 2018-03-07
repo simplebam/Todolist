@@ -6,7 +6,6 @@ package com.yueyue.todolist.base;
  */
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
@@ -25,7 +24,6 @@ import butterknife.ButterKnife;
  * quote  : https://github.com/DanteAndroid/Beauty
  */
 
-
 public abstract class BaseFragment extends Fragment {
 
     protected View rootView;
@@ -36,15 +34,15 @@ public abstract class BaseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (rootView == null) {
             rootView = inflater.inflate(initLayoutId(), container, false);
+            ButterKnife.bind(this, rootView);
             initViews();
         }
-        ButterKnife.bind(this, rootView);
         onCreateView();
         return rootView;
     }
 
     @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
+    public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean("isHidden", isHidden());
     }
@@ -68,14 +66,21 @@ public abstract class BaseFragment extends Fragment {
     protected abstract int initLayoutId();
 
     protected void onCreateView() {
-        if (getActivity() != null && getActivity() instanceof BaseActivity) {
-            toolbar = ((BaseActivity) getActivity()).toolbar;
-        }
+        ButterKnife.bind(this, rootView);
+        toolbar = ((BaseActivity) getActivity()).toolbar;
     }
 
     protected abstract void initViews();
 
     protected abstract void initData();
+
+//    //RxJava之过滤操作符 - 行云间 - CSDN博客
+//    //      http://blog.csdn.net/io_field/article/details/51378909
+//    public <T> Observable.Transformer<T, T> applySchedulers() {
+//        return observable -> observable.subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .distinct();
+//    }
 
 
     public void log(String key, String content) {

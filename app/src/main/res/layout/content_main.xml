@@ -1,110 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical">
+    tools:context=".modules.main.ui.MainActivity">
 
-    <!--状态栏-->
-    <View
-        android:id="@+id/view_status"
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="24dp"
-        android:background="@color/colorPrimary"
-        android:visibility="gone"/>
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="@color/colorPrimary">
-
-        <ImageView
-            android:id="@+id/toolbar_home_as_up"
-            android:layout_width="50dp"
-            android:layout_height="20dp"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="1dp"
-            android:layout_marginTop="53dp"
-            android:src="@drawable/ic_titlebar_menu"/>
-
-        <TextView
-            android:id="@+id/toolbar_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="1dp"
-            android:layout_marginTop="40dp"
-            android:layout_toEndOf="@+id/toolbar_home_as_up"
-            android:text="9月"
-            android:textColor="#ffffff"
-            android:textSize="30sp"/>
-
-        <TextView
-            android:id="@+id/toolbar_sub_title_year"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="40dp"
-            android:layout_toEndOf="@id/toolbar_title"
-            android:text="2017年"
-            android:textColor="#ffffff"
-            android:textSize="14sp"/>
-
-        <TextView
-            android:id="@+id/toolbar_sub_title_day"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/toolbar_sub_title_year"
-            android:layout_marginStart="10dp"
-            android:layout_toEndOf="@id/toolbar_title"
-            android:text="07日"
-            android:textColor="#ffffff"
-            android:textSize="14sp"/>
-
-        <TextView
-            android:id="@+id/toolbar_to_today"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="48dp"
-            android:layout_toEndOf="@id/toolbar_sub_title_year"
-            android:background="@drawable/ic_calendar_today_bg"
-            android:gravity="bottom|center_horizontal"
-            android:text="10"
-            android:textColor="#ffffff"
-            android:textSize="18sp"/>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <FrameLayout
-            android:id="@+id/fl_content"
+        <!--Android 详细分析AppBarLayout的五种ScrollFlags - 简书
+                         https://www.jianshu.com/p/7caa5f4f49bd-->
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+            android:layout_height="?actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
+            app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
-        <!--app:rippleColor="#79bd4c" 按下状态的波纹颜色-->
-        <!--app:elevation="6dp" evelation用来显示阴影-->
-        <!--app:pressedTranslationZ="12dp" pressedTranslationZ用来控制按下状态阴影的变化-->
-        <!--app:backgroundTint 用来填充背景颜色；-->
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginBottom="45dp"
-            android:layout_marginEnd="10dp"
-            android:src="@drawable/ic_float_action_button"
-            app:backgroundTint="@color/colorPrimary"
-            app:borderWidth="0dp"
-            app:elevation="6dp"
-            app:fabSize="normal"
-            app:pressedTranslationZ="12dp"
-            app:rippleColor="@color/fab_rippleColor"/>
+    </android.support.design.widget.AppBarLayout>
 
-    </RelativeLayout>
-</LinearLayout>
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    </FrameLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|start"
+        android:layout_margin="16dp"
+        android:scaleX="0"
+        android:scaleY="0"
+        android:src="@drawable/ic_float_action_button"
+        app:backgroundTint="@color/colorPrimary"
+        app:layout_anchor="@+id/container"
+        app:layout_anchorGravity="bottom|right"/>
+
+</android.support.design.widget.CoordinatorLayout>

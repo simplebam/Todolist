@@ -20,7 +20,7 @@ public class VersionUtil {
             return info.versionName;
         } catch (Exception e) {
             e.printStackTrace();
-            return context.getString(R.string.can_not_find_version_name);
         }
+        return context.getString(R.string.can_not_find_version_name);
     }
 }
