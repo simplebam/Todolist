@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="main_tabs_titles">
+        <item name="today">今天</item>
+        <item name="tomorrow">明天</item>
+    </string-array>
+
+    <string-array name="main_tabs_types">
+        <item name="today">today</item>
+        <item name="tomorrow">tomorrow</item>
+    </string-array>
+</resources>

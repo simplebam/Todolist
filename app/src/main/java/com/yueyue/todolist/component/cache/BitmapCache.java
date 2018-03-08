@@ -19,7 +19,7 @@ import java.io.OutputStream;
  * quote  : Android DiskLruCache完全解析，硬盘缓存的最佳方案 - CSDN博客
  * http://blog.csdn.net/guolin_blog/article/details/28863651
  */
-
+@Deprecated
 public class BitmapCache {
 
     private final static String TAG = BitmapCache.class.getSimpleName();

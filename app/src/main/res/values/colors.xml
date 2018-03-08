@@ -82,4 +82,8 @@
 
 
     <color name="color_a1a1a1">#a1a1a1</color>
+    <color name="btg_global_light_white">#ff333333</color>
+    <color name="color_f37979">#F37979</color>
+    <color name="color_37bed7">#37BED7</color>
+    <color name="color_f0f01a">#f0f01a</color>
 </resources>

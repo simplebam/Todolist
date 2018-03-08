@@ -1,4 +1,4 @@
-package com.yueyue.todolist.common.utils.entity;
+package com.yueyue.todolist.modules.main.domain;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -12,7 +12,7 @@ import org.litepal.annotation.Column;
  * desc   :
  */
 
-public class PlanTask extends BaseEntity implements Parcelable {
+public class DiaryEntity extends BaseEntity implements Parcelable {
     //private public 以及 public final 类型,LitePal都会存储
 
     //设置unique = true时候,taskId已经存在数据库的话,再次存储该taskId(调用save()方法)
@@ -20,32 +20,35 @@ public class PlanTask extends BaseEntity implements Parcelable {
     private long taskId = System.currentTimeMillis();
     public int priority;
     public String title = "";
-    public String describe = "";
+    public String content = "";
+    //这个为了获取年月日时分
     public long time;
+    //这个为了根据年月日查询数据库
+    public String calendar;
     @Column(defaultValue = "0")
     public int state; //0: normal; 1: finished
 
-    public PlanTask() {
+    public DiaryEntity() {
     }
 
-    private PlanTask(Parcel in) {
+    private DiaryEntity(Parcel in) {
         taskId = in.readLong();
         priority = in.readInt();
         title = in.readString();
-        describe = in.readString();
+        content = in.readString();
         time = in.readLong();
         state = in.readInt();
     }
 
-    public static final Creator<PlanTask> CREATOR = new Creator<PlanTask>() {
+    public static final Creator<DiaryEntity> CREATOR = new Creator<DiaryEntity>() {
         @Override
-        public PlanTask createFromParcel(Parcel in) {
-            return new PlanTask(in);
+        public DiaryEntity createFromParcel(Parcel in) {
+            return new DiaryEntity(in);
         }
 
         @Override
-        public PlanTask[] newArray(int size) {
-            return new PlanTask[size];
+        public DiaryEntity[] newArray(int size) {
+            return new DiaryEntity[size];
         }
     };
 
@@ -59,7 +62,7 @@ public class PlanTask extends BaseEntity implements Parcelable {
         dest.writeLong(taskId);
         dest.writeInt(priority);
         dest.writeString(title);
-        dest.writeString(describe);
+        dest.writeString(content);
         dest.writeLong(time);
         dest.writeInt(state);
     }
@@ -69,14 +72,14 @@ public class PlanTask extends BaseEntity implements Parcelable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        PlanTask planTask = (PlanTask) o;
+        DiaryEntity diaryEntity = (DiaryEntity) o;
 
-        if (taskId != planTask.taskId) return false;
-        if (priority != planTask.priority) return false;
-        if (time != planTask.time) return false;
-        if (state != planTask.state) return false;
-        if (!title.equals(planTask.title)) return false;
-        return describe.equals(planTask.describe);
+        if (taskId != diaryEntity.taskId) return false;
+        if (priority != diaryEntity.priority) return false;
+        if (time != diaryEntity.time) return false;
+        if (state != diaryEntity.state) return false;
+        if (!title.equals(diaryEntity.title)) return false;
+        return content.equals(diaryEntity.content);
     }
 
     @Override
@@ -84,7 +87,7 @@ public class PlanTask extends BaseEntity implements Parcelable {
         int result = (int) (taskId ^ (taskId >>> 32));
         result = 31 * result + priority;
         result = 31 * result + title.hashCode();
-        result = 31 * result + describe.hashCode();
+        result = 31 * result + content.hashCode();
         result = 31 * result + (int) (time ^ (time >>> 32));
         result = 31 * result + state;
         return result;

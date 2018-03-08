@@ -34,9 +34,9 @@ public abstract class BaseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (rootView == null) {
             rootView = inflater.inflate(initLayoutId(), container, false);
-            ButterKnife.bind(this, rootView);
-            initViews();
         }
+        ButterKnife.bind(this, rootView);
+        initViews();
         onCreateView();
         return rootView;
     }
@@ -66,7 +66,6 @@ public abstract class BaseFragment extends Fragment {
     protected abstract int initLayoutId();
 
     protected void onCreateView() {
-        ButterKnife.bind(this, rootView);
         toolbar = ((BaseActivity) getActivity()).toolbar;
     }
 

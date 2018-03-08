@@ -32,7 +32,7 @@
     	</list>
     -->
     <list>
-        <mapping class="com.yueyue.todolist.common.utils.entity.PlanTask"/>
+        <mapping class="com.yueyue.todolist.modules.main.domain.DiaryEntity"/>
     </list>
 
     <!--

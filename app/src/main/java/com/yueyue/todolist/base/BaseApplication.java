@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.Context;
 
 import com.blankj.utilcode.util.Utils;
-import com.yueyue.todolist.component.CachePlanTaskStore;
 import com.yueyue.todolist.component.CrashHandler;
 
 import org.litepal.LitePal;
@@ -33,8 +32,6 @@ public class BaseApplication extends Application {
         //初始化AndroidUtilCode
         Utils.init(this);
         ForegroundObserver.init(this);
-
-        CachePlanTaskStore.initialize(this);
     }
 
 

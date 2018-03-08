@@ -11,6 +11,7 @@ import android.provider.BaseColumns;
 public class AbsolutePlanContract {
     public static final String AUTHORITY = "com.yueyue.todolist";
 
+    @Deprecated
     public static final class PlanTask implements BaseColumns {
         public static final String TASK_ID = "task_id";
         public static final String TASK_TITLE = "task_title";

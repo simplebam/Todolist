@@ -30,6 +30,13 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".modules.avatar.ui.AvatarActivity"/>
+        <!--EditText弹出输入键盘后页面往上顶的问题 - CSDN博客
+                  http://blog.csdn.net/u012319317/article/details/51135813-->
+        <activity
+            android:name=".modules.diary.ui.AddDiaryActivity"
+            android:windowSoftInputMode="adjustPan"/>
+
+
         <activity android:name=".modules.details.ui.PlanTaskActivity"/>
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"

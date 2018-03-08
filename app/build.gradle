@@ -14,8 +14,6 @@ android {
         versionName app.versionName
         resConfigs app.resConfigs
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
         ndk {
             // 设置支持的 SO 库构架，一般而言，取你所有的库支持的构架的`交集`。
             abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a', 'x86'// 'x86_64', 'mips', 'mips64'
@@ -95,6 +93,9 @@ dependencies {
     implementation "com.android.support:recyclerview-v7:$rootProject.ext.support_version"
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
 
+    //floatingactionbutton https://github.com/trity1993/FloatingActionButton
+    compile "cc.trity.floatingactionbutton:library:$rootProject.ext.floatingactionbutton_version"
+
     // RecycleViewBaseAdapter  https://github.com/CymChad/BaseRecyclerViewAdapterHelper
     compile "com.github.CymChad:BaseRecyclerViewAdapterHelper:$rootProject.ext.base_recyclerview_adapter_helper_version"
 
@@ -163,7 +164,7 @@ dependencies {
     compile "com.blankj:utilcode:$rootProject.ext.android_utilcode_version"
 
     //bugtags https://work.bugtags.com/login.html
-    implementation 'com.bugtags.library:bugtags-lib:latest.integration'
+//    implementation 'com.bugtags.library:bugtags-lib:latest.integration'
 
     //stetho https://github.com/facebook/stetho
     implementation "com.facebook.stetho:stetho:$rootProject.ext.stetho_version"

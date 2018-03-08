@@ -25,12 +25,16 @@
 
     <!-- 侧滑栏-->
     <string name="note">便签</string>
+    <string name="todo" translatable="false">todo</string>
+    <string name="calendar">日历</string>
+    <string name="finished">已完成</string>
+    <string name="all">所有</string>
+
     <string name="today">今天</string>
     <string name="tomorrow">明天</string>
-    <string name="calendar">日历</string>
-    <string name="all">所有</string>
-    <string name="finished">已完成</string>
 
+    <string name="other_service">其他服务</string>
+    <string name="more_service">更多服务</string>
     <string name="weather">天气</string>
     <string name="select_city">选择城市</string>
     <string name="multi_cities_manage">多城市管理</string>
@@ -45,10 +49,9 @@
     <string name="leave_app">哎呦,真的要离开人家吗？</string>
 
 
-
     <!-- UserActionService -->
-    <string name="save_success">存储成功</string>
-    <string name="save_error">存储失败</string>
+    <string name="save_success">保存成功</string>
+    <string name="save_error">保存失败</string>
     <string name="data_update">数据更新</string>
     <string name="branch">条</string>
     <string name="data_delete">数据删除</string>
@@ -62,7 +65,8 @@
     <string name="modify">修改了</string>
     <string name="title_point">标题、</string>
     <string name="content_point">内容、</string>
-    <string name="time">时间</string>
+    <string name="time_point">时间、</string>
+
     <string name="not_save_yeah">还没保存呢</string>
     <string name="modify_plan">修改计划</string>
     <string name="content">内容</string>
@@ -70,5 +74,15 @@
     <string name="year">年</string>
     <string name="month">月</string>
     <string name="day">日</string>
+
+    <!--MainActivity-->
+    <string name="navigation_drawer_open" translatable="false">close drawer</string>
+    <string name="navigation_drawer_close" translatable="false">open drawer</string>
+    <string name="time">时间</string>
+    <string name="date">日期</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="you_have_write_nothing_today">今天，你什么都没写下...</string>
+
 
 </resources>

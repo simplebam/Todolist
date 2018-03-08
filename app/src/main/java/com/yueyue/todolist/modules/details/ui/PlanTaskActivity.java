@@ -29,13 +29,12 @@ import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 import com.yueyue.todolist.R;
 import com.yueyue.todolist.base.BaseActivity;
+import com.yueyue.todolist.common.utils.DateUtils;
 import com.yueyue.todolist.common.utils.StringUtils;
-import com.yueyue.todolist.common.utils.entity.DateUtils;
-import com.yueyue.todolist.common.utils.entity.PlanTask;
-import com.yueyue.todolist.component.CachePlanTaskStore;
 import com.yueyue.todolist.modules.details.impl.TextWatcherImpl;
+import com.yueyue.todolist.modules.diary.ui.SaveDialog;
+import com.yueyue.todolist.modules.main.domain.DiaryEntity;
 import com.yueyue.todolist.modules.main.impl.OnGuideChangedListenerImpl;
-import com.yueyue.todolist.modules.service.UserActionService;
 import com.yueyue.todolist.widget.CenteredImageSpan;
 
 import java.util.ArrayList;
@@ -73,7 +72,7 @@ public class PlanTaskActivity extends BaseActivity {
     ////Greek  //Arab
 
     private Calendar mCalendar = Calendar.getInstance(Locale.CHINA);
-    private PlanTask mPlanTask;
+    private DiaryEntity mDiaryEntity;
 
 
     @BindView(R.id.iv_back)
@@ -103,16 +102,16 @@ public class PlanTaskActivity extends BaseActivity {
     @BindView(R.id.et_body_content)
     EditText mEtBodyContent;
 
-    public static void launch(Context context, String showType, PlanTask planTask, boolean isTomorrow) {
+    public static void launch(Context context, String showType, DiaryEntity diaryEntity, boolean isTomorrow) {
         mShowType = showType;
         Intent intent = new Intent(context, PlanTaskActivity.class);
         intent.putExtra(KEY_IS_TOMORROW, isTomorrow);
-        intent.putExtra(KEY_EXTRA_PLANTASK, planTask);
+        intent.putExtra(KEY_EXTRA_PLANTASK, diaryEntity);
         context.startActivity(intent);
     }
 
-    public static void launch(Context context, String showType, PlanTask planTask) {
-        launch(context, showType, planTask, false);
+    public static void launch(Context context, String showType, DiaryEntity diaryEntity) {
+        launch(context, showType, diaryEntity, false);
     }
 
 
@@ -132,13 +131,13 @@ public class PlanTaskActivity extends BaseActivity {
     }
 
     private void initData() {
-        mPlanTask = getIntent().getParcelableExtra(KEY_EXTRA_PLANTASK);
-        if (mPlanTask != null) {
-            mEtBodyTitle.setText(mPlanTask.title);
-            mEtBodyContent.setText(mPlanTask.describe);
-            mCalendar.setTime(new Date(mPlanTask.time));
+        mDiaryEntity = getIntent().getParcelableExtra(KEY_EXTRA_PLANTASK);
+        if (mDiaryEntity != null) {
+            mEtBodyTitle.setText(mDiaryEntity.title);
+            mEtBodyContent.setText(mDiaryEntity.content);
+            mCalendar.setTime(new Date(mDiaryEntity.time));
         } else {
-            mPlanTask = new PlanTask();
+            mDiaryEntity = new DiaryEntity();
         }
 
         boolean isTomorrow = getIntent().getBooleanExtra(KEY_IS_TOMORROW, false);
@@ -165,7 +164,7 @@ public class PlanTaskActivity extends BaseActivity {
         mTvHeaderDate.setClickable(!isTypeModify);
         mTvToolbarTime.setClickable(!isTypeModify);
 
-        int drawbleId = isTypeModify ? R.drawable.ic_modify_plantask : R.drawable.ic_save_plantask;
+        int drawbleId = isTypeModify ? R.drawable.ic_modify_plantask : R.drawable.ic_diary_save;
         mIvToolbarSave.setImageDrawable(getResources().getDrawable(drawbleId));
 
         setYearMonthDay();
@@ -286,7 +285,7 @@ public class PlanTaskActivity extends BaseActivity {
                 .append(":")
                 .append(StringUtils.fillZero(minute));
 
-        mTvToolbarTime.setText(createStringWithLeftPicture(R.drawable.ic_time_plantask, sb.toString()));
+        mTvToolbarTime.setText(createStringWithLeftPicture(R.drawable.ic_time_diary, sb.toString()));
     }
 
 
@@ -418,7 +417,7 @@ public class PlanTaskActivity extends BaseActivity {
         switch (mShowType) {
             case TYPE_MODIFY:
                 mTvToolbarTitle.setText(getString(R.string.modify_plan));
-                mIvToolbarSave.setImageDrawable(getDrawable(R.drawable.ic_save_plantask));
+                mIvToolbarSave.setImageDrawable(getDrawable(R.drawable.ic_diary_save));
                 mEtBodyTitle.setEnabled(true);
                 mEtBodyContent.setEnabled(true);
                 mTvHeaderDate.setClickable(true);
@@ -438,9 +437,9 @@ public class PlanTaskActivity extends BaseActivity {
         String bodyContent = mEtBodyContent.getText().toString();
 
 
-        boolean titleChanged = !TextUtils.equals(mPlanTask.title, bodyTitle);
-        boolean contentChanged = !TextUtils.equals(mPlanTask.describe, bodyContent);
-        boolean timeChanged = mPlanTask.time != mCalendar.getTimeInMillis();
+        boolean titleChanged = !TextUtils.equals(mDiaryEntity.title, bodyTitle);
+        boolean contentChanged = !TextUtils.equals(mDiaryEntity.content, bodyContent);
+        boolean timeChanged = mDiaryEntity.time != mCalendar.getTimeInMillis();
 
         if (!titleChanged && !contentChanged && !timeChanged) {
             finish();
@@ -473,20 +472,20 @@ public class PlanTaskActivity extends BaseActivity {
             return;
         }
 
-        mPlanTask.time = mCalendar.getTimeInMillis();
-        mPlanTask.title = TextUtils.isEmpty(bodyTitle) ? "\"标题\"" : bodyTitle;
-        mPlanTask.describe = TextUtils.isEmpty(bodyContent) ? "\"描述\"" : bodyContent;
+        mDiaryEntity.time = mCalendar.getTimeInMillis();
+        mDiaryEntity.title = TextUtils.isEmpty(bodyTitle) ? "\"标题\"" : bodyTitle;
+        mDiaryEntity.content = TextUtils.isEmpty(bodyContent) ? "\"描述\"" : bodyContent;
 
 
         KeyboardUtils.hideSoftInput(this);
 
         if (TYPE_NEW_BUILD.equals(mShowType)) {
-            CachePlanTaskStore.getInstance().addPlanTask(mPlanTask, true);
-            UserActionService.startService(this, UserActionService.INTENT_ACTION_ADD_ONE_PLANTASK, mPlanTask);
+//            DiaryStore.getInstance().addPlanTask(mDiaryEntity, true);
+//            UserActionService.startService(this, UserActionService.INTENT_ACTION_ADD_ONE_PLANTASK, mDiaryEntity);
 
         } else {
-            CachePlanTaskStore.getInstance().updatePlanTaskState(mPlanTask, true);
-            UserActionService.startService(this, UserActionService.INTENT_ACTION_UPDATE_ONE_PLANTASK_STATE, mPlanTask);
+//            DiaryStore.getInstance().updatePlanTaskState(mDiaryEntity, true);
+//            UserActionService.startService(this, UserActionService.INTENT_ACTION_UPDATE_ONE_PLANTASK_STATE, mDiaryEntity);
         }
 
     }

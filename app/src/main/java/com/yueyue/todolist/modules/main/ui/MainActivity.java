@@ -7,65 +7,63 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.app.hubert.library.Controller;
-import com.app.hubert.library.HighLight;
-import com.app.hubert.library.NewbieGuide;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.yueyue.todolist.R;
 import com.yueyue.todolist.base.BaseActivity;
-import com.yueyue.todolist.modules.details.ui.PlanTaskActivity;
-import com.yueyue.todolist.modules.main.impl.OnGuideChangedListenerImpl;
+import com.yueyue.todolist.modules.diary.ui.AddDiaryActivity;
+import com.yueyue.todolist.modules.main.domain.DiaryEntity;
 
 import java.util.Date;
 
 import butterknife.BindView;
 
+import static android.support.v4.widget.DrawerLayout.LOCK_MODE_LOCKED_CLOSED;
+
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
+    public static final long DRAWER_CLOSE_DELAY = 230L;
+
     private static final String KEY_GUIDE_BUILD = "guide_build";
     private static final String KEY_GUIDE_SIDE = "guide_side";
-
-    public static final long DRAWER_CLOSE_DELAY = 230L;
-    private boolean backPressed = false;
     private SparseArray<Fragment> mFragmentSparseArray;
+
 
     @BindView(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
 
-    //---------- 自定义那里的ToolBar---------
-    @BindView(R.id.toolbar_home_as_up)
-    ImageView mHomeAsUp;
-
-    @BindView(R.id.toolbar_title)
-    TextView mToolbarTitle;
-    @BindView(R.id.toolbar_sub_title_year)
-    TextView mToolbarSubTitleYear;
-    @BindView(R.id.toolbar_sub_title_day)
-    TextView mToolbarSubTitleDay;
-
-    @BindView(R.id.toolbar_to_today)
-    TextView mToolbarToToday;
+    @BindView(R.id.container)
+    ViewGroup container;
 
 
     @BindView(R.id.fab)
     FloatingActionButton mFab;
 
+    @BindView(R.id.root)
+    CoordinatorLayout root;
+
+    public ActionBarDrawerToggle toggle;
+    private boolean backPressed;
+    private MenuItem currentMenu;
+    private SparseArray<Fragment> fragmentSparseArray;
+    private boolean isFirst = true;
+    private int placeHolderHeight;
+    private boolean secretMode;
 
     //侧滑栏
     @BindView(R.id.nav_view)
@@ -84,7 +82,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setupView();
+        setupDrawer();
+        initToolbar();
+//        initFab();
+        initNavigationView();
+        initListener();
 
 
         // FIXME: 2018/3/4 仿照就看天气或者DonateGrils
@@ -95,26 +97,29 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
 
-    private void setupView() {
-        //隐藏Toolbar
-        hideToolbar();
+    private void setupDrawer() {
+        toggle = new ActionBarDrawerToggle(
+                this, mDrawerLayout, toolbar, R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
+        mDrawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+    }
 
-        //初始化statusView
-        View statusView = findViewById(R.id.view_status);
-        ViewGroup.LayoutParams layoutParams = statusView.getLayoutParams();
-        layoutParams.height = BarUtils.getStatusBarHeight();
-        statusView.setLayoutParams(layoutParams);
-
-        initNavigationView();
-        initListener();
+    private void initToolbar() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            ViewGroup.LayoutParams layoutParams = toolbar.getLayoutParams();
+            layoutParams.height = BarUtils.getActionBarHeight();
+            toolbar.setLayoutParams(layoutParams);
+        }
 
     }
+
 
     private void initListener() {
         mDrawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
             @Override
             public void onDrawerClosed(View drawerView) {
-                showGuideBuild();
+//                showGuideBuild();
             }
         });
 
@@ -127,12 +132,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 //            startActivity(intent);
         });
 
-        mHomeAsUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mDrawerLayout.openDrawer(GravityCompat.START);
-            }
-        });
+
+//        mHomeAsUp.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mDrawerLayout.openDrawer(GravityCompat.START);
+//            }
+//        });
 
 
     }
@@ -167,22 +173,21 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-        switch (id) {
-            case R.id.menu_today:
-                PlanTaskActivity.launch(this, PlanTaskActivity.TYPE_NEW_BUILD, null, false);
-                break;
-            case R.id.menu_tomorrow:
+        switch (item.getItemId()) {
+            case R.id.menu_todo:
+                DiaryEntity entity = new DiaryEntity();
+                entity.time = new Date().getTime();
+                AddDiaryActivity.launch(this, AddDiaryActivity.TYPE_ADD, entity);
                 break;
             case R.id.menu_calendar:
                 break;
-            case R.id.menu_all:
-                break;
             case R.id.menu_finished:
                 break;
-            case R.id.menu_one_city:
+            case R.id.menu_all:
                 break;
-            case R.id.menu_multi_cities:
+            case R.id.menu_weather:
+                break;
+            case R.id.menu_more_service:
                 break;
             case R.id.menu_setting:
                 break;
@@ -196,13 +201,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     private void initFragments(Bundle savedInstanceState) {
-//        if (mFragmentSparseArray == null) {
-//            String[] titles, types;
-//            mFragmentSparseArray = new SparseArray<>();
-//            String[] all = getResources().getStringArray(R.array.db_titles);
+        if (mFragmentSparseArray == null) {
+            mFragmentSparseArray = new SparseArray<>();
+            String[] titles = getResources().getStringArray(R.array.main_tabs_titles);
+            String[] types = getResources().getStringArray(R.array.main_tabs_types);
+
+            mFragmentSparseArray.put(R.id.menu_todo, MainTabsFragment.newInstance(titles, types));
 //
-////            secretMode = true;
-//            Log.d(TAG, "initFragments: secret " + secretMode + " " + SpUtil.getString("deviceId"));
 //            if (secretMode) {
 //                //Gank & Douban
 //                titles = all;
@@ -211,7 +216,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 //                titles = new String[]{all[0]};
 //                types = new String[]{TYPE_GANK};
 //            }
-//            mFragmentSparseArray.put(R.taskId.nav_beauty, MainTabsFragment.newInstance(titles, types));
+//
 //
 //            //二次元
 //            titles = getResources().getStringArray(R.array.a_titles);
@@ -219,10 +224,36 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 //            mFragmentSparseArray.put(R.taskId.nav_a, MainTabsFragment.newInstance(titles, types));
 //            //favorite
 //            mFragmentSparseArray.put(R.taskId.nav_favorite, new FavoriteFragment());
-//        }
-//        setMainFragment(R.taskId.nav_beauty, mFragmentSparseArray, savedInstanceState == null);
+        }
+        setMainFragment(R.id.menu_todo, mFragmentSparseArray, savedInstanceState == null);
     }
 
+    /**
+     * DrawerLayout侧滑菜单 - summerjing - 博客园
+     * https://www.cnblogs.com/blogljj/p/5016588.html?utm_source=tuicool&utm_medium=referral
+     */
+    public void changeNavigator(boolean enable) {
+        if (toggle == null) return;
+        if (enable) {
+            toggle.setDrawerIndicatorEnabled(true);//true的时候会走系统的逻辑，展示的是系统图标
+        } else {
+            toggle.setDrawerIndicatorEnabled(false);
+            toggle.setToolbarNavigationClickListener(v -> onBackPressed());
+        }
+    }
+
+    public String getCurrentMenuTitle() {
+        if (currentMenu == null) {
+            currentMenu = mNavView.getMenu().getItem(0);
+        }
+        return currentMenu.getTitle().toString();
+    }
+
+    public void changeDrawer(boolean enable) {
+        int lockMode = enable ? DrawerLayout.LOCK_MODE_UNLOCKED : LOCK_MODE_LOCKED_CLOSED;
+        mDrawerLayout.setDrawerLockMode(lockMode);
+
+    }
 
     @Override
     public void onBackPressed() {
@@ -248,44 +279,44 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         new Handler().postDelayed(() -> backPressed = false, 2000);
     }
 
-    private void showGuideSide() {
-        Controller controller = NewbieGuide.with(this)
-                .setOnGuideChangedListener(new OnGuideChangedListenerImpl() {
-                    @Override
-                    public void onRemoved(Controller controller) {
-                        mDrawerLayout.openDrawer(GravityCompat.START);
-                    }
-                })
-                .setBackgroundColor(getResources().getColor(R.color.guide_bg_color))
-                .setEveryWhereCancelable(true)
-                .setLayoutRes(R.layout.guide_side_view_layout)
-                .alwaysShow(false)
-                .addHighLight(mHomeAsUp, HighLight.Type.CIRCLE)
-                .setLabel(KEY_GUIDE_SIDE)
-                .build();
-        controller.show();
-    }
+//    private void showGuideSide() {
+//        Controller controller = NewbieGuide.with(this)
+//                .setOnGuideChangedListener(new OnGuideChangedListenerImpl() {
+//                    @Override
+//                    public void onRemoved(Controller controller) {
+//                        mDrawerLayout.openDrawer(GravityCompat.START);
+//                    }
+//                })
+//                .setBackgroundColor(getResources().getColor(R.color.guide_bg_color))
+//                .setEveryWhereCancelable(true)
+//                .setLayoutRes(R.layout.guide_side_view_layout)
+//                .alwaysShow(false)
+//                .addHighLight(mHomeAsUp, HighLight.Type.CIRCLE)
+//                .setLabel(KEY_GUIDE_SIDE)
+//                .build();
+//        controller.show();
+//    }
 
 
-    private void showGuideBuild() {
-        Controller controller = NewbieGuide.with(this)
-                .setOnGuideChangedListener(new OnGuideChangedListenerImpl() {
-                    @Override
-                    public void onRemoved(Controller controller) {
-//                        Intent intent = new Intent(MainActivity.this, PlanTaskActivity.class);
-//                        intent.putExtra(PlanTaskActivity.KEY_SHOW_TYPE, PlanTaskActivity.TYPE_NEW_BUILD);
-//                        startActivity(intent);
-                    }
-                })
-                .setBackgroundColor(getResources().getColor(R.color.guide_bg_color))
-                .setEveryWhereCancelable(true)
-                .setLayoutRes(R.layout.guide_build_view_layout)
-                .alwaysShow(false)
-                .addHighLight(mFab, HighLight.Type.CIRCLE)
-                .setLabel(KEY_GUIDE_BUILD)
-                .build();
-        controller.show();
-    }
+//    private void showGuideBuild() {
+//        Controller controller = NewbieGuide.with(this)
+//                .setOnGuideChangedListener(new OnGuideChangedListenerImpl() {
+//                    @Override
+//                    public void onRemoved(Controller controller) {
+////                        Intent intent = new Intent(MainActivity.this, PlanTaskActivity.class);
+////                        intent.putExtra(PlanTaskActivity.KEY_SHOW_TYPE, PlanTaskActivity.TYPE_NEW_BUILD);
+////                        startActivity(intent);
+//                    }
+//                })
+//                .setBackgroundColor(getResources().getColor(R.color.guide_bg_color))
+//                .setEveryWhereCancelable(true)
+//                .setLayoutRes(R.layout.guide_build_view_layout)
+//                .alwaysShow(false)
+//                .addHighLight(mFab, HighLight.Type.CIRCLE)
+//                .setLabel(KEY_GUIDE_BUILD)
+//                .build();
+//        controller.show();
+//    }
 
 
 }

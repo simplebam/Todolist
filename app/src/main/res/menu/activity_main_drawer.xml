@@ -4,41 +4,37 @@
         <menu>
             <group android:checkableBehavior="single">
                 <item
-                    android:id="@+id/menu_today"
-                    android:icon="@drawable/ic_menu_today"
-                    android:title="@string/today"/>
-                <item
-                    android:id="@+id/menu_tomorrow"
-                    android:icon="@drawable/ic_menu_tomorrow"
-                    android:title="@string/tomorrow"/>
+                    android:id="@+id/menu_todo"
+                    android:icon="@drawable/ic_menu_todo"
+                    android:title="@string/todo"/>
                 <item
                     android:id="@+id/menu_calendar"
                     android:icon="@drawable/ic_menu_calendar"
                     android:title="@string/calendar"/>
                 <item
-                    android:id="@+id/menu_all"
-                    android:icon="@drawable/ic_menu_all"
-                    android:title="@string/all"/>
-                <item
                     android:id="@+id/menu_finished"
                     android:icon="@drawable/ic_menu_finished"
                     android:title="@string/finished"/>
+                <item
+                    android:id="@+id/menu_all"
+                    android:icon="@drawable/ic_menu_all"
+                    android:title="@string/all"/>
 
             </group>
         </menu>
     </item>
 
-    <item android:title="@string/weather">
+    <item android:title="@string/other_service">
         <menu>
             <group android:checkableBehavior="single">
                 <item
-                    android:id="@+id/menu_one_city"
-                    android:icon="@drawable/ic_menu_one_city"
-                    android:title="@string/select_city"/>
+                    android:id="@+id/menu_weather"
+                    android:icon="@drawable/ic_menu_weather"
+                    android:title="@string/weather"/>
                 <item
-                    android:id="@+id/menu_multi_cities"
+                    android:id="@+id/menu_more_service"
                     android:icon="@drawable/ic_menu_multi_cities"
-                    android:title="@string/multi_cities_manage"/>
+                    android:title="@string/more_service"/>
             </group>
         </menu>
     </item>

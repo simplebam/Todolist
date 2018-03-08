@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/layout_app_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/et_body_title"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/shape_add_diary_title"
+                android:enabled="true"
+                android:gravity="top"
+                android:maxLines="10"
+                android:minLines="8"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:scrollbars="vertical"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:background="@color/transparent"/>
+
+            <com.yueyue.todolist.widget.LinedEditText
+                android:id="@+id/et_body_content"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/shape_add_diary_title"
+                android:enabled="true"
+                android:gravity="top"
+                android:lineSpacingExtra="5dp"
+                android:maxLines="10"
+                android:minLines="8"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp"
+                android:scrollbars="vertical"
+                android:textSize="17sp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="95dp"
+                android:background="@color/transparent"/>
+
+        </LinearLayout>
+
+
+        <!--FloatingActionsMenu 颜色和图案都使用默认的-->
+        <cc.trity.floatingactionbutton.FloatingActionsMenu
+            android:id="@+id/fam_labels"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            app:fab_expandDirection="right">
+
+            <cc.trity.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_save"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:fab_colorNormal="@color/color_37bed7"
+                app:fab_icon="@drawable/ic_diary_save"
+                app:fab_size="normal"/>
+
+            <cc.trity.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_share"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:fab_colorNormal="@color/color_f37979"
+                app:fab_icon="@drawable/ic_diary_share"
+                app:fab_size="normal"/>
+
+        </cc.trity.floatingactionbutton.FloatingActionsMenu>
+
+    </RelativeLayout>
+</LinearLayout>

@@ -82,7 +82,7 @@
                 android:background="@drawable/common_item_bg_selector"
                 android:gravity="center"
                 android:scaleType="center"
-                android:src="@drawable/ic_save_plantask"/>
+                android:src="@drawable/ic_diary_save"/>
 
             <ImageView
                 android:id="@+id/iv_toolbar_share"
