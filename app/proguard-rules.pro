@@ -125,3 +125,5 @@
 -keep class * extends org.litepal.crud.DataSupport {*;}
 # End litepal#
 
+## 解决注解混淆了引发的can't find referenced class javax.annotation.Nonnull
+-dontwarn javax.annotation.**

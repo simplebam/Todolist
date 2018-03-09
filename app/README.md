@@ -186,6 +186,12 @@ App体验：[Todolist - fir.im ](https://fir.im/tolist)
   ,所以很难找到适合的这类开源库,哈哈哈,还是让我扎到了,看这里:[yanzhenjie/
   AddressChecker: MD风格的地址选择器，MD风格的城市选择器，Android就不要按照
   iOS风格来设计啦！](https://github.com/yanzhenjie/AddressChecker)
+* 出现下面这个问题一般都是打包使用了注解而引发的问题:
+ ```
+ Warning:com.trello.rxlifecycle2.LifecycleProvider: can't find referenced class javax.annotation.Nonnull
+ Warning:com.trello.rxlifecycle2.LifecycleProvider: can't find referenced class javax.annotation.CheckReturnValue
+ ```
+ rxlifecycle2作者已经给出了解决方案:[can't find referenced class javax.annotation.Nonnull · Issue #228 · trello/RxLifecycle ](https://github.com/trello/RxLifecycle/issues/228)
 
 
 ### 项目中的缺点
