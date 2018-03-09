@@ -97,26 +97,25 @@ dependencies {
 
     //floatingactionbutton https://github.com/trity1993/FloatingActionButton
     compile "cc.trity.floatingactionbutton:library:$rootProject.ext.floatingactionbutton_version"
-
     // RecycleViewBaseAdapter  https://github.com/CymChad/BaseRecyclerViewAdapterHelper
     compile "com.github.CymChad:BaseRecyclerViewAdapterHelper:$rootProject.ext.base_recyclerview_adapter_helper_version"
-
     //ucrop https://github.com/Yalantis/uCrop
     compile "com.github.yalantis:ucrop:$rootProject.ext.ucrop_version"
-
     //NewbieGuide https://github.com/huburt-Hu/NewbieGuide
     compile("com.github.huburt-Hu:NewbieGuide:$rootProject.ext.newbieguide_version") {
         exclude group: 'com.android.support'
     }
-
     //MaterialDateTimePicker https://github.com/wdullaer/MaterialDateTimePicker
     compile("com.wdullaer:materialdatetimepicker:$rootProject.ext.material_datetime_picker_version") {
         exclude group: 'com.android.support'
     }
 
+    // 做地址选择器用到 地址选择器借鉴:https://github.com/yanzhenjie/AddressChecker
+    compile "com.yanzhenjie:loading:$rootProject.ext.loading_version"
+    compile 'com.alibaba:fastjson:1.1.52.android'
+
     //数据库 litepal https://github.com/LitePalFramework/LitePal
     compile "org.litepal.android:core:$rootProject.ext.litepal_version"
-    implementation files('libs/lite-orm-1.9.2.jar')
 
     //定位
     implementation files('libs/AMap_Location_V3.8.0_20180201.jar')
@@ -125,27 +124,25 @@ dependencies {
     //RxJava https://github.com/ReactiveX/RxAndroid
     compile "io.reactivex.rxjava2:rxandroid:$rootProject.ext.rxandroid_version"
     compile "io.reactivex.rxjava2:rxjava:$rootProject.ext.rxjava_version"
-
     //rxpermissions  https://github.com/tbruyelle/RxPermissions
     compile "com.tbruyelle.rxpermissions2:rxpermissions:$rootProject.ext.rxpermissions2_version"
-
     //rxlifecycle  https://github.com/trello/RxLifecycle
     compile "com.trello.rxlifecycle2:rxlifecycle:$rootProject.ext.rxlifecycle_version"
     compile "com.trello.rxlifecycle2:rxlifecycle-android:$rootProject.ext.rxlifecycle_version"
     compile "com.trello.rxlifecycle2:rxlifecycle-components:$rootProject.ext.rxlifecycle_version"
 
     //network
-
     //gson https://github.com/google/gson
     compile "com.google.code.gson:gson:$rootProject.ext.gson_version"
-
     //retrofit https://github.com/square/retrofit
     compile "com.squareup.retrofit2:retrofit:$rootProject.ext.retrofit_version"
     compile "com.squareup.retrofit2:adapter-rxjava2:$rootProject.ext.retrofit_version"
     compile "com.squareup.retrofit2:converter-gson:$rootProject.ext.retrofit_version"
-
     //okhttp https://github.com/square/okhttp
     implementation "com.squareup.okhttp3:okhttp:$rootProject.ext.okhttp_version"
+
+
+    //assist相关的
 
     //glide https://github.com/bumptech/glide
     implementation "com.github.bumptech.glide:glide:$rootProject.ext.glide_version"
@@ -154,20 +151,15 @@ dependencies {
     compile "com.jakewharton:butterknife:$rootProject.ext.butterknife_version"
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.butterknife_version"
 
-    //citypicker https://github.com/crazyandcoder/citypicker
-//    compile "liji.library.dev:citypickerview:$rootProject.ext.citypickerview_version"
-
     //AlipayZeroSdk https://github.com/fython/AlipayZeroSdk
     compile "moe.feng:AlipayZeroSdk:$rootProject.ext.alipayzerosdk_version"
 
-    //assist相关的
+
 
     //AndroidUtilCode https://github.com/Blankj/AndroidUtilCode
     compile "com.blankj:utilcode:$rootProject.ext.android_utilcode_version"
 
-    // 做地址选择器用到 地址选择器借鉴:https://github.com/yanzhenjie/AddressChecker
-    compile 'com.yanzhenjie:loading:1.0.0'
-    compile 'com.alibaba:fastjson:1.1.52.android'
+
 
     //bugtags https://work.bugtags.com/login.html
 //    implementation 'com.bugtags.library:bugtags-lib:latest.integration'
