@@ -9,12 +9,12 @@ ext {
             targetSdkVersion : 27,
             applicationId    : "com.yueyue.todolist",
             versionCode      : 1,
-            versionName      : "1.31",
+            versionName      : "1.40",
             resConfigs       : "zh",
     ]
 
-    weather = [
-            name : "WeatherKey",
+    heweather = [
+            name : "HeWeatherKey",
             value: "b9e05332eea2426fb74de09c14c77227"
     ]
 

@@ -32,11 +32,10 @@ public class BaseApplication extends Application {
 
         //初始化AndroidUtilCode
         Utils.init(this);
-        ForegroundObserver.init(this);
     }
 
 
-    public static Context getContext() {
+    public static Context getAppContext() {
         return sContext;
     }
 

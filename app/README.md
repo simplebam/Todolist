@@ -181,10 +181,11 @@ App体验：[Todolist - fir.im ](https://fir.im/tolist)
   Error:(42, 5) error: style attribute '@android:attr/windowExitAnimation' not found.
   ```
   其实就是@android 前面的"@"去掉就好
-* 本来这里打算使用第三方开源库作为CityPicker依赖库,但由于都不太满足需求(可能是
-  数据也可能因为UI不好看等愿意),所以唯有自己找了一个网上的修改源码才得,参考的源
-  代码:[yanzhenjie/AddressChecker: MD风格的地址选择器，MD风格的城市选择器，
-  Android就不要按照iOS风格来设计啦！](https://github.com/yanzhenjie/AddressChecker)
+* 在做三级联动省市区选择里面,一般都是采用第三方库居多一点,但存在或多或少的问题,
+  比如数据太大导致很多时间等待甚至导致ANR、它提供的数据很多用不上(不可以更改数据)
+  ,所以很难找到适合的这类开源库,哈哈哈,还是让我扎到了,看这里:[yanzhenjie/
+  AddressChecker: MD风格的地址选择器，MD风格的城市选择器，Android就不要按照
+  iOS风格来设计啦！](https://github.com/yanzhenjie/AddressChecker)
 
 
 ### 项目中的缺点

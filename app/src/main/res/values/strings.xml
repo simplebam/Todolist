@@ -9,19 +9,7 @@
 
 
     <!-- activity_avatar -->
-    <string name="select_gallery">选择图库</string>
-    <string name="take_photo">拍照</string>
-    <string name="change_avatar">更新头像</string>
-    <string name="edit_photo">编辑照片</string>
-    <string name="crop_store_failer">裁剪图片存储失败!!!请稍后再试</string>
-    <string name="crop_store_success">裁剪图片存储成功</string>
-    <string name="unexpected_error">意外错误</string>
-    <string name="request_permission_title">权限申请</string>
-    <string name="open_album_request_permission_explain">打开图库需要文件读取权限,拒绝的话打不开喔</string>
     <string name="sure">确认</string>
-    <string name="fail_to_get_image">找不到图片</string>
-    <string name="need_storge_permission_to_open_album">需要申请文件读取权限才打开图库喔</string>
-    <string name="cannot_get_crop_pic">无法取回裁剪图片</string>
 
     <!-- 侧滑栏-->
     <string name="note">便签</string>
@@ -36,15 +24,11 @@
     <string name="other_service">其他服务</string>
     <string name="more_service">更多服务</string>
     <string name="weather">天气</string>
-    <string name="select_city">选择城市</string>
-    <string name="multi_cities_manage">多城市管理</string>
 
     <string name="setting">设置</string>
     <string name="about">关于</string>
 
     <!-- MainActivity -->
-    <string name="click_to_open_slide">点击开启侧边栏</string>
-    <string name="click_to_create_file">点击新建计划</string>
     <string name="head_view_hint">干嘛戳人家屁股,哼</string>
     <string name="leave_app">哎呦,真的要离开人家吗？</string>
 
@@ -52,14 +36,9 @@
     <!-- UserActionService -->
     <string name="save_success">保存成功</string>
     <string name="save_error">保存失败</string>
-    <string name="data_update">数据更新</string>
-    <string name="branch">条</string>
-    <string name="data_delete">数据删除</string>
 
     <!-- PlanTaskActivity -->
-    <string name="create_plan">新建计划</string>
     <string name="title">标题</string>
-    <string name="particular_to_describe">详细描述一下&#8230;</string>
     <string name="click_to_set_time">点击设置计划时间</string>
     <string name="click_to_save_plan">点击保存计划</string>
     <string name="modify">修改了</string>
@@ -68,12 +47,9 @@
     <string name="time_point">时间、</string>
 
     <string name="not_save_yeah">还没保存呢</string>
-    <string name="modify_plan">修改计划</string>
     <string name="content">内容</string>
     <string name="save">保存</string>
     <string name="year">年</string>
-    <string name="month">月</string>
-    <string name="day">日</string>
 
     <!--MainActivity-->
     <string name="navigation_drawer_open" translatable="false">close drawer</string>
@@ -81,22 +57,14 @@
     <string name="time">时间</string>
     <string name="date">日期</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="you_have_write_nothing_today">今天，你什么都没写下...</string>
-    <string name="forecast">预报</string>
-    <string name="air_quality">空气质量</string>
-    <string name="aqi_exponent">AQI指数</string>
-    <string name="pm25_exponent">PM2.5指数</string>
-    <string name="life_suggestion">生活建议</string>
-    <string name="cannot_find_other_city">找不到城市啦</string>
-    <string name="guangzhou">广州</string>
-    <string name="complete">完成</string>
-    <string name="need_loacation_permission_to_offer_right_weather">需要定位权限去提供优质的天气</string>
-    <string name="error_location_location_yourself">定位失败,请手动定位</string>
-
 
     <!--AddressActivity-->
     <string name="select_please">请选择</string>
+
+    <!--WeatherActivity-->
+    <string name="need_location_permission_to_offer_accurate_weather">需要定位权限去提供精确的服务</string>
+    <string name="error_location">定位失败</string>
+    <string name="refreshing_complete">刷新完成</string>
 
 
 </resources>

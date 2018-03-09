@@ -2,6 +2,7 @@ package com.yueyue.todolist.component;
 
 import android.content.Context;
 
+import com.yueyue.todolist.common.utils.SpUtil;
 import com.yueyue.todolist.common.utils.VersionUtil;
 
 import java.io.PrintWriter;
@@ -41,9 +42,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         PLog.e(TAG, getCrashInfo(ex));
 
         // T崩溃后自动初始化数据
-        // FIXME: 2018/3/2 注释了两行代码SpUtil跟OrmLite删除库
-//        SpUtil.getInstance().setCityName("北京");
-//        OrmLite.getInstance().deleteDatabase();
+        SpUtil.getInstance().putCityName("广州");
         // 调用系统错误机制
         mDefaultHandler.uncaughtException(thread, ex);
     }
@@ -62,7 +61,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
     /**
      * 收集程序崩溃的设备信息
      * Android之Build类.（Android获取手机配置信息 ） - CSDN博客
-     *            http://blog.csdn.net/gjy211/article/details/52015198
+     * http://blog.csdn.net/gjy211/article/details/52015198
      */
     private String collectCrashDeviceInfo() {
 

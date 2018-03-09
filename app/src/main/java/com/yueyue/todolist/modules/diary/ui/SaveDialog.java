@@ -36,7 +36,7 @@ public class SaveDialog extends Dialog {
     public SaveDialog(@NonNull Context context, int themeResId) {
         super(context, R.style.NormalDialogStyle);
         mContext = context;
-        View view = View.inflate(context, R.layout.dialog_plantask, null);
+        View view = View.inflate(context, R.layout.dialog_diary, null);
         view.setMinimumHeight((int) (context.getResources().getDisplayMetrics().widthPixels * 0.23f));
         setContentView(view);
 

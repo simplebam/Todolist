@@ -3,7 +3,6 @@ package com.yueyue.todolist.common.utils;
 import android.app.Notification;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.text.TextUtils;
 
 import com.yueyue.todolist.base.BaseApplication;
 
@@ -27,7 +26,7 @@ public class SpUtil {
     public static int ONE_HOUR = 1000 * 60 * 60;//60分钟
 
     private SpUtil() {
-        mPrefs = BaseApplication.getContext().getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
+        mPrefs = BaseApplication.getAppContext().getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
     }
 
     public static SpUtil getInstance() {
@@ -40,7 +39,7 @@ public class SpUtil {
     }
 
     public void putString(String key, String value) {
-        mPrefs.edit().putString(key, value).commit();
+        mPrefs.edit().putString(key, value).apply();
     }
 
     public String getString(String key, String defValue) {
@@ -48,7 +47,7 @@ public class SpUtil {
     }
 
     public void setBoolean(String key, boolean value) {
-        mPrefs.edit().putBoolean(key, value).commit();
+        mPrefs.edit().putBoolean(key, value).apply();
     }
 
     public boolean getBoolean(String key, boolean defValue) {
@@ -56,7 +55,7 @@ public class SpUtil {
     }
 
     public void putInt(String key, int value) {
-        mPrefs.edit().putInt(key, value).commit();
+        mPrefs.edit().putInt(key, value).apply();
     }
 
     public int getInt(String key, int defValue) {
@@ -64,16 +63,8 @@ public class SpUtil {
     }
 
 
-
-    public void setAvatar(String value) {
-        if (TextUtils.isEmpty(value)) {
-            return;
-        }
-        putString(AVATAR_KEY, value);
-    }
-
-    public String getAvatar() {
-        return getString(AVATAR_KEY, "");
+    public void remove(String key) {
+        mPrefs.edit().remove(key).apply();
     }
 
 
@@ -85,10 +76,19 @@ public class SpUtil {
         putString(KEY_WEATHER_CITY, value);
     }
 
+    // 自动更新时间 hours
+    public void setAutoUpdate(int t) {
+        mPrefs.edit().putInt(WEATHER_AUTO_UPDATE, t).apply();
+    }
+
+    public int getAutoUpdate() {
+        return mPrefs.getInt(WEATHER_AUTO_UPDATE, 3);
+    }
+
     // 首页 Item 动画效果 默认关闭
 
     public void putWeatherAnim(boolean b) {
-        mPrefs.edit().putBoolean(WEATHER_ANIM_START, b).commit();
+        mPrefs.edit().putBoolean(WEATHER_ANIM_START, b).apply();
     }
 
     public boolean getWeatherAnim() {
@@ -98,20 +98,21 @@ public class SpUtil {
 
     //  通知栏模式 默认为常驻
     public void putNotificationModel(int t) {
-        mPrefs.edit().putInt(NOTIFICATION_MODEL, t).commit();
+        mPrefs.edit().putInt(NOTIFICATION_MODEL, t).apply();
     }
 
     public int getNotificationModel() {
         return mPrefs.getInt(NOTIFICATION_MODEL, Notification.FLAG_ONGOING_EVENT);
     }
 
-    // 自动更新时间 hours
-    public void setAutoUpdate(int t) {
-        mPrefs.edit().putInt(WEATHER_AUTO_UPDATE, t).commit();
+
+    public void putWeatherData(String weather) {
+        putString(WEATHER_DATA, weather);
     }
 
-    public int getAutoUpdate() {
-        return mPrefs.getInt(WEATHER_AUTO_UPDATE, 3);
+    public String getWeatherData() {
+        return getString(WEATHER_DATA, null);
     }
+
 
 }

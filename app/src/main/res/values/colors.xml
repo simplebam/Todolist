@@ -1,95 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="common_color">@color/colorPrimary</color>
-    <color name="common_bg_color">#e6e6e6</color>
-    <color name="transparent">#00000000</color>//透明
-    <color name="translucent">#e0000000</color>//半透明
-
     <color name="colorPrimary">#2196f3</color>
     <color name="colorPrimaryDark">#2196f3</color>
     <color name="colorAccent">#2196f3</color>
 
+
+    <color name="transparent">#00000000</color>//透明
     <color name="white">#ffffffff</color>
-    <color name="white_90">#e6ffffff</color>
-    <color name="white_80">#ccffffff</color>
-    <color name="white_70">#b3ffffff</color>
-    <color name="white_60">#99ffffff</color>
-    <color name="white_50">#80ffffff</color>
-    <color name="white_40">#66ffffff</color>
-    <color name="white_30">#4dffffff</color>
-    <color name="white_20">#33ffffff</color>
-    <color name="white_10">#1affffff</color>
 
     <color name="black">#ff000000</color>
-    <color name="black_90">#e6000000</color>
-    <color name="black_80">#cc000000</color>
     <color name="black_70">#b3000000</color>
-    <color name="black_60">#99000000</color>
-    <color name="black_50">#80000000</color>
-    <color name="black_40">#66000000</color>
     <color name="black_30">#4d000000</color>
-    <color name="black_20">#33000000</color>
     <color name="black_10">#1a000000</color>
 
-    <color name="side_selected_item_bg_color">@color/black_20</color>
-
-    <!-- 日历 -->
-    <color name="calendar_empty_view_color">#838181</color>
-    <color name="solarTextColor">#000000</color>//公历日期的文本颜色
-    <color name="lunarTextColor">@color/black_20</color>//农历日期的文本颜色
-    <color name="hintColor">@color/lunarTextColor</color>//不是本月的日期文本颜色
-    <color name="selectCircleColor">@color/black</color>//选中日期和当天的圆颜色
-    <color name="hollowCircleColor">#ffffffff</color>//选中空心圆中间的颜色
-    <color name="holidayColor">@color/colorPrimary</color>//节假日“休”字颜色
-    <color name="workdayColor">#e91c1c</color>//工作日日“班”字颜色
-    <color name="poinColor">#e91c1c</color>//指示圆点颜色
-    <!-- 日历 -->
 
     <color name="guide_bg_color">#b2000000</color>
     <color name="side_ic_normal_color">#626360</color>
-    <color name="side_text_normal_color">#222222</color>
-
-    <color name="setting_activity_bg_color">#f1f4f4</color>
-    <color name="skin_activity_bg_color">#f1f4f4</color>
-    <color name="about_activity_bg_color">#f1f4f4</color>
-    <color name="feedback_suggestion_activity_bg_color">#f1f4f4</color>
-    <color name="opensource_activity_bg_color">#f1f4f4</color>
-    <color name="sidetitle_activity_bg_color">#f1f4f4</color>
-    <color name="avatar_activity_bg_color">#f1f4f4</color>
-
-    <color name="item_bg_normal">#fafafa</color>
-    <color name="item_bg_finished">#bababa</color>
-
-    <drawable name="item_plantask_normal_bg_state_pressed">@color/black_20</drawable>
-    <drawable name="item_plantask_normal_bg_state_normal">@color/transparent</drawable>
 
     <color name="fab_rippleColor">@color/black</color>
 
     <color name="switch_thumb_normal_color">#838181</color>
-
-    <color name="skin_bluegrey_color">#607d8b</color>
-    <color name="skin_grey_color">#9e9e9e</color>
-    <color name="skin_deeporange_color">#ff5722</color>
-    <color name="skin_teal_color">#009688</color>
-    <color name="skin_black_color">#212121</color>
-    <color name="skin_purple_color">#673ab7</color>
-    <color name="skin_pink_color">#fb7299</color>
-    <color name="skin_red_color">#db4437</color>
-
-    <color name="switch_thumb_unchecked_color">#838383</color>
-    <color name="share_bg_color">#f9f3e7</color>
-    <color name="share_other_color">#411d0d</color>
 
     <!-- DiaryActivity界面-->
     <color name="color_a1a1a1">#a1a1a1</color>
     <color name="btg_global_light_white">#ff333333</color>
     <color name="color_f37979">#F37979</color>
     <color name="color_37bed7">#37BED7</color>
-    <color name="color_f0f01a">#f0f01a</color>
     <color name="color_30469b">#30469b</color>
-    <color name="color_728288">#728288</color>
 
     <!--AddressActivity-->
     <color name="colorControlNormal">#FFB2B2B2</color>
     <color name="colorControlActivated">@color/colorPrimary</color>
+
+
+    <!--WeatherActivity-->
+    <color name="color_303f9f">#303F9F</color>
+
 </resources>

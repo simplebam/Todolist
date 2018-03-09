@@ -5,13 +5,13 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.SparseArray;
 import android.view.MotionEvent;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.yueyue.todolist.R;
 import com.yueyue.todolist.modules.main.ui.MainActivity;
 
@@ -22,7 +22,7 @@ import butterknife.ButterKnife;
  * desc   : BaseActivity includes a base layoutId, init its toolbar (if the layout has one)
  */
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends RxAppCompatActivity {
     private static final String TAG = "BaseActivity";
     public Toolbar toolbar;
     private boolean isShowToolbar = true;

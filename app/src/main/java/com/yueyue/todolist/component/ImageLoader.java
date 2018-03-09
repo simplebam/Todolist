@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 
 /**
- * author : yueyue on 2018/3/9 13:05
+ * author : yueyue on 2018/3/10 01:46
  * desc   : 图片加载类,统一适配(方便换库,方便管理)
  */
 
@@ -21,3 +21,4 @@ public class ImageLoader {
         Glide.get(context).clearMemory();
     }
 }
+

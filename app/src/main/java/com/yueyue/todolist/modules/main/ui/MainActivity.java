@@ -26,9 +26,10 @@ import com.blankj.utilcode.util.SnackbarUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.yueyue.todolist.R;
 import com.yueyue.todolist.base.BaseActivity;
-import com.yueyue.todolist.modules.address.AddressCheckActivity;
+import com.yueyue.todolist.modules.address.ui.AddressCheckActivity;
 import com.yueyue.todolist.modules.diary.ui.AddDiaryActivity;
 import com.yueyue.todolist.modules.main.domain.DiaryEntity;
+import com.yueyue.todolist.modules.weather.ui.WeatherActivity;
 
 import java.util.Date;
 
@@ -174,8 +175,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             case R.id.menu_all:
                 break;
             case R.id.menu_weather:
-                setFabVisible(true);
-                switchMenu(R.id.menu_weather, mFragmentSparseArray);
+                WeatherActivity.launch(this);
                 break;
             case R.id.menu_more_service:
                 break;

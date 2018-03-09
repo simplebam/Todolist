@@ -19,7 +19,7 @@ android {
             abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a', 'x86'// 'x86_64', 'mips', 'mips64'
         }
 
-        buildConfigField "String", "$rootProject.ext.weather.name", "\"$rootProject.ext.weather.value\""
+        buildConfigField "String", "$rootProject.ext.heweather.name", "\"$rootProject.ext.heweather.value\""
         buildConfigField "String", "$rootProject.ext.fir_api_token.name", "\"$rootProject.ext.fir_api_token.value\""
         buildConfigField "String", "$rootProject.ext.fir_app_id.name", "\"$rootProject.ext.fir_app_id.value\""
         buildConfigField "String", "$rootProject.ext.alipay.name", "\"$rootProject.ext.alipay.value\""
@@ -45,7 +45,7 @@ android {
     buildTypes {
         release {
             minifyEnabled true
-            shrinkResources false
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
