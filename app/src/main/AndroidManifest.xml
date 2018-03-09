@@ -3,8 +3,26 @@
           xmlns:tools="http://schemas.android.com/tools"
           package="com.yueyue.todolist">
 
+    <!--用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <!--用于访问GPS定位-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <!--获取运营商信息，用于支持提供运营商信息相关的接口-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <!--用于访问wifi网络信息，wifi信息会用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <!--这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <!--用于访问网络，网络定位需要上网-->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <!--用于读取手机当前的状态-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <!--写入扩展存储，向扩展卡写入数据，用于写入缓存定位数据-->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_LOGS"/>
+    <!--悬浮窗-->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
     <application
         android:name=".base.BaseApplication"
@@ -27,31 +45,33 @@
         </activity>
         <activity
             android:name=".modules.main.ui.MainActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".modules.avatar.ui.AvatarActivity"/>
-        <!--EditText弹出输入键盘后页面往上顶的问题 - CSDN博客
-                  http://blog.csdn.net/u012319317/article/details/51135813-->
+        <!--
+            EditText弹出输入键盘后页面往上顶的问题 - CSDN博客
+                  http://blog.csdn.net/u012319317/article/details/51135813
+        -->
         <activity
             android:name=".modules.diary.ui.AddDiaryActivity"
             android:windowSoftInputMode="adjustPan"/>
-
-
         <activity android:name=".modules.details.ui.PlanTaskActivity"/>
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 
-        <service
-            android:name=".modules.service.UserActionService"
-            android:enabled="true"
-            android:exported="false"/>
+        <activity android:name=".modules.address.AddressCheckActivity"/>
+        <!--        <service
+                    android:name=".modules.service.UserActionService"
+                    android:enabled="true"
+                    android:exported="false"/>-->
 
-        <provider
-            android:name=".modules.service.db.AbsolutePlanProvider"
-            android:authorities="com.yueyue.todolist"
-            android:exported="false"/>
+        <!--        <provider
+                    android:name=".modules.service.db.AbsolutePlanProvider"
+                    android:authorities="com.yueyue.todolist"
+                    android:exported="false"/>-->
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.fileProvider"
@@ -61,7 +81,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths"/>
         </provider>
-
 
     </application>
 

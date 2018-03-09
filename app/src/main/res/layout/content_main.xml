@@ -37,13 +37,12 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="top|start"
+        android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:scaleX="0"
-        android:scaleY="0"
-        android:src="@drawable/ic_float_action_button"
-        app:backgroundTint="@color/colorPrimary"
-        app:layout_anchor="@+id/container"
-        app:layout_anchorGravity="bottom|right"/>
+        android:backgroundTint="@color/color_30469b"
+        android:src="@drawable/ic_weather_location_fab"
+        app:borderWidth="0dp"
+        app:layout_anchor="@id/container"
+        app:layout_anchorGravity="end|bottom"/>
 
 </android.support.design.widget.CoordinatorLayout>

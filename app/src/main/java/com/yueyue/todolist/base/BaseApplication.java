@@ -27,6 +27,7 @@ public class BaseApplication extends Application {
 
         LitePal.initialize(this);
         CrashHandler.init(new CrashHandler(this));
+
 //        Bugtags.start(BuildConfig.BugtagsKey, this, Bugtags.BTGInvocationEventBubble);
 
         //初始化AndroidUtilCode
@@ -37,5 +38,9 @@ public class BaseApplication extends Application {
 
     public static Context getContext() {
         return sContext;
+    }
+
+    public static String getAppCacheDir() {
+        return sContext.getCacheDir().toString();
     }
 }

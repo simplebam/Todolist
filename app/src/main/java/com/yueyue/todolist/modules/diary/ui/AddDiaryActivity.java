@@ -27,7 +27,7 @@ import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 import com.yueyue.todolist.R;
 import com.yueyue.todolist.base.BaseActivity;
 import com.yueyue.todolist.common.utils.DateUtils;
-import com.yueyue.todolist.modules.main.db.DbHelper;
+import com.yueyue.todolist.modules.main.db.DiaryDbHelper;
 import com.yueyue.todolist.modules.main.domain.DiaryEntity;
 import com.yueyue.todolist.modules.main.impl.OnGuideChangedListenerImpl;
 import com.yueyue.todolist.widget.CenteredImageSpan;
@@ -293,7 +293,7 @@ public class AddDiaryActivity extends BaseActivity {
 
     private void savePlanTask() {
         int msgId=R.string.save_error;
-        if (DbHelper.getInstance().addPlantask(mDiaryEntity)) {
+        if (DiaryDbHelper.getInstance().addPlantask(mDiaryEntity)) {
             msgId=R.string.save_success;
         }
         ToastUtils.showShort(getString(msgId));

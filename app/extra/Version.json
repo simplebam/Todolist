@@ -1,0 +1,20 @@
+//这里主要用于版本检查更新使用,至于https://fir.im/docs/version_detection
+//这里需要//http://api.fir.im/apps/latest/{id} ? api={api}
+// 第一个{id}文档里面说是应用ID，可在"应用管理"->"基本信息"查看
+// 第二个{api}长度为 32, 用户在 fir 的 api_token
+//http://api.fir.im/apps/latest/5a98f70d959d69345043b19f?api_token=9f54d692924d4f867795c3047cf57dc4
+{
+  "name": "Todolist",
+  "version": "1",
+  "changelog": "增加了\"今天Diary的编写\"功能",
+  "updated_at": 1520521928,
+  "versionShort": "1.31",
+  "build": "1",
+  "installUrl": "http://download.fir.im/v2/app/install/5a98f70d959d69345043b19f?download_token=87f50ff2de4ebbc3e9dba22c6ee8b4ab\u0026source=update",
+  "install_url": "http://download.fir.im/v2/app/install/5a98f70d959d69345043b19f?download_token=87f50ff2de4ebbc3e9dba22c6ee8b4ab\u0026source=update",
+  "direct_install_url": "http://download.fir.im/v2/app/install/5a98f70d959d69345043b19f?download_token=87f50ff2de4ebbc3e9dba22c6ee8b4ab\u0026source=update",
+  "update_url": "http://fir.im/tolist",
+  "binary": {
+    "fsize": 2575532
+  }
+}

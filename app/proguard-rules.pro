@@ -133,4 +133,5 @@
 ## configuration for litepal
 -keep class org.litepal.** { *;}
 -keep class * extends org.litepal.crud.DataSupport {*;}
-# End litepal
+# End litepal#
+

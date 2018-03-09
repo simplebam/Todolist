@@ -7,13 +7,14 @@ package com.yueyue.todolist.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.yueyue.todolist.BuildConfig;
 
 import butterknife.ButterKnife;
@@ -24,7 +25,7 @@ import butterknife.ButterKnife;
  * quote  : https://github.com/DanteAndroid/Beauty
  */
 
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment extends RxFragment {
 
     protected View rootView;
     protected Toolbar toolbar;
@@ -66,7 +67,10 @@ public abstract class BaseFragment extends Fragment {
     protected abstract int initLayoutId();
 
     protected void onCreateView() {
-        toolbar = ((BaseActivity) getActivity()).toolbar;
+        FragmentActivity activity = getActivity();
+        if (activity != null && activity instanceof BaseActivity) {
+            toolbar = ((BaseActivity) activity).toolbar;
+        }
     }
 
     protected abstract void initViews();
@@ -81,6 +85,11 @@ public abstract class BaseFragment extends Fragment {
 //                .distinct();
 //    }
 
+    protected void setToolBarTitle(String title) {
+        if (toolbar != null && title!=null) {
+            toolbar.setTitle(title);
+        }
+    }
 
     public void log(String key, String content) {
         if (BuildConfig.DEBUG && getUserVisibleHint()) {

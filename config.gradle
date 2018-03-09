@@ -18,9 +18,15 @@ ext {
             value: "b9e05332eea2426fb74de09c14c77227"
     ]
 
-    fir = [
-            name : "FirToken",
+
+    fir_api_token = [
+            name : "FirApiToken",
             value: "9f54d692924d4f867795c3047cf57dc4"
+    ]
+
+    fir_app_id = [
+            name : "FirAppID",
+            value: "5a98f70d959d69345043b19f"
     ]
 
     alipay = [

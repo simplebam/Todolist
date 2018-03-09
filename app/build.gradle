@@ -20,9 +20,11 @@ android {
         }
 
         buildConfigField "String", "$rootProject.ext.weather.name", "\"$rootProject.ext.weather.value\""
-        buildConfigField "String", "$rootProject.ext.fir.name", "\"$rootProject.ext.fir.value\""
+        buildConfigField "String", "$rootProject.ext.fir_api_token.name", "\"$rootProject.ext.fir_api_token.value\""
+        buildConfigField "String", "$rootProject.ext.fir_app_id.name", "\"$rootProject.ext.fir_app_id.value\""
         buildConfigField "String", "$rootProject.ext.alipay.name", "\"$rootProject.ext.alipay.value\""
         buildConfigField "String", "$rootProject.ext.bugtags.name", "\"$rootProject.ext.bugtags.value\""
+
 
         //Error:Execution failed for task ':Todolist:transformClassesAndResourcesWithProguardForRelease'.
         multiDexEnabled true
@@ -163,12 +165,12 @@ dependencies {
     //AndroidUtilCode https://github.com/Blankj/AndroidUtilCode
     compile "com.blankj:utilcode:$rootProject.ext.android_utilcode_version"
 
+    // 做地址选择器用到 地址选择器借鉴:https://github.com/yanzhenjie/AddressChecker
+    compile 'com.yanzhenjie:loading:1.0.0'
+    compile 'com.alibaba:fastjson:1.1.52.android'
+
     //bugtags https://work.bugtags.com/login.html
 //    implementation 'com.bugtags.library:bugtags-lib:latest.integration'
-
-    //stetho https://github.com/facebook/stetho
-    implementation "com.facebook.stetho:stetho:$rootProject.ext.stetho_version"
-    implementation "com.facebook.stetho:stetho-okhttp3:$rootProject.ext.stetho_version"
 
 
 }

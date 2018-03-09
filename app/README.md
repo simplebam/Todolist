@@ -147,6 +147,10 @@ App体验：[Todolist - fir.im ](https://fir.im/tolist)
         * 实战篇：[Android权限管理详解 - CSDN博客](http://blog.csdn.net/shangmingchao/article/details/70312824)
         * 补充篇：[关于Android 6.0 运行时权限 | Android Notes ](https://bxbxbai.github.io/2016/05/27/android-runtime-permission/)
                  以及 [targetSdkVersion 23以下6.0中调用checkSelfPermission的问题 - 海阔天空玩世不恭](https://my.oschina.net/u/990728/blog/549914)
+* Retrofit
+   * [你真的会用Retrofit2吗?Retrofit2完全教程 - 简书](https://www.jianshu.com/p/308f3c54abdd)
+   * [Android Retrofit 2.0使用 | 吴小龙同學](http://wuxiaolong.me/2016/01/15/retrofit/)
+   * [Android Retrofit 2.0 使用-补充篇 - 简书](https://www.jianshu.com/p/93153b34310e)
 * Glide
   * [Android图片加载框架最全解析（一），Glide的基本用法 - 郭霖的专栏](http://blog.csdn.net/guolin_blog/article/details/53759439)
     郭霖写的东西都很赞,值得推荐阅读
@@ -177,6 +181,11 @@ App体验：[Todolist - fir.im ](https://fir.im/tolist)
   Error:(42, 5) error: style attribute '@android:attr/windowExitAnimation' not found.
   ```
   其实就是@android 前面的"@"去掉就好
+* 本来这里打算使用第三方开源库作为CityPicker依赖库,但由于都不太满足需求(可能是
+  数据也可能因为UI不好看等愿意),所以唯有自己找了一个网上的修改源码才得,参考的源
+  代码:[yanzhenjie/AddressChecker: MD风格的地址选择器，MD风格的城市选择器，
+  Android就不要按照iOS风格来设计啦！](https://github.com/yanzhenjie/AddressChecker)
+
 
 ### 项目中的缺点
 * 本来我准备完全借鉴[WoodsHo/AbsolutePlan: AbsolutePlan ](https://github.com/WoodsHo/AbsolutePlan)

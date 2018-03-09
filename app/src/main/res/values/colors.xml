@@ -80,10 +80,16 @@
     <color name="share_bg_color">#f9f3e7</color>
     <color name="share_other_color">#411d0d</color>
 
-
+    <!-- DiaryActivity界面-->
     <color name="color_a1a1a1">#a1a1a1</color>
     <color name="btg_global_light_white">#ff333333</color>
     <color name="color_f37979">#F37979</color>
     <color name="color_37bed7">#37BED7</color>
     <color name="color_f0f01a">#f0f01a</color>
+    <color name="color_30469b">#30469b</color>
+    <color name="color_728288">#728288</color>
+
+    <!--AddressActivity-->
+    <color name="colorControlNormal">#FFB2B2B2</color>
+    <color name="colorControlActivated">@color/colorPrimary</color>
 </resources>

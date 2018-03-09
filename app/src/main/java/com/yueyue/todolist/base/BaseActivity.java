@@ -26,7 +26,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     private static final String TAG = "BaseActivity";
     public Toolbar toolbar;
     private boolean isShowToolbar = true;
-    private Fragment currentFragment;
+    protected Fragment currentFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

@@ -14,6 +14,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.MenuItem;
@@ -25,12 +26,14 @@ import com.blankj.utilcode.util.SnackbarUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.yueyue.todolist.R;
 import com.yueyue.todolist.base.BaseActivity;
+import com.yueyue.todolist.modules.address.AddressCheckActivity;
 import com.yueyue.todolist.modules.diary.ui.AddDiaryActivity;
 import com.yueyue.todolist.modules.main.domain.DiaryEntity;
 
 import java.util.Date;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 import static android.support.v4.widget.DrawerLayout.LOCK_MODE_LOCKED_CLOSED;
 
@@ -38,6 +41,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private static final String TAG = MainActivity.class.getSimpleName();
     public static final long DRAWER_CLOSE_DELAY = 230L;
+    private static final int ADDRESS_REQUEST_CODE = 666;
 
     private static final String KEY_GUIDE_BUILD = "guide_build";
     private static final String KEY_GUIDE_SIDE = "guide_side";
@@ -50,9 +54,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @BindView(R.id.container)
     ViewGroup container;
 
-
     @BindView(R.id.fab)
     FloatingActionButton mFab;
+
 
     @BindView(R.id.root)
     CoordinatorLayout root;
@@ -65,9 +69,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private int placeHolderHeight;
     private boolean secretMode;
 
+
     //侧滑栏
     @BindView(R.id.nav_view)
     NavigationView mNavView;
+
 
     public static void launch(Context context) {
         context.startActivity(new Intent(context, MainActivity.class));
@@ -123,24 +129,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             }
         });
 
-        mFab.setOnClickListener(v -> {
-//            Intent intent = new Intent(MainActivity.this, PlanTaskActivity.class);
-//            intent.putExtra(PlanTaskActivity.KEY_SHOW_TYPE, PlanTaskActivity.TYPE_NEW_BUILD);
-//            if (mLastSelectedSideId == ID_TOMORROW) {
-//                intent.putExtra(PlanTaskActivity.KEY_IS_TOMORROW, true);
-//            }
-//            startActivity(intent);
-        });
-
-
-//        mHomeAsUp.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mDrawerLayout.openDrawer(GravityCompat.START);
-//            }
-//        });
-
-
     }
 
     @TargetApi(Build.VERSION_CODES.M)
@@ -186,6 +174,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             case R.id.menu_all:
                 break;
             case R.id.menu_weather:
+                setFabVisible(true);
+                switchMenu(R.id.menu_weather, mFragmentSparseArray);
                 break;
             case R.id.menu_more_service:
                 break;
@@ -203,10 +193,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private void initFragments(Bundle savedInstanceState) {
         if (mFragmentSparseArray == null) {
             mFragmentSparseArray = new SparseArray<>();
-            String[] titles = getResources().getStringArray(R.array.main_tabs_titles);
-            String[] types = getResources().getStringArray(R.array.main_tabs_types);
-
-            mFragmentSparseArray.put(R.id.menu_todo, MainTabsFragment.newInstance(titles, types));
+//            String[] titles = getResources().getStringArray(R.array.main_tabs_titles);
+//            String[] types = getResources().getStringArray(R.array.main_tabs_types);
+//
+//            mFragmentSparseArray.put(R.id.menu_todo, MainTabsFragment.newInstance(titles, types));
 //
 //            if (secretMode) {
 //                //Gank & Douban
@@ -224,8 +214,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 //            mFragmentSparseArray.put(R.taskId.nav_a, MainTabsFragment.newInstance(titles, types));
 //            //favorite
 //            mFragmentSparseArray.put(R.taskId.nav_favorite, new FavoriteFragment());
+
+            //weather
+//            mFragmentSparseArray.put(R.id.menu_weather, WeatherFragment.newInstance());
         }
-        setMainFragment(R.id.menu_todo, mFragmentSparseArray, savedInstanceState == null);
+//        setMainFragment(R.id.menu_todo, mFragmentSparseArray, savedInstanceState == null);
     }
 
     /**
@@ -253,6 +246,58 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         int lockMode = enable ? DrawerLayout.LOCK_MODE_UNLOCKED : LOCK_MODE_LOCKED_CLOSED;
         mDrawerLayout.setDrawerLockMode(lockMode);
 
+    }
+
+    @OnClick(R.id.fab)
+    void fabClick() {
+        String fragmentName = currentFragment.getClass().getSimpleName();
+        switch (fragmentName) {
+            case "WeatherFragment":
+                startActivityForResult(new Intent(this,
+                        AddressCheckActivity.class), ADDRESS_REQUEST_CODE);
+                break;
+            case "0":
+                //点击今天
+                //            Intent intent = new Intent(MainActivity.this, PlanTaskActivity.class);
+//            intent.putExtra(PlanTaskActivity.KEY_SHOW_TYPE, PlanTaskActivity.TYPE_NEW_BUILD);
+//            if (mLastSelectedSideId == ID_TOMORROW) {
+//                intent.putExtra(PlanTaskActivity.KEY_IS_TOMORROW, true);
+//            }
+//            startActivity(intent);
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != RESULT_OK) return;
+        switch (requestCode) {
+            case ADDRESS_REQUEST_CODE: {
+                parseAddress(data);
+                break;
+            }
+        }
+    }
+
+
+    /**
+     * 解析地址。
+     */
+    private void parseAddress(Intent intent) {
+        String cityName = AddressCheckActivity.parse(intent);
+        if (!TextUtils.isEmpty(cityName)) {
+//            SpUtil.getInstance().putCityName(cityName);
+//            RxBus.getDefault().post(new ChangeCityEvent(cityName));
+        }
+
+    }
+
+
+    public void setFabVisible(boolean visible) {
+        int visibility = visible ? View.VISIBLE : View.GONE;
+        mFab.setVisibility(visibility);
     }
 
     @Override

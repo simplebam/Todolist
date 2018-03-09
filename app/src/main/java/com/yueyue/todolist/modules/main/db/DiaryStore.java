@@ -35,7 +35,7 @@ public class DiaryStore {
 
     public List<DiaryEntity> getDiaryFromDb(int offset, String calendarStr) {
         try {
-            return DbHelper.getInstance().pageSearch(offset, "calendar=?", calendarStr);
+            return DiaryDbHelper.getInstance().pageSearch(offset, "calendar=?", calendarStr);
         } catch (Exception e) {
             PLog.e(TAG, "getTodayPlantask:" + e.toString());
             e.printStackTrace();

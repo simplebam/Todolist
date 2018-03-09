@@ -3,8 +3,8 @@ package com.yueyue.todolist.modules.main.ui;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.yueyue.todolist.R;
+import com.yueyue.todolist.base.BaseFragment;
 import com.yueyue.todolist.common.Constants;
 import com.yueyue.todolist.modules.main.adapter.DiaryHomeAdapter;
 import com.yueyue.todolist.modules.main.db.DiaryStore;
@@ -20,7 +20,7 @@ import butterknife.BindView;
  * desc   :
  */
 
-public class DiaryHomeFragment extends RecyclerFragment {
+public class DiaryHomeFragment extends BaseFragment {
 
     private static final String TAG = DiaryHomeFragment.class.getSimpleName();
     private static final String TYPE_TODAY = "today";
@@ -43,7 +43,6 @@ public class DiaryHomeFragment extends RecyclerFragment {
 
     @Override
     protected void initViews() {
-        super.initViews();
 
         mFab.setOnClickListener((v)->{
 
@@ -53,7 +52,6 @@ public class DiaryHomeFragment extends RecyclerFragment {
     //今天,明天,所有,已经完成
     @Override
     protected void initData() {
-        super.initData();
         Bundle bundle = getArguments();
         if (bundle != null) {
             String type = bundle.getString(Constants.TYPE);
@@ -71,21 +69,16 @@ public class DiaryHomeFragment extends RecyclerFragment {
         }
 
 
-        mDiaryHomeAdapter = new DiaryHomeAdapter(R.layout.fragment_diary_home_item, mDiaryList);
-
-        mDiaryHomeAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
-            @Override
-            public void onLoadMoreRequested() {
-
-            }
-        }, mRecyclerView);
+//        mDiaryHomeAdapter = new DiaryHomeAdapter(R.layout.fragment_diary_home_item, mDiaryList);
+//
+//        mDiaryHomeAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+//            @Override
+//            public void onLoadMoreRequested() {
+//
+//            }
+//        }, mRecyclerView);
         // 没有数据的时候默认显示该布局
 //        mDiaryHomeAdapter.setEmptyView(R.layout.fragment_diary_home_item);
-    }
-
-    @Override
-    public void onRefresh() {
-
     }
 
     @Override

@@ -83,6 +83,20 @@
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="you_have_write_nothing_today">今天，你什么都没写下...</string>
+    <string name="forecast">预报</string>
+    <string name="air_quality">空气质量</string>
+    <string name="aqi_exponent">AQI指数</string>
+    <string name="pm25_exponent">PM2.5指数</string>
+    <string name="life_suggestion">生活建议</string>
+    <string name="cannot_find_other_city">找不到城市啦</string>
+    <string name="guangzhou">广州</string>
+    <string name="complete">完成</string>
+    <string name="need_loacation_permission_to_offer_right_weather">需要定位权限去提供优质的天气</string>
+    <string name="error_location_location_yourself">定位失败,请手动定位</string>
+
+
+    <!--AddressActivity-->
+    <string name="select_please">请选择</string>
 
 
 </resources>

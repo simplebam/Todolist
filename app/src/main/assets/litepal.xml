@@ -33,6 +33,17 @@
     -->
     <list>
         <mapping class="com.yueyue.todolist.modules.main.domain.DiaryEntity"/>
+        <mapping class="com.yueyue.todolist.modules.weather.domain.Weather"/>
+        <mapping class="com.yueyue.todolist.modules.weather.domain.AqiEntity"/>
+        <mapping class="com.yueyue.todolist.modules.weather.domain.BasicEntity"/>
+        <mapping class="com.yueyue.todolist.modules.weather.domain.CityEntity"/>
+        <mapping class="com.yueyue.todolist.modules.weather.domain.CondEntity"/>
+        <mapping class="com.yueyue.todolist.modules.weather.domain.DailyForecastEntity"/>
+        <mapping class="com.yueyue.todolist.modules.weather.domain.HourlyForecastEntity"/>
+        <mapping class="com.yueyue.todolist.modules.weather.domain.NowEntity"/>
+        <mapping class="com.yueyue.todolist.modules.weather.domain.SuggestionEntity"/>
+        <mapping class="com.yueyue.todolist.modules.weather.domain.TmpEntity"/>
+        <mapping class="com.yueyue.todolist.modules.weather.domain.WindEntity"/>
     </list>
 
     <!--
