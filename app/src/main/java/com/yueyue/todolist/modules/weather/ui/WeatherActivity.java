@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.amap.api.location.AMapLocationClient;
@@ -83,6 +85,11 @@ public class WeatherActivity extends BaseActivity {
 
 
     private void setupView() {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayShowHomeEnabled(true);
+        }
+
         mSwipeRefresh.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
@@ -123,7 +130,6 @@ public class WeatherActivity extends BaseActivity {
         SpUtil.getInstance().putInt("霾", R.mipmap.type_one_fog);
         SpUtil.getInstance().putInt("雾", R.mipmap.type_one_fog);
     }
-
 
 
     private void initData() {
@@ -244,6 +250,15 @@ public class WeatherActivity extends BaseActivity {
                     break;
             }
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
