@@ -1,5 +1,6 @@
 package com.yueyue.todolist.modules.main.ui;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
@@ -15,7 +16,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,17 +24,24 @@ import android.view.ViewGroup;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.yueyue.todolist.R;
 import com.yueyue.todolist.base.BaseActivity;
 import com.yueyue.todolist.modules.address.ui.AddressCheckActivity;
 import com.yueyue.todolist.modules.diary.ui.AddDiaryActivity;
+import com.yueyue.todolist.modules.main.component.WeatherExecutor;
 import com.yueyue.todolist.modules.main.domain.DiaryEntity;
 import com.yueyue.todolist.modules.weather.ui.WeatherActivity;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 import static android.support.v4.widget.DrawerLayout.LOCK_MODE_LOCKED_CLOSED;
 
@@ -69,7 +76,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private boolean isFirst = true;
     private int placeHolderHeight;
     private boolean secretMode;
-
+    private List<Disposable> mDisposableList = new ArrayList<>();
 
     //侧滑栏
     @BindView(R.id.nav_view)
@@ -91,16 +98,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         super.onCreate(savedInstanceState);
         setupDrawer();
         initToolbar();
-//        initFab();
         initNavigationView();
         initListener();
+        initFragments(savedInstanceState);
 
 
         // FIXME: 2018/3/4 仿照就看天气或者DonateGrils
         //Update();
-        // FIXME: 2018/3/4 接上天气/仿照PonyMusic
-        //updateWeather();
-        initFragments(savedInstanceState);
+        updateWeather();
     }
 
 
@@ -134,10 +139,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @TargetApi(Build.VERSION_CODES.M)
     private void initNavigationView() {
-        //load headerView's image
         View navHeaderView = mNavView.getHeaderView(0);
-//        Imager.load(this, R.drawable.head, head);
-        // FIXME: 2018/3/4 到时更新为天气刷新,最多点击三次
         navHeaderView.setOnClickListener(new View.OnClickListener() {
             int index;
             long now;
@@ -145,14 +147,15 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: " + now + " - " + lastTime);
                 now = new Date().getTime();
-                if (now - lastTime < 500) {
+                if (now - lastTime < 1000) {
                     if (index < 3) {
                         index++;
                     } else {
                         ToastUtils.showShort(R.string.head_view_hint);
                     }
+                } else {
+                    updateWeather();
                 }
                 lastTime = now;
             }
@@ -300,6 +303,24 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         mFab.setVisibility(visibility);
     }
 
+    private void updateWeather() {
+        //使用RxPermissions（基于RxJava2） - CSDN博客
+        //           http://blog.csdn.net/u013553529/article/details/68948971
+        RxPermissions permissions = new RxPermissions(this);
+        Disposable disposable = permissions.request(Manifest.permission.ACCESS_COARSE_LOCATION)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(granted -> {
+                    if (granted) {
+                        View headerView = mNavView.getHeaderView(0);
+                        new WeatherExecutor(MainActivity.this, headerView).execute();
+                    } else {
+                        ToastUtils.showShort(getString(R.string.no_permission_location));
+                    }
+                });
+        mDisposableList.add(disposable);
+    }
+
     @Override
     public void onBackPressed() {
         if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -324,7 +345,18 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         new Handler().postDelayed(() -> backPressed = false, 2000);
     }
 
-//    private void showGuideSide() {
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //释放资源
+        for (Disposable disposable : mDisposableList) {
+            if (disposable != null && !disposable.isDisposed()) {
+                disposable.dispose();
+            }
+        }
+    }
+
+    //    private void showGuideSide() {
 //        Controller controller = NewbieGuide.with(this)
 //                .setOnGuideChangedListener(new OnGuideChangedListenerImpl() {
 //                    @Override

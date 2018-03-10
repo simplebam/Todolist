@@ -17,7 +17,10 @@ ext {
             name : "HeWeatherKey",
             value: "b9e05332eea2426fb74de09c14c77227"
     ]
-
+    mob_app_key=[
+            name : "MobAppKey",
+            value: "248ea7a1a766a"
+    ]
 
     fir_api_token = [
             name : "FirApiToken",
@@ -63,7 +66,6 @@ ext {
     glide_version='3.7.0'
     butterknife_version='8.8.1'
     litepal_version='1.6.1'
-    fastjson_version = '1.1.52'
     android_utilcode_version='1.13.0'
     alipayzerosdk_version='1.1'
 }

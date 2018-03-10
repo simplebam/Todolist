@@ -97,9 +97,6 @@ public class WeatherAdapter extends AnimRecyclerViewAdapter<RecyclerView.ViewHol
             default:
                 break;
         }
-        if (SpUtil.getInstance().getWeatherAnim()) {
-            showItemAnim(holder.itemView, position);
-        }
     }
 
     @Override

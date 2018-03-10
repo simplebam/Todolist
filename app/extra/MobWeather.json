@@ -1,0 +1,110 @@
+// Mob官网 - weather: http://api.mob.com/#/apiwiki/weather
+{
+  "msg": "success",
+  "result": [
+    {
+      "airCondition": "优",
+      "city": "番禺",
+      "coldIndex": "低发期",
+      "date": "2018-03-10",
+      "distrct": "番禺",
+      "dressingIndex": "夹衣类",
+      "exerciseIndex": "非常适宜",
+      "future": [
+        {
+          "date": "2018-03-10",
+          "dayTime": "晴",
+          "night": "晴",
+          "temperature": "21°C / 10°C",
+          "week": "今天",
+          "wind": "微风 小于3级"
+        },
+        {
+          "date": "2018-03-11",
+          "dayTime": "晴",
+          "night": "多云",
+          "temperature": "22°C / 14°C",
+          "week": "星期日",
+          "wind": "微风 小于3级"
+        },
+        {
+          "date": "2018-03-12",
+          "dayTime": "多云",
+          "night": "多云",
+          "temperature": "24°C / 16°C",
+          "week": "星期一",
+          "wind": "微风 小于3级"
+        },
+        {
+          "date": "2018-03-13",
+          "dayTime": "多云",
+          "night": "阵雨",
+          "temperature": "25°C / 17°C",
+          "week": "星期二",
+          "wind": "微风 小于3级"
+        },
+        {
+          "date": "2018-03-14",
+          "dayTime": "阵雨",
+          "night": "雷阵雨",
+          "temperature": "26°C / 18°C",
+          "week": "星期三",
+          "wind": "微风 小于3级"
+        },
+        {
+          "date": "2018-03-15",
+          "dayTime": "雷阵雨",
+          "night": "雷阵雨",
+          "temperature": "24°C / 17°C",
+          "week": "星期四",
+          "wind": "微风 小于3级"
+        },
+        {
+          "date": "2018-03-16",
+          "dayTime": "多云",
+          "night": "少云",
+          "temperature": "27°C / 20°C",
+          "week": "星期五",
+          "wind": "东南风 2级"
+        },
+        {
+          "date": "2018-03-17",
+          "dayTime": "零散雷雨",
+          "night": "局部多云",
+          "temperature": "28°C / 21°C",
+          "week": "星期六",
+          "wind": "东南偏南风 3级"
+        },
+        {
+          "date": "2018-03-18",
+          "dayTime": "阴天",
+          "night": "雷雨",
+          "temperature": "28°C / 21°C",
+          "week": "星期日",
+          "wind": "东南风 3级"
+        },
+        {
+          "date": "2018-03-19",
+          "dayTime": "零散雷雨",
+          "night": "雷雨",
+          "temperature": "27°C / 18°C",
+          "week": "星期一",
+          "wind": "东南偏南风 3级"
+        }
+      ],
+      "humidity": "湿度：31%",
+      "pollutionIndex": "33",
+      "province": "广东",
+      "sunrise": "06:41",
+      "sunset": "18:34",
+      "temperature": "22℃",
+      "time": "14:53",
+      "updateTime": "20180310151347",
+      "washIndex": "非常适宜",
+      "weather": "晴",
+      "week": "周六",
+      "wind": "东北风2级"
+    }
+  ],
+  "retCode": "200"
+}

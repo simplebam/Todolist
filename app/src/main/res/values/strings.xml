@@ -51,13 +51,6 @@
     <string name="save">保存</string>
     <string name="year">年</string>
 
-    <!--MainActivity-->
-    <string name="navigation_drawer_open" translatable="false">close drawer</string>
-    <string name="navigation_drawer_close" translatable="false">open drawer</string>
-    <string name="time">时间</string>
-    <string name="date">日期</string>
-
-
     <!--AddressActivity-->
     <string name="select_please">请选择</string>
 
@@ -65,6 +58,15 @@
     <string name="need_location_permission_to_offer_accurate_weather">需要定位权限去提供精确的服务</string>
     <string name="error_location">定位失败</string>
     <string name="refreshing_complete">刷新完成</string>
+
+    <!--MainActivity-->
+    <string name="navigation_drawer_open" translatable="false">close drawer</string>
+    <string name="navigation_drawer_close" translatable="false">open drawer</string>
+    <string name="time">时间</string>
+    <string name="date">日期</string>
+    <string name="no_permission_location">没有位置信息权限，无法更新天气！</string>
+    <string name="update_complete">更新完毕</string>
+    <string name="updating_weather">更新天气</string>
 
 
 </resources>

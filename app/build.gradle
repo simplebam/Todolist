@@ -20,11 +20,11 @@ android {
         }
 
         buildConfigField "String", "$rootProject.ext.heweather.name", "\"$rootProject.ext.heweather.value\""
+        buildConfigField "String", "$rootProject.ext.mob_app_key.name", "\"$rootProject.ext.mob_app_key.value\""
         buildConfigField "String", "$rootProject.ext.fir_api_token.name", "\"$rootProject.ext.fir_api_token.value\""
         buildConfigField "String", "$rootProject.ext.fir_app_id.name", "\"$rootProject.ext.fir_app_id.value\""
         buildConfigField "String", "$rootProject.ext.alipay.name", "\"$rootProject.ext.alipay.value\""
         buildConfigField "String", "$rootProject.ext.bugtags.name", "\"$rootProject.ext.bugtags.value\""
-
 
         //Error:Execution failed for task ':Todolist:transformClassesAndResourcesWithProguardForRelease'.
         multiDexEnabled true
@@ -76,6 +76,7 @@ def getLocalValue(String key, boolean quot) {
     }
     return value
 }
+
 
 //Bugtags 插件配置
 //bugtags {

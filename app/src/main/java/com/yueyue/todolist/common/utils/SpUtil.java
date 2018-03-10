@@ -13,14 +13,11 @@ import com.yueyue.todolist.base.BaseApplication;
 
 public class SpUtil {
     private SharedPreferences mPrefs;
-    private String FILE_NAME = "appConfig";
+    private static final String FILE_NAME = "appConfig";
 
-    private static final String AVATAR_KEY = "avatar_key";
-    public static final String WEATHER_DATA = "weather_data";
-    public static final String KEY_WEATHER_CITY = "weather_city";
-    public static final String WEATHER_ANIM_START = "weather_animation_start";//首页item动画
-    public static final String WEATHER_AUTO_UPDATE = "weather_update_time"; //自动更新时长
-    public static final String NOTIFICATION_MODEL = "notification_model";//通知栏常驻
+    private static final String KEY_WEATHER_CITY = "weather_city";
+    private static final String WEATHER_AUTO_UPDATE = "weather_update_time"; //自动更新时长
+    private static final String NOTIFICATION_MODEL = "notification_model";//通知栏常驻
 
 
     public static int ONE_HOUR = 1000 * 60 * 60;//60分钟
@@ -63,11 +60,7 @@ public class SpUtil {
     }
 
 
-    public void remove(String key) {
-        mPrefs.edit().remove(key).apply();
-    }
-
-
+    //----------Weather方面---------------
     public String getCityName() {
         return getString(KEY_WEATHER_CITY, null);
     }
@@ -85,16 +78,6 @@ public class SpUtil {
         return mPrefs.getInt(WEATHER_AUTO_UPDATE, 3);
     }
 
-    // 首页 Item 动画效果 默认关闭
-
-    public void putWeatherAnim(boolean b) {
-        mPrefs.edit().putBoolean(WEATHER_ANIM_START, b).apply();
-    }
-
-    public boolean getWeatherAnim() {
-        return mPrefs.getBoolean(WEATHER_ANIM_START, false);
-    }
-
 
     //  通知栏模式 默认为常驻
     public void putNotificationModel(int t) {
@@ -103,15 +86,6 @@ public class SpUtil {
 
     public int getNotificationModel() {
         return mPrefs.getInt(NOTIFICATION_MODEL, Notification.FLAG_ONGOING_EVENT);
-    }
-
-
-    public void putWeatherData(String weather) {
-        putString(WEATHER_DATA, weather);
-    }
-
-    public String getWeatherData() {
-        return getString(WEATHER_DATA, null);
     }
 
 

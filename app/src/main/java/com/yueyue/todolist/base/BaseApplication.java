@@ -27,7 +27,6 @@ public class BaseApplication extends Application {
 
         LitePal.initialize(this);
         CrashHandler.init(new CrashHandler(this));
-
 //        Bugtags.start(BuildConfig.BugtagsKey, this, Bugtags.BTGInvocationEventBubble);
 
         //初始化AndroidUtilCode

@@ -10,6 +10,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -21,6 +22,7 @@ import com.yueyue.todolist.R;
 import com.yueyue.todolist.base.BaseActivity;
 import com.yueyue.todolist.common.utils.SpUtil;
 import com.yueyue.todolist.common.utils.Util;
+import com.yueyue.todolist.component.AMapLocationer;
 import com.yueyue.todolist.component.RetrofitSingleton;
 import com.yueyue.todolist.modules.address.ui.AddressCheckActivity;
 import com.yueyue.todolist.modules.weather.adapter.WeatherAdapter;
@@ -153,6 +155,11 @@ public class WeatherActivity extends BaseActivity {
     }
 
     private void load() {
+        if (TextUtils.isEmpty(SpUtil.getInstance().getCityName())) {
+            ToastUtils.showShort("还没有选择城市,无法查询");
+            return;
+        }
+
         fetchDataByNetWork()
                 .doOnSubscribe(aLong -> changeSwipeRefreshState(true))
                 .doOnError(throwable -> {
@@ -162,7 +169,6 @@ public class WeatherActivity extends BaseActivity {
                 })
                 .doOnNext(weather -> {
                     mRecyclerView.setVisibility(View.VISIBLE);
-
                     setToolbarTitle(weather.basic.city);
                     mWeather.status = weather.status;
                     mWeather.aqi = weather.aqi;
@@ -171,9 +177,7 @@ public class WeatherActivity extends BaseActivity {
                     mWeather.now = weather.now;
                     mWeather.dailyForecast = weather.dailyForecast;
                     mWeather.hourlyForecast = weather.hourlyForecast;
-
                     mAdapter.notifyDataSetChanged();
-
 //                    NotificationHelper.showWeatherNotification(getActivity(), weather);
                 })
                 .doOnComplete(() -> {
@@ -188,33 +192,54 @@ public class WeatherActivity extends BaseActivity {
      * 高德定位
      */
     private void location() {
-        //初始化定位
-        mLocationClient = new AMapLocationClient(this);
-        mLocationOption = new AMapLocationClientOption();
-        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Battery_Saving);
-        mLocationOption.setNeedAddress(true);
-        mLocationOption.setOnceLocation(true);
-        //设置定位间隔 单位毫秒
-        int autoUpdateTime = SpUtil.getInstance().getAutoUpdate();
-        mLocationOption.setInterval((autoUpdateTime == 0 ? 100 : autoUpdateTime) * SpUtil.ONE_HOUR);
-        mLocationClient.setLocationOption(mLocationOption);
-        mLocationClient.setLocationListener(aMapLocation -> {
-            if (aMapLocation != null) {
-                if (aMapLocation.getErrorCode() == 0) {
-                    //定位成功。
-                    aMapLocation.getLocationType();
-                    SpUtil.getInstance().putCityName(Util.replaceCity(aMapLocation.getCity()));
-                    ToastUtils.showShort("定位成功");
-                } else {
-                    SpUtil.getInstance().putCityName("广州");
-                    ToastUtils.showShort("定位失败,已设置回默认的城市:广州");
-                }
-                ;
-                load();
-            }
-        });
-        mLocationClient.startLocation();
+        AMapLocationer.getInstance(this, SpUtil.getInstance().getAutoUpdate())
+                .location(aMapLocation -> {
+                    if (aMapLocation != null) {
+                        if (aMapLocation.getErrorCode() == 0) {
+                            //定位成功。
+                            aMapLocation.getLocationType();
+                            SpUtil.getInstance().putCityName(Util.replaceCity(aMapLocation.getCity()));
+                            ToastUtils.showShort("定位成功");
+                        } else {
+                            SpUtil.getInstance().putCityName("广州");
+                            ToastUtils.showShort("定位失败,已设置回默认的城市:广州");
+                        }
+                        load();
+                    }
+                });
     }
+
+//    /**
+//     * 高德定位
+//     */
+//    private void location() {
+//        //初始化定位
+//        mLocationClient = new AMapLocationClient(this);
+//        mLocationOption = new AMapLocationClientOption();
+//        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Battery_Saving);
+//        mLocationOption.setNeedAddress(true);
+//        mLocationOption.setOnceLocation(true);
+//        //设置定位间隔 单位毫秒
+//        int autoUpdateTime = SpUtil.getInstance().getAutoUpdate();
+//        mLocationOption.setInterval((autoUpdateTime == 0 ? 100 : autoUpdateTime) * SpUtil.ONE_HOUR);
+//        mLocationClient.setLocationOption(mLocationOption);
+//        mLocationClient.setLocationListener(aMapLocation -> {
+//            if (aMapLocation != null) {
+//                if (aMapLocation.getErrorCode() == 0) {
+//                    //定位成功。
+//                    aMapLocation.getLocationType();
+//                    SpUtil.getInstance().putCityName(Util.replaceCity(aMapLocation.getCity()));
+//                    ToastUtils.showShort("定位成功");
+//                } else {
+//                    SpUtil.getInstance().putCityName("广州");
+//                    ToastUtils.showShort("定位失败,已设置回默认的城市:广州");
+//                }
+//                ;
+//                load();
+//            }
+//        });
+//        mLocationClient.startLocation();
+//    }
 
 
     /**

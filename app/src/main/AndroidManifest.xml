@@ -21,8 +21,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_LOGS"/>
-    <!--悬浮窗-->
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
     <application
         android:name=".base.BaseApplication"
@@ -32,11 +30,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <!--使用 gradle 在编译时动态设置 Android resValue / BuildConfig / Manifes中<meta-data>变量的值
+                     http://blog.csdn.net/xx326664162/article/details/49247815-->
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="efa1fcb2bbdcd3080aead59af1ddd8d6"/>
+        <service android:name="com.amap.api.location.APSService"/>
         <!--
             Android全屏的两种方法 - 有棱角的圆 - 博客园
              https://www.cnblogs.com/sunjianfei/p/5855523.html
         -->
-        <activity android:name=".modules.splash.ui.SplashActivity">
+        <activity
+            android:name=".modules.splash.ui.SplashActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

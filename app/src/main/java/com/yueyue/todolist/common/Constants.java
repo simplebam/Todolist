@@ -15,7 +15,8 @@ public class Constants {
     public static final String NET_CACHE = BaseApplication.getAppCacheDir() + File.separator + "NetCache";
     public static final String FIR_API_TOKEN = BuildConfig.FirApiToken;
     public static final String FIR_API_APPID = BuildConfig.FirAppID;
-    public static final String KEY = BuildConfig.HeWeatherKey;// 和风天气 key
+    public static final String HE_WEATHER_KEY = BuildConfig.HeWeatherKey;// 和风天气 key
+    public static final String MOB_APP_KEY = BuildConfig.MobAppKey;// 和风天气 key
 
     public static final String VIEW_POSITION = "view_position";
     public static final String POSITION = "position";

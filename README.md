@@ -15,15 +15,16 @@ APP功能专一、操作简单、界面优美，记录只保存在本地，不�
 App体验：[Todolist - fir.im ](https://fir.im/tolist)
 
 ## 借鉴的App
-* 主框架：[WoodsHo/AbsolutePlan](https://github.com/WoodsHo/AbsolutePlan)
+* 主框架：[ifadai/SuperNote: 发呆便签/SuperNote是一款开源的Android便签](https://github.com/ifadai/SuperNote)
 * 侧划栏天气显示：[wangchenyan/PonyMusic](https://github.com/wangchenyan/PonyMusic)
 * 天气显示：[xcc3641/SeeWeather](https://github.com/xcc3641/SeeWeather)
 
 
-
 ## 数据提供
-* 和风天气：[和风天气 | 好用的气象数据服务 天气数据分析 天气商业化解决方案](https://www.heweather.com/)
-* MobApi：[Mob Api](http://api.mob.com/#/)
+* 天气:
+ * 和风天气：[和风天气 | 好用的气象数据服务 天气数据分析 天气商业化解决方案](https://www.heweather.com/)
+ * MobApi：[Mob Api](http://api.mob.com/#/) - 辅助作用
+
 
 
 ## 其他类似优秀项目

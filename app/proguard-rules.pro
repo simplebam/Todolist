@@ -127,3 +127,7 @@
 
 ## 解决注解混淆了引发的can't find referenced class javax.annotation.Nonnull
 -dontwarn javax.annotation.**
+
+## configuration for mob
+-keep class com.mob.**{*;}
+# End mob#

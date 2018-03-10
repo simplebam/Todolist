@@ -1,10 +1,13 @@
 package com.yueyue.todolist.component;
 
+import android.util.Log;
+
 import com.blankj.utilcode.util.ToastUtils;
 import com.yueyue.todolist.base.BaseApplication;
 import com.yueyue.todolist.common.Constants;
 import com.yueyue.todolist.common.utils.Util;
 import com.yueyue.todolist.modules.about.domain.Version;
+import com.yueyue.todolist.modules.main.domain.MobWeather;
 import com.yueyue.todolist.modules.weather.domain.Weather;
 
 import java.io.File;
@@ -92,6 +95,7 @@ public class RetrofitSingleton {
                 .build();
     }
 
+
     private static Consumer<Throwable> disposeFailureInfo(Throwable t) {
         return throwable -> {
             if (t.toString().contains("GaiException") || t.toString().contains("SocketTimeoutException") ||
@@ -99,19 +103,23 @@ public class RetrofitSingleton {
                 ToastUtils.showShort("网络问题");
             } else if (t.toString().contains("API没有")) {
                 ToastUtils.showShort("错误: " + t.getMessage());
+            } else {
+                ToastUtils.showShort("错误: " + t.getMessage());
             }
             PLog.w(t.getMessage());
         };
     }
 
     public Observable<Weather> fetchWeather(String city) {
-        return sApiService.mWeatherAPI(city, Constants.KEY)
+        return sApiService.mWeatherAPI(city, Constants.HE_WEATHER_KEY)
                 .flatMap(weather -> {
                     String status = weather.mWeathers.get(0).status;
                     if ("no more requests".equals(status)) {
                         return Observable.error(new RuntimeException("/(ㄒoㄒ)/~~,API免费次数已用完"));
                     } else if ("unknown city".equals(status)) {
                         return Observable.error(new RuntimeException(String.format("API没有%s", city)));
+                    } else if ("param invalid".equals(status)) {
+                        return Observable.error(new RuntimeException("API没有缺少查询的参数"));
                     }
                     return Observable.just(weather);
                 })
@@ -121,10 +129,37 @@ public class RetrofitSingleton {
                 .observeOn(AndroidSchedulers.mainThread(), true);
     }
 
+
+    public Observable<MobWeather> fetchMobWeather(String city) {
+        return sApiService.mMobWeatherAPI(city, Constants.MOB_APP_KEY)
+                .flatMap(weather -> {
+                    int code = weather.retCode;
+                    Log.i("xxxxxxxxxxxxxxxx", "fetchMobWeather---code:"+weather.retCode);
+                    Log.i("xxxxxxxxxxxxxxxx", "fetchMobWeather----city:"+city);
+                    Log.i("xxxxxxxxxxxxxxxx", "fetchMobWeather----list:"+weather.mMobWeathers);
+                    if (10001 == code) {
+                        return Observable.error(new RuntimeException("配置Mob的appkey不合法"));
+                    } else if (10020 == code) {
+                        return Observable.error(new RuntimeException("接口维护"));
+                    } else if (10021 == code) {
+                        return Observable.error(new RuntimeException("接口停用"));
+                    } else if (20402 == code) {
+                        return Observable.error(new RuntimeException("查询不到该城市的天气"));
+                    }
+                    return Observable.just(weather);//code==200
+                })
+                .map(weather -> weather.mMobWeathers.get(0))
+                .doOnError(RetrofitSingleton::disposeFailureInfo)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread(), true);
+    }
+
+
     public Observable<Version> fetchVersion() {
         return sApiService.mVersionAPI(Constants.FIR_API_TOKEN)
                 .doOnError(RetrofitSingleton::disposeFailureInfo)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread(), true);
     }
+
 }
