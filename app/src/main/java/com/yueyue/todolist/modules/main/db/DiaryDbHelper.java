@@ -14,7 +14,7 @@ import java.util.concurrent.TimeoutException;
  * author : yueyue on 2018/3/8 09:30
  * desc   :
  */
-
+@Deprecated
 public class DiaryDbHelper {
     private static final String TAG = DiaryDbHelper.class.getSimpleName();
 

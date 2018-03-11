@@ -20,8 +20,10 @@
 
     <string name="today">今天</string>
     <string name="tomorrow">明天</string>
+    <string name="recycle_bin">回收站</string>
+    <string name="privacy">私密</string>
 
-    <string name="other_service">其他服务</string>
+    <string name="other">其他</string>
     <string name="more_service">更多服务</string>
     <string name="weather">天气</string>
 
@@ -67,6 +69,7 @@
     <string name="no_permission_location">没有位置信息权限，无法更新天气！</string>
     <string name="update_complete">更新完毕</string>
     <string name="updating_weather">更新天气</string>
+
 
 
 </resources>

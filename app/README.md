@@ -1,16 +1,18 @@
 # Todolist
-这是一个只专注于帮助你记录、管理日常计划任务的界面简洁清爽工具类APP。
-
-APP功能专一、操作简单、界面优美，记录只保存在本地，不上传到服务端，不需要担心隐私泄露问题。
+发呆便签是一款极简的便签软件，却又绚丽多彩。
 
 ## 功能简介
-* 帮助你记录、管理日常计划任务
-* 天气预报
-* 其他功能如快递查询、基站查询、身份证查询、周公解梦、手机号码归属地、邮编查询等
+* 【便签夹分类】 让你的生活井然有序
+* 【图文编辑】  不只是单调的文字
+* 【多彩主题】 每一天都是好心情
+* 【私密便签】 方便且安全
+* 【废纸篓功能】 世上是有后悔药的
+* 【涂鸦功能】 我是画画的小行家
+* 【天气预报】 今天你带伞了吗
+* 【其他功能】 快递查询、基站查询、身份证查询、周公解梦、手机号码归属地、邮编查询等
 
 
 ### 项目截图
-
 
 App体验：[Todolist - fir.im ](https://fir.im/tolist)
 
@@ -93,6 +95,9 @@ App体验：[Todolist - fir.im ](https://fir.im/tolist)
    * 文本你还可以这样玩:[Android TextView中文字通过SpannableString来设置超链接
      、颜色、字体等属性- CSDN博客 ](http://blog.csdn.net/snowdream86/article/details/6776629)
    * 文本合成图片:[在代码中合成图片然后分享 - Android开发过程中的一些个人总结](https://segmentfault.com/a/1190000004554721)
+* Android进阶
+   * Gradle:
+     * [Android 开发之版本统一规范 | Blankj's Blog ](https://blankj.com/2016/09/21/android-keep-version-unity/)
 
 
 ### 项目中的用到的开源框架
@@ -158,10 +163,7 @@ App体验：[Todolist - fir.im ](https://fir.im/tolist)
   * [Glide 一个专注于平滑滚动的图片加载和缓存库 - 简书](https://www.jianshu.com/p/4a3177b57949)
   * [Glide V4 框架新特性（Migrating from v3 to v4） - HeXinGen的博客 - CSDN博客](http://blog.csdn.net/hexingen/article/details/72578066)
 * uCrop:[uCrop使用及源码浅析 | 吴小龙同學](http://wuxiaolong.me/2016/06/20/uCrop/)
-* NewbieGuide:[推荐一个好用小巧的Android引导蒙版（浮层）库 - 简书 ](https://www.jianshu.com/p/5e80c7aee1fc)
 * BaseRecyclerViewAdapterHelper:[BRVAH官方使用指南（持续更新） - 简书](https://www.jianshu.com/p/b343fcff51b0)
-* FloatingActionButton:[trity1993/FloatingActionButton](https://github.com/trity1993/FloatingActionButton)
-  * 其实就是悬浮button的多种选择
 
 
 ### Android 开发Tips && 性能优化
@@ -184,23 +186,23 @@ App体验：[Todolist - fir.im ](https://fir.im/tolist)
 * 在做三级联动省市区选择里面,一般都是采用第三方库居多一点,但存在或多或少的问题,
   比如数据太大导致很多时间等待甚至导致ANR、它提供的数据很多用不上(不可以更改数据)
   ,所以很难找到适合的这类开源库,哈哈哈,还是让我扎到了,看这里:[yanzhenjie/
-  AddressChecker: MD风格的地址选择器，MD风格的城市选择器，Android就不要按照
-  iOS风格来设计啦！](https://github.com/yanzhenjie/AddressChecker)
+  AddressChecker: MD风格的地址选择器](https://github.com/yanzhenjie/AddressChecker)
 * 出现下面这个问题一般都是打包使用了注解而引发的问题:
  ```
  Warning:com.trello.rxlifecycle2.LifecycleProvider: can't find referenced class javax.annotation.Nonnull
  Warning:com.trello.rxlifecycle2.LifecycleProvider: can't find referenced class javax.annotation.CheckReturnValue
  ```
  rxlifecycle2作者已经给出了解决方案:[can't find referenced class javax.annotation.Nonnull · Issue #228 · trello/RxLifecycle ](https://github.com/trello/RxLifecycle/issues/228)
+* 开发中经常发现软键盘一旦弹起来,界面会相对应向上弹,但很遗憾就是有时候不尽人意,
+  只要往清单文件 AndroidManifest 里面对应的 Activity 配置
+  ```
+   android:windowSoftInputMode="adjustResize"
+  ```
+  参考博客:[EditText弹出输入键盘后页面往上顶的问题 - CSDN博客](http://blog.csdn.net/u012319317/article/details/51135813)
 
 
 ### 项目中的缺点
-* 本来我准备完全借鉴[WoodsHo/AbsolutePlan: AbsolutePlan ](https://github.com/WoodsHo/AbsolutePlan)
-  ,但是由于这个项目实在太坑,决定放弃
-
 * 由于本人理解换肤方面的知识没有透彻,去掉换肤功能
-* 由于天气方面用了两个数据库,准备全线转LitePal
-* 到时需要逐步删除readme.text多余的东西
+* 项目转MVP
 * 后续考虑支持md语法,参考:[zeleven/mua](https://github.com/zeleven/mua)
 * 做个懒加载
-* 后期考虑替换Mua软件

@@ -13,6 +13,8 @@ APP功能专一、操作简单、界面优美，记录只保存在本地，不�
 
 
 App体验：[Todolist - fir.im ](https://fir.im/tolist)
+开发用到的知识以及框架等详情,需查看请点击:[传送门](./app/README.md)
+
 
 ## 借鉴的App
 * 主框架：[ifadai/SuperNote: 发呆便签/SuperNote是一款开源的Android便签](https://github.com/ifadai/SuperNote)
@@ -20,10 +22,10 @@ App体验：[Todolist - fir.im ](https://fir.im/tolist)
 * 天气显示：[xcc3641/SeeWeather](https://github.com/xcc3641/SeeWeather)
 
 
-## 数据提供
+### 数据支持
 * 天气:
  * 和风天气：[和风天气 | 好用的气象数据服务 天气数据分析 天气商业化解决方案](https://www.heweather.com/)
- * MobApi：[Mob Api](http://api.mob.com/#/) - 辅助作用
+ * MobApi ：[Mob Api](http://api.mob.com/#/)
 
 
 
@@ -40,13 +42,14 @@ App体验：[Todolist - fir.im ](https://fir.im/tolist)
     比以前好很多,所以不妨试试这个项目集
 
 
-## 推荐阅读-推荐的不仅仅是技术
+## 推荐阅读-推荐的不仅仅只有技术
 * [对不起，我的文案已经比不过00后了！-情书参考](http://mp.weixin.qq.com/s/GMSKJnX3JyrdnguKsMQD_Q)
 * [推荐3个优质学习项目](http://mp.weixin.qq.com/s/nTo7rqt0Y839r6O28uQW8Q)
 * [开源一款超级好用的mp3剪切器app](http://mp.weixin.qq.com/s/9OK1gJgsctnt6WA04LCYCA)
 * [程序员接私活的途径以及正确方式](https://mp.weixin.qq.com/s/9a1QsOj3sJ6N4CaeZfWdvQ)
 * [软件开发知识体系 ](https://mp.weixin.qq.com/s/A5n9PG0aUl2z2z3zakZF3A)
 * [如何选择开源许可证？ - CSDN博客](http://blog.csdn.net/wadefelix/article/details/6384317)
+* [中文技术文档的写作规范 - DiyCode](https://www.diycode.cc/topics/941)
 
 
 ## Support

@@ -13,24 +13,30 @@ import org.litepal.LitePal;
  * desc   : App基类
  */
 
-public class BaseApplication extends Application {
+public class MainApplication extends Application {
 
-    public static final String TAG = BaseApplication.class.getSimpleName();
-    public static Context sContext;
-
+    private static Context sContext;
 
     @Override
     public void onCreate() {
         super.onCreate();
         sContext = this;
 
+        initTools();
+        initBugsHandle();
 
-        LitePal.initialize(this);
-        CrashHandler.init(new CrashHandler(this));
-//        Bugtags.start(BuildConfig.BugtagsKey, this, Bugtags.BTGInvocationEventBubble);
 
+    }
+
+    private void initTools() {
         //初始化AndroidUtilCode
-        Utils.init(this);
+        Utils.init(sContext);
+        LitePal.initialize(sContext);
+    }
+
+    private void initBugsHandle() {
+        CrashHandler.init(new CrashHandler(sContext));
+//        Bugtags.start(BuildConfig.BugtagsKey, sContext, Bugtags.BTGInvocationEventBubble);
     }
 
 

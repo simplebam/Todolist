@@ -1,1 +1,1 @@
-include ':app', ':PonyMusic', ':Beauty', ':testapp'
+include ':app', ':Beauty', ':testapp'

@@ -2,8 +2,7 @@ package com.yueyue.todolist.component;
 
 import android.content.Context;
 
-import com.yueyue.todolist.common.utils.SpUtil;
-import com.yueyue.todolist.common.utils.VersionUtil;
+import com.yueyue.todolist.common.utils.*;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -42,7 +41,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         PLog.e(TAG, getCrashInfo(ex));
 
         // T崩溃后自动初始化数据
-        SpUtil.getInstance().putCityName("广州");
+        com.yueyue.todolist.common.utils.CacheManager.getInstance().saveCityName("广州");
         // 调用系统错误机制
         mDefaultHandler.uncaughtException(thread, ex);
     }

@@ -96,20 +96,11 @@ dependencies {
     implementation "com.android.support:recyclerview-v7:$rootProject.ext.support_version"
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
 
-    //floatingactionbutton https://github.com/trity1993/FloatingActionButton
-    compile "cc.trity.floatingactionbutton:library:$rootProject.ext.floatingactionbutton_version"
     // RecycleViewBaseAdapter  https://github.com/CymChad/BaseRecyclerViewAdapterHelper
     compile "com.github.CymChad:BaseRecyclerViewAdapterHelper:$rootProject.ext.base_recyclerview_adapter_helper_version"
     //ucrop https://github.com/Yalantis/uCrop
     compile "com.github.yalantis:ucrop:$rootProject.ext.ucrop_version"
-    //NewbieGuide https://github.com/huburt-Hu/NewbieGuide
-    compile("com.github.huburt-Hu:NewbieGuide:$rootProject.ext.newbieguide_version") {
-        exclude group: 'com.android.support'
-    }
-    //MaterialDateTimePicker https://github.com/wdullaer/MaterialDateTimePicker
-    compile("com.wdullaer:materialdatetimepicker:$rootProject.ext.material_datetime_picker_version") {
-        exclude group: 'com.android.support'
-    }
+
 
     // 做地址选择器用到 地址选择器借鉴:https://github.com/yanzhenjie/AddressChecker
     compile "com.yanzhenjie:loading:$rootProject.ext.loading_version"
@@ -144,25 +135,19 @@ dependencies {
 
 
     //assist相关的
-
     //glide https://github.com/bumptech/glide
     implementation "com.github.bumptech.glide:glide:$rootProject.ext.glide_version"
-
     //butterknife https://github.com/JakeWharton/butterknife
     compile "com.jakewharton:butterknife:$rootProject.ext.butterknife_version"
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.butterknife_version"
-
     //AlipayZeroSdk https://github.com/fython/AlipayZeroSdk
     compile "moe.feng:AlipayZeroSdk:$rootProject.ext.alipayzerosdk_version"
-
-
-
     //AndroidUtilCode https://github.com/Blankj/AndroidUtilCode
     compile "com.blankj:utilcode:$rootProject.ext.android_utilcode_version"
 
 
 
-    //bugtags https://work.bugtags.com/login.html
+    //bugtags https://work.bugtags.com
 //    implementation 'com.bugtags.library:bugtags-lib:latest.integration'
 
 

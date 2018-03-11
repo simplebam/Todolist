@@ -20,7 +20,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.yueyue.todolist.R;
 import com.yueyue.todolist.base.BaseActivity;
-import com.yueyue.todolist.common.utils.SpUtil;
+import com.yueyue.todolist.common.utils.CacheManager;
 import com.yueyue.todolist.common.utils.Util;
 import com.yueyue.todolist.component.AMapLocationer;
 import com.yueyue.todolist.component.RetrofitSingleton;
@@ -44,8 +44,6 @@ import io.reactivex.schedulers.Schedulers;
  */
 
 public class WeatherActivity extends BaseActivity {
-
-
     private static final int AddressRequestCode = 666;
 
 
@@ -81,7 +79,6 @@ public class WeatherActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         setupView();
-        initIcon();
         initData();
     }
 
@@ -114,24 +111,6 @@ public class WeatherActivity extends BaseActivity {
         });
     }
 
-    /**
-     * 初始化 Icons
-     */
-    private void initIcon() {
-        SpUtil.getInstance().putInt("未知", R.mipmap.none);
-        SpUtil.getInstance().putInt("晴", R.mipmap.type_one_sunny);
-        SpUtil.getInstance().putInt("阴", R.mipmap.type_one_cloudy);
-        SpUtil.getInstance().putInt("多云", R.mipmap.type_one_cloudy);
-        SpUtil.getInstance().putInt("少云", R.mipmap.type_one_cloudy);
-        SpUtil.getInstance().putInt("晴间多云", R.mipmap.type_one_cloudytosunny);
-        SpUtil.getInstance().putInt("小雨", R.mipmap.type_one_light_rain);
-        SpUtil.getInstance().putInt("中雨", R.mipmap.type_one_light_rain);
-        SpUtil.getInstance().putInt("大雨", R.mipmap.type_one_heavy_rain);
-        SpUtil.getInstance().putInt("阵雨", R.mipmap.type_one_thunderstorm);
-        SpUtil.getInstance().putInt("雷阵雨", R.mipmap.type_one_thunder_rain);
-        SpUtil.getInstance().putInt("霾", R.mipmap.type_one_fog);
-        SpUtil.getInstance().putInt("雾", R.mipmap.type_one_fog);
-    }
 
 
     private void initData() {
@@ -155,7 +134,7 @@ public class WeatherActivity extends BaseActivity {
     }
 
     private void load() {
-        if (TextUtils.isEmpty(SpUtil.getInstance().getCityName())) {
+        if (TextUtils.isEmpty(CacheManager.getInstance().getCityName())) {
             ToastUtils.showShort("还没有选择城市,无法查询");
             return;
         }
@@ -164,7 +143,7 @@ public class WeatherActivity extends BaseActivity {
                 .doOnSubscribe(aLong -> changeSwipeRefreshState(true))
                 .doOnError(throwable -> {
                     mRecyclerView.setVisibility(View.GONE);
-                    SpUtil.getInstance().putCityName("广州");
+                    CacheManager.getInstance().saveCityName("广州");
                     setToolbarTitle("找不到城市啦");
                 })
                 .doOnNext(weather -> {
@@ -192,16 +171,16 @@ public class WeatherActivity extends BaseActivity {
      * 高德定位
      */
     private void location() {
-        AMapLocationer.getInstance(this, SpUtil.getInstance().getAutoUpdate())
+        AMapLocationer.getInstance(this, CacheManager.getInstance().getAutoUpdate())
                 .location(aMapLocation -> {
                     if (aMapLocation != null) {
                         if (aMapLocation.getErrorCode() == 0) {
                             //定位成功。
                             aMapLocation.getLocationType();
-                            SpUtil.getInstance().putCityName(Util.replaceCity(aMapLocation.getCity()));
+                            CacheManager.getInstance().saveCityName(Util.replaceCity(aMapLocation.getCity()));
                             ToastUtils.showShort("定位成功");
                         } else {
-                            SpUtil.getInstance().putCityName("广州");
+                            CacheManager.getInstance().saveCityName("广州");
                             ToastUtils.showShort("定位失败,已设置回默认的城市:广州");
                         }
                         load();
@@ -220,18 +199,18 @@ public class WeatherActivity extends BaseActivity {
 //        mLocationOption.setNeedAddress(true);
 //        mLocationOption.setOnceLocation(true);
 //        //设置定位间隔 单位毫秒
-//        int autoUpdateTime = SpUtil.getInstance().getAutoUpdate();
-//        mLocationOption.setInterval((autoUpdateTime == 0 ? 100 : autoUpdateTime) * SpUtil.ONE_HOUR);
+//        int autoUpdateTime = CacheManager.getInstance().getAutoUpdate();
+//        mLocationOption.setInterval((autoUpdateTime == 0 ? 100 : autoUpdateTime) * CacheManager.ONE_HOUR);
 //        mLocationClient.setLocationOption(mLocationOption);
 //        mLocationClient.setLocationListener(aMapLocation -> {
 //            if (aMapLocation != null) {
 //                if (aMapLocation.getErrorCode() == 0) {
 //                    //定位成功。
 //                    aMapLocation.getLocationType();
-//                    SpUtil.getInstance().putCityName(Util.replaceCity(aMapLocation.getCity()));
+//                    CacheManager.getInstance().saveCityName(Util.replaceCity(aMapLocation.getCity()));
 //                    ToastUtils.showShort("定位成功");
 //                } else {
-//                    SpUtil.getInstance().putCityName("广州");
+//                    CacheManager.getInstance().saveCityName("广州");
 //                    ToastUtils.showShort("定位失败,已设置回默认的城市:广州");
 //                }
 //                ;
@@ -246,7 +225,7 @@ public class WeatherActivity extends BaseActivity {
      * 从网络获取
      */
     private Observable<Weather> fetchDataByNetWork() {
-        String cityName = SpUtil.getInstance().getCityName();
+        String cityName = CacheManager.getInstance().getCityName();
         return RetrofitSingleton.getInstance()
                 .fetchWeather(cityName)
                 .compose(this.bindToLifecycle());
@@ -268,7 +247,7 @@ public class WeatherActivity extends BaseActivity {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case AddressRequestCode:
-                    SpUtil.getInstance().putCityName(AddressCheckActivity.parse(data));
+                    CacheManager.getInstance().saveCityName(AddressCheckActivity.parse(data));
                     load();
                     break;
                 default:

@@ -5,12 +5,9 @@ import android.support.design.widget.FloatingActionButton;
 
 import com.yueyue.todolist.R;
 import com.yueyue.todolist.base.BaseFragment;
-import com.yueyue.todolist.common.Constants;
 import com.yueyue.todolist.modules.main.adapter.DiaryHomeAdapter;
-import com.yueyue.todolist.modules.main.db.DiaryStore;
 import com.yueyue.todolist.modules.main.domain.DiaryEntity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -35,7 +32,7 @@ public class DiaryHomeFragment extends BaseFragment {
 
     public static DiaryHomeFragment newInstance(String type) {
         Bundle args = new Bundle();
-        args.putString(Constants.TYPE, type);
+//        args.putString(Constans.TYPE, type);
         DiaryHomeFragment fragment = new DiaryHomeFragment();
         fragment.setArguments(args);
         return fragment;
@@ -52,21 +49,21 @@ public class DiaryHomeFragment extends BaseFragment {
     //今天,明天,所有,已经完成
     @Override
     protected void initData() {
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            String type = bundle.getString(Constants.TYPE);
-            switch (type) {
-                case TYPE_TODAY:
-                    mDiaryList = DiaryStore.getInstance().getTodayAllDiary(dbOffset);
-                    break;
-                case TYPE_TOMORROW:
-                    mDiaryList = DiaryStore.getInstance().getTomorrowAllDiary(dbOffset);
-                    break;
-                default:
-                    mDiaryList = new ArrayList<>();
-                    break;
-            }
-        }
+//        Bundle bundle = getArguments();
+//        if (bundle != null) {
+//            String type = bundle.getString(Constans.TYPE);
+//            switch (type) {
+//                case TYPE_TODAY:
+//                    mDiaryList = DiaryStore.getInstance().getTodayAllDiary(dbOffset);
+//                    break;
+//                case TYPE_TOMORROW:
+//                    mDiaryList = DiaryStore.getInstance().getTomorrowAllDiary(dbOffset);
+//                    break;
+//                default:
+//                    mDiaryList = new ArrayList<>();
+//                    break;
+//            }
+//        }
 
 
 //        mDiaryHomeAdapter = new DiaryHomeAdapter(R.layout.fragment_diary_home_item, mDiaryList);

@@ -13,11 +13,15 @@ import com.yueyue.todolist.R;
 import com.yueyue.todolist.base.AnimRecyclerViewAdapter;
 import com.yueyue.todolist.base.BaseViewHolder;
 import com.yueyue.todolist.common.utils.DateUtils;
-import com.yueyue.todolist.common.utils.SpUtil;
+import com.yueyue.todolist.common.utils.PreferencesUtil;
 import com.yueyue.todolist.common.utils.Util;
 import com.yueyue.todolist.component.ImageLoader;
 import com.yueyue.todolist.component.PLog;
 import com.yueyue.todolist.modules.weather.domain.Weather;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 import butterknife.BindView;
 
@@ -28,6 +32,43 @@ import butterknife.BindView;
 
 public class WeatherAdapter extends AnimRecyclerViewAdapter<RecyclerView.ViewHolder> {
     private static String TAG = WeatherAdapter.class.getSimpleName();
+
+    static {
+        HashMap<String, Integer> map = new HashMap<String, Integer>() {{
+            put("未知", R.mipmap.none);
+            put("晴", R.mipmap.type_one_sunny);
+            put("阴", R.mipmap.type_one_cloudy);
+            put("多云", R.mipmap.type_one_cloudy);
+            put("少云", R.mipmap.type_one_cloudy);
+            put("晴间多云", R.mipmap.type_one_cloudytosunny);
+            put("小雨", R.mipmap.type_one_light_rain);
+            put("中雨", R.mipmap.type_one_light_rain);
+            put("大雨", R.mipmap.type_one_heavy_rain);
+            put("阵雨", R.mipmap.type_one_thunderstorm);
+            put("雷阵雨", R.mipmap.type_one_thunder_rain);
+            put("霾", R.mipmap.type_one_fog);
+            put("雾", R.mipmap.type_one_fog);
+        }};
+
+        Set<Map.Entry<String, Integer>> entries = map.entrySet();
+        for (Map.Entry<String, Integer> entry : entries) {
+            PreferencesUtil.saveInt(entry.getKey(), entry.getValue());
+        }
+
+//        PreferencesUtil.saveInt("未知", R.mipmap.none);
+//        PreferencesUtil.saveInt("晴", R.mipmap.type_one_sunny);
+//        PreferencesUtil.saveInt("阴", R.mipmap.type_one_cloudy);
+//        PreferencesUtil.saveInt("多云", R.mipmap.type_one_cloudy);
+//        PreferencesUtil.saveInt("少云", R.mipmap.type_one_cloudy);
+//        PreferencesUtil.saveInt("晴间多云", R.mipmap.type_one_cloudytosunny);
+//        PreferencesUtil.saveInt("小雨", R.mipmap.type_one_light_rain);
+//        PreferencesUtil.saveInt("中雨", R.mipmap.type_one_light_rain);
+//        PreferencesUtil.saveInt("大雨", R.mipmap.type_one_heavy_rain);
+//        PreferencesUtil.saveInt("阵雨", R.mipmap.type_one_thunderstorm);
+//        PreferencesUtil.saveInt("雷阵雨", R.mipmap.type_one_thunder_rain);
+//        PreferencesUtil.saveInt("霾", R.mipmap.type_one_fog);
+//        PreferencesUtil.saveInt("雾", R.mipmap.type_one_fog);
+    }
 
     private Context mContext;
 
@@ -137,7 +178,7 @@ public class WeatherAdapter extends AnimRecyclerViewAdapter<RecyclerView.ViewHol
                 tempPm.setText(String.format("PM2.5: %s μg/m³", Util.safeText(weather.aqi.city.pm25)));
                 tempQuality.setText(String.format("空气质量：%s", Util.safeText(weather.aqi.city.qlty)));
                 ImageLoader.load(itemView.getContext(),
-                        SpUtil.getInstance().getInt(weather.now.cond.txt, R.mipmap.none),
+                        PreferencesUtil.getInt(weather.now.cond.txt, R.mipmap.none),
                         weatherIcon);
             } catch (Exception e) {
                 PLog.e(TAG, e.toString());
@@ -277,8 +318,7 @@ public class WeatherAdapter extends AnimRecyclerViewAdapter<RecyclerView.ViewHol
                         }
                     }
                     ImageLoader.load(mContext,
-                            SpUtil.getInstance().getInt(weather.dailyForecast.get(i).cond.txtDay,
-                                    R.mipmap.none),
+                            PreferencesUtil.getInt(weather.dailyForecast.get(i).cond.txtDay, R.mipmap.none),
                             forecastIcon[i]);
                     forecastTemp[i].setText(
                             String.format("%s℃ - %s℃",

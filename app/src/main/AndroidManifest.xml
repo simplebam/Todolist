@@ -23,7 +23,7 @@
     <uses-permission android:name="android.permission.READ_LOGS"/>
 
     <application
-        android:name=".base.BaseApplication"
+        android:name=".base.MainApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -54,10 +54,6 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"/>
-        <!--
-            EditText弹出输入键盘后页面往上顶的问题 - CSDN博客
-                  http://blog.csdn.net/u012319317/article/details/51135813
-        -->
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
@@ -65,15 +61,7 @@
 
         <activity android:name=".modules.address.ui.AddressCheckActivity"/>
         <activity android:name=".modules.weather.ui.WeatherActivity"/>
-        <!--        <service
-                    android:name=".modules.service.UserActionService"
-                    android:enabled="true"
-                    android:exported="false"/>-->
 
-        <!--        <provider
-                    android:name=".modules.service.db.AbsolutePlanProvider"
-                    android:authorities="com.yueyue.todolist"
-                    android:exported="false"/>-->
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.fileProvider"

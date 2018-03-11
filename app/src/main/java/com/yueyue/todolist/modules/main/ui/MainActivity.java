@@ -28,10 +28,8 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.yueyue.todolist.R;
 import com.yueyue.todolist.base.BaseActivity;
 import com.yueyue.todolist.modules.address.ui.AddressCheckActivity;
-import com.yueyue.todolist.modules.diary.ui.AddDiaryActivity;
 import com.yueyue.todolist.modules.main.component.WeatherExecutor;
 import com.yueyue.todolist.modules.main.domain.DiaryEntity;
-import com.yueyue.todolist.modules.weather.ui.WeatherActivity;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -169,16 +167,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             case R.id.menu_todo:
                 DiaryEntity entity = new DiaryEntity();
                 entity.time = new Date().getTime();
-                AddDiaryActivity.launch(this, AddDiaryActivity.TYPE_ADD, entity);
                 break;
-            case R.id.menu_calendar:
-                break;
-            case R.id.menu_finished:
-                break;
-            case R.id.menu_all:
-                break;
-            case R.id.menu_weather:
-                WeatherActivity.launch(this);
+            case R.id.menu_recycle_bin:
                 break;
             case R.id.menu_more_service:
                 break;
@@ -291,7 +281,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private void parseAddress(Intent intent) {
         String cityName = AddressCheckActivity.parse(intent);
         if (!TextUtils.isEmpty(cityName)) {
-//            SpUtil.getInstance().putCityName(cityName);
+//            CacheManager.getInstance().saveCityName(cityName);
 //            RxBus.getDefault().post(new ChangeCityEvent(cityName));
         }
 
@@ -355,45 +345,5 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             }
         }
     }
-
-    //    private void showGuideSide() {
-//        Controller controller = NewbieGuide.with(this)
-//                .setOnGuideChangedListener(new OnGuideChangedListenerImpl() {
-//                    @Override
-//                    public void onRemoved(Controller controller) {
-//                        mDrawerLayout.openDrawer(GravityCompat.START);
-//                    }
-//                })
-//                .setBackgroundColor(getResources().getColor(R.color.guide_bg_color))
-//                .setEveryWhereCancelable(true)
-//                .setLayoutRes(R.layout.guide_side_view_layout)
-//                .alwaysShow(false)
-//                .addHighLight(mHomeAsUp, HighLight.Type.CIRCLE)
-//                .setLabel(KEY_GUIDE_SIDE)
-//                .build();
-//        controller.show();
-//    }
-
-
-//    private void showGuideBuild() {
-//        Controller controller = NewbieGuide.with(this)
-//                .setOnGuideChangedListener(new OnGuideChangedListenerImpl() {
-//                    @Override
-//                    public void onRemoved(Controller controller) {
-////                        Intent intent = new Intent(MainActivity.this, PlanTaskActivity.class);
-////                        intent.putExtra(PlanTaskActivity.KEY_SHOW_TYPE, PlanTaskActivity.TYPE_NEW_BUILD);
-////                        startActivity(intent);
-//                    }
-//                })
-//                .setBackgroundColor(getResources().getColor(R.color.guide_bg_color))
-//                .setEveryWhereCancelable(true)
-//                .setLayoutRes(R.layout.guide_build_view_layout)
-//                .alwaysShow(false)
-//                .addHighLight(mFab, HighLight.Type.CIRCLE)
-//                .setLabel(KEY_GUIDE_BUILD)
-//                .build();
-//        controller.show();
-//    }
-
 
 }

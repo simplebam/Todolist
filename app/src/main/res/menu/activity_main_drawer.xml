@@ -8,47 +8,34 @@
                     android:icon="@drawable/ic_menu_todo"
                     android:title="@string/todo"/>
                 <item
-                    android:id="@+id/menu_calendar"
-                    android:icon="@drawable/ic_menu_calendar"
-                    android:title="@string/calendar"/>
+                    android:id="@+id/menu_privacy"
+                    android:icon="@drawable/ic_menu_privacy"
+                    android:title="@string/privacy"/>
                 <item
-                    android:id="@+id/menu_finished"
-                    android:icon="@drawable/ic_menu_finished"
-                    android:title="@string/finished"/>
-                <item
-                    android:id="@+id/menu_all"
-                    android:icon="@drawable/ic_menu_all"
-                    android:title="@string/all"/>
+                    android:id="@+id/menu_recycle_bin"
+                    android:icon="@drawable/ic_menu_recycle_bin"
+                    android:title="@string/recycle_bin"/>
 
             </group>
         </menu>
     </item>
 
-    <item android:title="@string/other_service">
+    <item android:title="@string/other">
         <menu>
             <group android:checkableBehavior="single">
-                <item
-                    android:id="@+id/menu_weather"
-                    android:icon="@drawable/ic_menu_weather"
-                    android:title="@string/weather"/>
                 <item
                     android:id="@+id/menu_more_service"
                     android:icon="@drawable/ic_menu_multi_cities"
                     android:title="@string/more_service"/>
+                <item
+                    android:id="@+id/menu_setting"
+                    android:icon="@drawable/ic_menu_setting"
+                    android:title="@string/setting"/>
+                <item
+                    android:id="@+id/menu_about"
+                    android:icon="@drawable/ic_menu_about"
+                    android:title="@string/about"/>
             </group>
-        </menu>
-    </item>
-
-    <item android:title="@string/setting">
-        <menu>
-            <item
-                android:id="@+id/menu_setting"
-                android:icon="@drawable/ic_menu_setting"
-                android:title="@string/setting"/>
-            <item
-                android:id="@+id/menu_about"
-                android:icon="@drawable/ic_menu_about"
-                android:title="@string/about"/>
         </menu>
     </item>
 

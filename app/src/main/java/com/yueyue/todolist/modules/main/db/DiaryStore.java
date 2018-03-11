@@ -15,7 +15,7 @@ import java.util.Locale;
  * author : yueyue on 2018/3/3 10:16
  * desc   :
  */
-
+@Deprecated
 public class DiaryStore {
     public static final String TAG = DiaryStore.class.getSimpleName();
 
