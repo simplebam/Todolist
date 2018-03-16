@@ -10,7 +10,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.yueyue.todolist.R;
 import com.yueyue.todolist.common.listener.IExecutor;
-import com.yueyue.todolist.common.utils.CacheManager;
+import com.yueyue.todolist.component.PreferencesManager;
 import com.yueyue.todolist.common.utils.Util;
 import com.yueyue.todolist.component.AMapLocationer;
 import com.yueyue.todolist.component.RetrofitSingleton;
@@ -57,13 +57,13 @@ public class WeatherExecutor implements IExecutor {
     }
 
     private void location() {
-        AMapLocationer.getInstance(mActivity, CacheManager.getInstance().getAutoUpdate())
+        AMapLocationer.getInstance(mActivity, PreferencesManager.getInstance().getAutoUpdate())
                 .location(aMapLocation -> {
                     if (aMapLocation != null) {
                         if (aMapLocation.getErrorCode() == 0) {
                             //定位成功。
                             aMapLocation.getLocationType();
-                            CacheManager.getInstance().saveCityName(Util.replaceCity(aMapLocation.getCity()));
+                            PreferencesManager.getInstance().saveCityName(Util.replaceCity(aMapLocation.getCity()));
                             ToastUtils.showShort("定位成功");
                         }
                         load();
@@ -72,15 +72,15 @@ public class WeatherExecutor implements IExecutor {
     }
 
     private void load() {
-        String cityName = CacheManager.getInstance().getCityName();
+        String cityName = PreferencesManager.getInstance().getCityName();
         if (TextUtils.isEmpty(cityName)) {
             cityName = "广州";
-            CacheManager.getInstance().saveCityName(cityName);
+            PreferencesManager.getInstance().saveCityName(cityName);
             ToastUtils.showShort("定位失败,自动查询广州天气");
         }
 
         fetchDataByNetWork(cityName)
-                .doOnError(throwable -> CacheManager.getInstance().saveCityName("广州"))
+                .doOnError(throwable -> PreferencesManager.getInstance().saveCityName("广州"))
                 .doOnNext(weather -> updateView(weather))
                 .doOnComplete(() -> ToastUtils.showShort(mActivity.getString(R.string.update_complete)))
                 .subscribe();

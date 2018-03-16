@@ -20,9 +20,10 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.yueyue.todolist.R;
 import com.yueyue.todolist.base.BaseActivity;
-import com.yueyue.todolist.common.utils.CacheManager;
 import com.yueyue.todolist.common.utils.Util;
 import com.yueyue.todolist.component.AMapLocationer;
+import com.yueyue.todolist.component.PreferencesManager;
+import com.yueyue.todolist.component.PLog;
 import com.yueyue.todolist.component.RetrofitSingleton;
 import com.yueyue.todolist.modules.address.ui.AddressCheckActivity;
 import com.yueyue.todolist.modules.weather.adapter.WeatherAdapter;
@@ -44,6 +45,7 @@ import io.reactivex.schedulers.Schedulers;
  */
 
 public class WeatherActivity extends BaseActivity {
+    private static final String TAG = WeatherActivity.class.getSimpleName();
     private static final int AddressRequestCode = 666;
 
 
@@ -112,7 +114,6 @@ public class WeatherActivity extends BaseActivity {
     }
 
 
-
     private void initData() {
 
         //使用RxPermissions（基于RxJava2） - CSDN博客
@@ -134,36 +135,41 @@ public class WeatherActivity extends BaseActivity {
     }
 
     private void load() {
-        if (TextUtils.isEmpty(CacheManager.getInstance().getCityName())) {
+        if (TextUtils.isEmpty(PreferencesManager.getInstance().getCityName())) {
             ToastUtils.showShort("还没有选择城市,无法查询");
             return;
         }
 
-        fetchDataByNetWork()
-                .doOnSubscribe(aLong -> changeSwipeRefreshState(true))
-                .doOnError(throwable -> {
-                    mRecyclerView.setVisibility(View.GONE);
-                    CacheManager.getInstance().saveCityName("广州");
-                    setToolbarTitle("找不到城市啦");
-                })
-                .doOnNext(weather -> {
-                    mRecyclerView.setVisibility(View.VISIBLE);
-                    setToolbarTitle(weather.basic.city);
-                    mWeather.status = weather.status;
-                    mWeather.aqi = weather.aqi;
-                    mWeather.basic = weather.basic;
-                    mWeather.suggestion = weather.suggestion;
-                    mWeather.now = weather.now;
-                    mWeather.dailyForecast = weather.dailyForecast;
-                    mWeather.hourlyForecast = weather.hourlyForecast;
-                    mAdapter.notifyDataSetChanged();
-//                    NotificationHelper.showWeatherNotification(getActivity(), weather);
-                })
-                .doOnComplete(() -> {
-                    changeSwipeRefreshState(false);
-                    ToastUtils.showShort(getString(R.string.refreshing_complete));
-                })
-                .subscribe();
+        try {
+            fetchDataByNetWork()
+                    .doOnSubscribe(aLong -> changeSwipeRefreshState(true))
+                    .doOnError(throwable -> {
+                        mRecyclerView.setVisibility(View.GONE);
+                        PreferencesManager.getInstance().saveCityName("广州");
+                        setToolbarTitle("找不到城市啦");
+                    })
+                    .doOnNext(weather -> {
+                        mRecyclerView.setVisibility(View.VISIBLE);
+                        setToolbarTitle(weather.basic.city);
+                        mWeather.status = weather.status;
+                        mWeather.aqi = weather.aqi;
+                        mWeather.basic = weather.basic;
+                        mWeather.suggestion = weather.suggestion;
+                        mWeather.now = weather.now;
+                        mWeather.dailyForecast = weather.dailyForecast;
+                        mWeather.hourlyForecast = weather.hourlyForecast;
+                        mAdapter.notifyDataSetChanged();
+                        //NotificationHelper.showWeatherNotification(getActivity(), weather);
+                    })
+                    .doOnComplete(() -> {
+                        changeSwipeRefreshState(false);
+                        ToastUtils.showShort(getString(R.string.refreshing_complete));
+                    })
+                    .subscribe();
+        } catch (Exception e) {
+            PLog.e(TAG, "fetchDataByNetWork: " + e.toString());
+            e.printStackTrace();
+        }
 
     }
 
@@ -171,16 +177,16 @@ public class WeatherActivity extends BaseActivity {
      * 高德定位
      */
     private void location() {
-        AMapLocationer.getInstance(this, CacheManager.getInstance().getAutoUpdate())
+        AMapLocationer.getInstance(this, PreferencesManager.getInstance().getAutoUpdate())
                 .location(aMapLocation -> {
                     if (aMapLocation != null) {
                         if (aMapLocation.getErrorCode() == 0) {
                             //定位成功。
                             aMapLocation.getLocationType();
-                            CacheManager.getInstance().saveCityName(Util.replaceCity(aMapLocation.getCity()));
+                            PreferencesManager.getInstance().saveCityName(Util.replaceCity(aMapLocation.getCity()));
                             ToastUtils.showShort("定位成功");
                         } else {
-                            CacheManager.getInstance().saveCityName("广州");
+                            PreferencesManager.getInstance().saveCityName("广州");
                             ToastUtils.showShort("定位失败,已设置回默认的城市:广州");
                         }
                         load();
@@ -188,47 +194,18 @@ public class WeatherActivity extends BaseActivity {
                 });
     }
 
-//    /**
-//     * 高德定位
-//     */
-//    private void location() {
-//        //初始化定位
-//        mLocationClient = new AMapLocationClient(this);
-//        mLocationOption = new AMapLocationClientOption();
-//        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Battery_Saving);
-//        mLocationOption.setNeedAddress(true);
-//        mLocationOption.setOnceLocation(true);
-//        //设置定位间隔 单位毫秒
-//        int autoUpdateTime = CacheManager.getInstance().getAutoUpdate();
-//        mLocationOption.setInterval((autoUpdateTime == 0 ? 100 : autoUpdateTime) * CacheManager.ONE_HOUR);
-//        mLocationClient.setLocationOption(mLocationOption);
-//        mLocationClient.setLocationListener(aMapLocation -> {
-//            if (aMapLocation != null) {
-//                if (aMapLocation.getErrorCode() == 0) {
-//                    //定位成功。
-//                    aMapLocation.getLocationType();
-//                    CacheManager.getInstance().saveCityName(Util.replaceCity(aMapLocation.getCity()));
-//                    ToastUtils.showShort("定位成功");
-//                } else {
-//                    CacheManager.getInstance().saveCityName("广州");
-//                    ToastUtils.showShort("定位失败,已设置回默认的城市:广州");
-//                }
-//                ;
-//                load();
-//            }
-//        });
-//        mLocationClient.startLocation();
-//    }
+
 
 
     /**
      * 从网络获取
      */
     private Observable<Weather> fetchDataByNetWork() {
-        String cityName = CacheManager.getInstance().getCityName();
+        String cityName = PreferencesManager.getInstance().getCityName();
         return RetrofitSingleton.getInstance()
                 .fetchWeather(cityName)
                 .compose(this.bindToLifecycle());
+
     }
 
     private void changeSwipeRefreshState(boolean state) {
@@ -247,7 +224,7 @@ public class WeatherActivity extends BaseActivity {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case AddressRequestCode:
-                    CacheManager.getInstance().saveCityName(AddressCheckActivity.parse(data));
+                    PreferencesManager.getInstance().saveCityName(AddressCheckActivity.parse(data));
                     load();
                     break;
                 default:

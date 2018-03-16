@@ -4,9 +4,8 @@ import com.google.gson.annotations.SerializedName;
 
 /**
  * author : yueyue on 2018/3/9 09:45
- * desc   :
+ * desc   : fir 更新接口,数据参考 extra/version.json 文件
  */
-
 public class Version {
 
     @SerializedName("name") public String name;

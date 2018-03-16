@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:paddingBottom="32dp"
+              android:paddingEnd="24dp"
+              android:paddingStart="24dp"
+              android:paddingTop="32dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="4dp"
+            android:drawableStart="@drawable/about_1"
+            android:gravity="center"
+            android:text="@string/nice_to_meet_you"
+            android:textColor="@color/color_106c99"
+            android:textSize="15sp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.3dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="4dp"
+            android:background="@color/color_60d3d3d3"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:lineSpacingExtra="3dp"
+            android:text="@string/aboutContent"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.3dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="12dp"
+            android:background="@color/color_60d3d3d3"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="4dp"
+            android:drawableStart="@drawable/about_2"
+            android:gravity="center"
+            android:text="@string/everything_is_worth_it"
+            android:textColor="@color/color_106c99"
+            android:textSize="15sp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.3dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="4dp"
+            android:background="@color/color_60d3d3d3"/>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:columnCount="2">
+
+            <Button
+                android:id="@+id/bt_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:drawablePadding="12dp"
+                android:drawableStart="@drawable/about_code"
+                android:gravity="start|center_vertical"
+                android:paddingEnd="12dp"
+                android:paddingStart="12dp"
+                android:text="@string/browse_open_source"
+                android:textColor="@color/color_6f6f6f"
+                tools:targetApi="lollipop"/>
+
+            <Button
+                android:id="@+id/bt_blog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:drawablePadding="12dp"
+                android:drawableStart="@drawable/about_home"
+                android:gravity="start|center_vertical"
+                android:paddingEnd="12dp"
+                android:paddingStart="12dp"
+                android:text="@string/browse_person_blog"
+                android:textColor="@color/color_6f6f6f"
+                tools:targetApi="lollipop"/>
+
+            <Button
+                android:id="@+id/bt_pay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:drawablePadding="12dp"
+                android:drawableStart="@drawable/about_pay"
+                android:gravity="start|center_vertical"
+                android:paddingEnd="12dp"
+                android:paddingStart="12dp"
+                android:text="@string/support_me_with_your_donation"
+                android:textColor="@color/color_6f6f6f"
+                tools:targetApi="lollipop"/>
+
+            <Button
+                android:id="@+id/bt_share"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:drawablePadding="12dp"
+                android:drawableStart="@drawable/about_share"
+                android:gravity="start|center_vertical"
+                android:paddingEnd="12dp"
+                android:paddingStart="12dp"
+                android:text="@string/share_todolist"
+                android:textAllCaps="false"
+                android:textColor="@color/color_6f6f6f"
+                tools:targetApi="lollipop"/>
+
+            <Button
+                android:id="@+id/bt_update"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:drawablePadding="12dp"
+                android:drawableStart="@drawable/about_update"
+                android:gravity="start|center_vertical"
+                android:paddingEnd="12dp"
+                android:paddingStart="12dp"
+                android:text="@string/check_update"
+                android:textColor="@color/color_6f6f6f"
+                tools:targetApi="lollipop"/>
+
+            <Button
+                android:id="@+id/bt_bug"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:drawablePadding="12dp"
+                android:drawableStart="@drawable/about_bug"
+                android:gravity="start|center_vertical"
+                android:paddingEnd="12dp"
+                android:paddingStart="12dp"
+                android:text="@string/commit_bugs"
+                android:textColor="@color/color_6f6f6f"
+                tools:targetApi="lollipop"/>
+        </GridLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.3dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="12dp"
+            android:background="@color/color_60d3d3d3"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="4dp"
+            android:drawableStart="@drawable/about_3"
+            android:gravity="center"
+            android:text="@string/thx_for_open_source_and_resource"
+            android:textColor="@color/color_106c99"
+            android:textSize="15sp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.3dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="4dp"
+            android:background="@color/color_60d3d3d3"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:autoLink="web"
+            android:lineSpacingExtra="6dp"
+            android:text="@string/open_source"
+            android:textColorLink="@color/color_728288"
+            android:textSize="12sp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.3dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="12dp"
+            android:background="@color/color_60d3d3d3"/>
+
+    </LinearLayout>
+
+</LinearLayout>

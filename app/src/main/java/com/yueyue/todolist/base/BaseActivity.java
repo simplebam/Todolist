@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.SparseArray;
 import android.view.MotionEvent;
@@ -26,7 +27,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     private static final String TAG = "BaseActivity";
     public Toolbar toolbar;
     private boolean isShowToolbar = true;
-    protected Fragment currentFragment;
+    private Fragment currentFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -109,8 +110,9 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     }
 
     public void setToolbarTitle(String title) {
-        if (toolbar != null) {
-            toolbar.setTitle(title);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle(title);// 使用toolbar.setTitle(title);会无效
         }
     }
 

@@ -22,4 +22,9 @@
         <attr name="switchColor" format="color"/>
         <attr name="android:buttonTint" />
     </declare-styleable>
+
+    <declare-styleable name="LineRecyclerView">
+        <!--是否划线-->
+        <attr name="isDrawLine" format="boolean" />
+    </declare-styleable>
 </resources>

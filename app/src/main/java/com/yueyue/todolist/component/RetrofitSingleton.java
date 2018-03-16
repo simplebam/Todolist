@@ -3,8 +3,8 @@ package com.yueyue.todolist.component;
 import android.util.Log;
 
 import com.blankj.utilcode.util.ToastUtils;
-import com.yueyue.todolist.base.MainApplication;
-import com.yueyue.todolist.common.Constans;
+import com.blankj.utilcode.util.Utils;
+import com.yueyue.todolist.common.C;
 import com.yueyue.todolist.common.utils.Util;
 import com.yueyue.todolist.modules.about.domain.Version;
 import com.yueyue.todolist.modules.main.domain.MobWeather;
@@ -54,18 +54,18 @@ public class RetrofitSingleton {
     private static void initOkHttp() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         // 缓存 http://www.jianshu.com/p/93153b34310e
-        File cacheFile = new File(Constans.NET_CACHE);
+        File cacheFile = new File(C.NET_CACHE);
         Cache cache = new Cache(cacheFile, 1024 * 1024 * 50);
         Interceptor cacheInterceptor = chain -> {
             Request request = chain.request();
-            if (!Util.isNetworkConnected(MainApplication.getAppContext())) {
+            if (!Util.isNetworkConnected(Utils.getApp())) {
                 request = request.newBuilder()
                         .cacheControl(CacheControl.FORCE_CACHE)
                         .build();
             }
             Response response = chain.proceed(request);
             Response.Builder newBuilder = response.newBuilder();
-            if (Util.isNetworkConnected(MainApplication.getAppContext())) {
+            if (Util.isNetworkConnected(Utils.getApp())) {
                 int maxAge = 0;
                 // 有网络时 设置缓存超时时间0个小时
                 newBuilder.header("Cache-Control", "public, max-age=" + maxAge);
@@ -111,7 +111,7 @@ public class RetrofitSingleton {
     }
 
     public Observable<Weather> fetchWeather(String city) {
-        return sApiService.mWeatherAPI(city, Constans.HE_WEATHER_KEY)
+        return sApiService.mWeatherAPI(city, C.HE_WEATHER_KEY)
                 .flatMap(weather -> {
                     String status = weather.mWeathers.get(0).status;
                     if ("no more requests".equals(status)) {
@@ -131,7 +131,7 @@ public class RetrofitSingleton {
 
 
     public Observable<MobWeather> fetchMobWeather(String city) {
-        return sApiService.mMobWeatherAPI(city, Constans.MOB_APP_KEY)
+        return sApiService.mMobWeatherAPI(city, C.MOB_APP_KEY)
                 .flatMap(weather -> {
                     int code = weather.retCode;
                     Log.i("xxxxxxxxxxxxxxxx", "fetchMobWeather---code:"+weather.retCode);
@@ -156,7 +156,7 @@ public class RetrofitSingleton {
 
 
     public Observable<Version> fetchVersion() {
-        return sApiService.mVersionAPI(Constans.FIR_API_TOKEN)
+        return sApiService.mVersionAPI(C.FIR_API_TOKEN)
                 .doOnError(RetrofitSingleton::disposeFailureInfo)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread(), true);

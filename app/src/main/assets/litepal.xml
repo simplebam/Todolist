@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <litepal>
     <!--
-    	Define the database name of your application.
-    	By default each database name should be end with .db.
-    	If you didn't name your database end with .db,
+    	Define the databuniqueNamename of your application.
+    	By default each databuniqueNamename should be end with .db.
+    	If you diduniqueNamename your database end with .db,
     	LitePal would plus the suffix automatically for you.
     	For example:
     	<dbname value="demo" />
@@ -32,7 +32,7 @@
     	</list>
     -->
     <list>
-        <mapping class="com.yueyue.todolist.modules.main.domain.DiaryEntity"/>
+        <mapping class="com.yueyue.todolist.modules.main.domain.NoteEntity"/>
     </list>
 
     <!--

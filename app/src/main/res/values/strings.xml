@@ -70,6 +70,82 @@
     <string name="update_complete">更新完毕</string>
     <string name="updating_weather">更新天气</string>
 
+    <string name="database_content_one">点击右上角，可以切换视图样式！</string>
+    <string name="database_content_two">长按便签，可以进行批量操作！</string>
+    <string name="database_content_three">在设置中，可以切换主题颜色！</string>
+    <string name="database_content_four">点击右下角，创建新的便签！</string>
+    <string name="database_content_five">
+        您现在使用的是该软件的第四个版本，使用中如果遇到问题，或者有什么建议,请一定要记得给我们发送反馈！\n本软件无毒无广告，功能也会在后续的开发中逐渐完善，如果您觉得好用，可以在支持一下开发者！\n开发这个软件纯粹是出于兴趣，也没有想加入广告，软件的进一步完善也需要你们的反馈和支持！\n非常感谢！
+    </string>
+    <string name="note_privacy_and_recycle">私密便签无法直接预览，请先恢复！</string>
+    <string name="search">搜索</string>
+    <string name="show_mode">显示模式</string>
+    <string name="check_all">全选</string>
 
+
+    <!--OtherServerFragment-->
+    <string name="weather_forecast">天气预报</string>
+    <string name="phone_attr">手机号码归属地</string>
+    <string name="zip_code">邮编查询</string>
+    <string name="recipe">菜谱查询</string>
+    <string name="base_station_location">基站定位查询</string>
+    <string name="id_card_inquiries">身份证查询</string>
+    <string name="the_question_bank">驾考题库</string>
+    <string name="train_ticket_inquiries">火车票查询</string>
+    <string name="football_five_league">足球五大联赛</string>
+    <string name="zg_solution_dream">周公解梦</string>
+
+    <!--AboutActivity-->
+    <string name="aboutContent">
+        发呆便签如同它的名字一样，只做一个呆萌、极简的便签软件。这么多便签软件，你选择了我，这是我的幸运。\n
+        从18年03月上线，到目前经历两次重大改版，一次代码的重构，一次界面的大幅度改动，目的都是为了更好的逻辑纹理。在开源的过程中，收到了很多来自有趣的你们的邮件。\n
+        我也曾遇到过棘手的问题无处咨询又谷歌不到。那个时候的我，也可能是现在的你。所以我希望能够帮助到你。</string>
+    <string name="open_source">
+        • RxJava: github.com/ReactiveX/RxJava\n
+        • RxAndroid: github.com/ReactiveX/RxAndroid\n
+        • Retrofit: github.com/square/retrofit\n
+        • Glide: github.com/bumptech/glide\n
+        • YujunZhu/jennycham4(喵本喵) 设计师提供图标设计\n
+        • 和风天气和Mob天气提供数据支持\n
+        • 高德定位提供位置定位服务</string>
+    <string name="bugs_tips">请到设置界面的应用反馈提交bug</string>
+    <string name="nice_to_meet_you">很高兴认识你</string>
+    <string name="everything_is_worth_it">一切都很值得</string>
+    <string name="browse_open_source">查看项目源码</string>
+    <string name="browse_person_blog">查看个人博客</string>
+    <string name="support_me_with_your_donation">随意捐赠支持</string>
+    <string name="share_todolist">分享Todolist</string>
+    <string name="check_update">检查软件更新</string>
+    <string name="commit_bugs">意见错误反馈</string>
+    <string name="thx_for_open_source_and_resource">感谢开源的世界和开放的资源</string>
+    <string name="app_html">https://github.com/simplebam/Todolist</string>
+    <string name="blog_html">http://blog.csdn.net/simplebam</string>
+    <string name="share_txt">欢迎使用“Todolist”，希望每天都是好心情，您可以在https://fir.im/tolist下载</string>
+    <string name="share_app">分享-Todolist</string>
+    <string name="permission_statement">拒绝电话权限将无法捐献以感谢作者的辛苦劳动）</string>
+    <string name="transfer_to_author">准备转账给作者啦</string>
+    <string name="alipay_not_found">您没有安装支付宝，请安装支付宝再赞助哈</string>
+    <string name="feedback_description">如果你有好的idea或建议，不要犹豫，告诉我吧~</string>
+    <string name="no_note">没有便签 (´･_･`)</string>
+
+
+    <!--EditNoteActivity-->
+    <string name="need_storge_permission_to_open_album">需要读写内存权限才可以打开系统相册~</string>
+    <string name="share">分享</string>
+    <string name="statistics">统计</string>
+    <string name="creating_image">生成图片中...</string>
+    <string name="error_on_create_image">生成图片发生错误</string>
+    <string name="success_on_create_image">成功生成图片</string>
+    <string name="from_todolist">来自：Todolist</string>
+    <string name="share_by_picture">以图片形式分享</string>
+    <string name="share_by_text">以文字形式分享</string>
+
+    <!--ShareActivity-->
+    <string name="preview">预览</string>
+    <string name="need_storage_permission_to_save_photo">保存图片需要内存写入权限哦</string>
+    <string name="apply_for_storage_permission_in_setting_if_select_the_longer_reminder">勾选了不再提醒需要前往设置界面获取权限</string>
+    <string name="unable_to_save_photo_because_of_the_stroage_error">手机内存卡有问题,无法保存图片到图库,请检查</string>
+    <string name="the_photo_not_exist">图片不存在</string>
+    <string name="to_setting">前往设置界面</string>
 
 </resources>

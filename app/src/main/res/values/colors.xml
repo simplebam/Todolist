@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#2196f3</color>
     <color name="colorAccent">#2196f3</color>
 
+    <color name="color_f06292">#F06292</color>
+    <color name="color_ff5722">#FF5722</color>
 
     <color name="transparent">#00000000</color>//透明
     <color name="white">#ffffffff</color>
@@ -28,6 +30,9 @@
     <color name="color_37bed7">#37BED7</color>
     <color name="color_30469b">#30469b</color>
 
+    <!--SplashActivity-->
+    <color name="color_70ffffff">#70ffffff</color>
+
     <!--AddressActivity-->
     <color name="colorControlNormal">#FFB2B2B2</color>
     <color name="colorControlActivated">@color/colorPrimary</color>
@@ -35,5 +40,21 @@
 
     <!--WeatherActivity-->
     <color name="color_303f9f">#303F9F</color>
+    <color name="color_ccffffff">#ccffffff</color>
+
+
+    <!--MainActivity-->
+    <color name="color_f7f7f7">#F7F7F7</color>
+    <color name="color_1e000000">#1E000000</color>
+    <color name="color_dd000000">#DD000000</color>
+    <color name="color_89000000">#89000000</color>
+    <color name="color_11000000">#11000000</color>
+    <color name="color_0d000000">#0D000000</color>
+    <color name="color_106c99">#106c99</color>
+    <color name="color_60d3d3d3">#60d3d3d3</color>
+    <color name="color_6f6f6f">#6f6f6f</color>
+    <color name="color_728288">#728288</color>
+    <color name="color_ff4081">#FF4081</color>
+
 
 </resources>

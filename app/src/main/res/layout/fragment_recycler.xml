@@ -7,42 +7,20 @@
     <!-- framelayout 是解决swipeRefresh造成fragment overlap的bug-->
 
     <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/btg_global_light_white"
+        android:background="@color/color_ccffffff"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <!--android中xml tools属性详解 - 泡在网上的日子
             http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/0309/2567.html-->
         <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="vertical"/>
     </android.support.v4.widget.SwipeRefreshLayout>
 
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginBottom="45dp"
-        android:layout_marginEnd="10dp"
-        android:background="@color/transparent">
-        <!--app:rippleColor="#79bd4c" 按下状态的波纹颜色-->
-        <!--app:elevation="6dp" evelation用来显示阴影-->
-        <!--app:pressedTranslationZ="12dp" pressedTranslationZ用来控制按下状态阴影的变化-->
-        <!--app:backgroundTint 用来填充背景颜色；-->
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@drawable/ic_float_action_button"
-            app:backgroundTint="@color/colorPrimary"
-            app:borderWidth="0dp"
-            app:elevation="6dp"
-            app:fabSize="normal"
-            app:layout_scrollFlags="scroll|enterAlways|snap"
-            app:pressedTranslationZ="12dp"
-            app:rippleColor="@color/fab_rippleColor"/>
-    </android.support.design.widget.AppBarLayout>
 </android.support.design.widget.CoordinatorLayout>

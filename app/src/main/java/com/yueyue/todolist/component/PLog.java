@@ -3,8 +3,8 @@ package com.yueyue.todolist.component;
 import android.util.Log;
 
 import com.blankj.utilcode.util.TimeUtils;
+import com.blankj.utilcode.util.Utils;
 import com.yueyue.todolist.BuildConfig;
-import com.yueyue.todolist.base.MainApplication;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -19,7 +19,7 @@ import java.io.IOException;
  */
 public class PLog {
     private static boolean isDebug = BuildConfig.DEBUG;
-    private static final String PATH = MainApplication.getAppContext().getCacheDir().toString();
+    private static final String PATH = Utils.getApp().getCacheDir().toString();
     private static final String PLOG_FILE_NAME = "log.txt";
 
     /**

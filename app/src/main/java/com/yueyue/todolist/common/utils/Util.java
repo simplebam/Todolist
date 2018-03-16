@@ -1,8 +1,11 @@
 package com.yueyue.todolist.common.utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
+import android.os.Build;
 import android.text.TextUtils;
 
 /**
@@ -49,21 +52,21 @@ public class Util {
         return city;
     }
 
-
-//    /**
-//     * 将返回的JSON数据解析成Weather实体类,使用了V5接口
-//     */
-//    public static Weather handleWeatherResponse(String response) {
-//        try {
-//            JSONObject jsonObject = new JSONObject(response);
-//
-//            JSONArray jsonArray = jsonObject.getJSONArray("HeWeather5");
-//            String weatherContent = jsonArray.getJSONObject(0).toString();
-//            return new Gson().fromJson(weatherContent, Weather.class);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
+    /**
+     * 跳转到权限设置界面
+     */
+    public static void toAppSetting(Context context) {
+        Intent intent = new Intent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        if (Build.VERSION.SDK_INT >= 9) {
+            intent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
+            intent.setData(Uri.fromParts("package", context.getPackageName(), null));
+        } else if (Build.VERSION.SDK_INT <= 8) {
+            intent.setAction(Intent.ACTION_VIEW);
+            intent.setClassName("com.android.settings", "com.android.settings.InstalledAppDetails");
+            intent.putExtra("com.android.settings.ApplicationPkgName", context.getPackageName());
+        }
+        context.startActivity(intent);
+    }
 
 }

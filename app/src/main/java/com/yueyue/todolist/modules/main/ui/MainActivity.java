@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,8 +16,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.text.TextUtils;
 import android.util.SparseArray;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,12 +25,15 @@ import android.view.ViewGroup;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.blankj.utilcode.util.Utils;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.yueyue.todolist.R;
 import com.yueyue.todolist.base.BaseActivity;
-import com.yueyue.todolist.modules.address.ui.AddressCheckActivity;
+import com.yueyue.todolist.common.C;
+import com.yueyue.todolist.modules.about.ui.AboutActivity;
+import com.yueyue.todolist.modules.edit.ui.EditNoteActivity;
 import com.yueyue.todolist.modules.main.component.WeatherExecutor;
-import com.yueyue.todolist.modules.main.domain.DiaryEntity;
+import com.yueyue.todolist.modules.other.ui.OtherServerFragment;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -43,14 +47,13 @@ import io.reactivex.schedulers.Schedulers;
 
 import static android.support.v4.widget.DrawerLayout.LOCK_MODE_LOCKED_CLOSED;
 
-public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity
+        extends BaseActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
-    public static final long DRAWER_CLOSE_DELAY = 230L;
-    private static final int ADDRESS_REQUEST_CODE = 666;
 
-    private static final String KEY_GUIDE_BUILD = "guide_build";
-    private static final String KEY_GUIDE_SIDE = "guide_side";
+    public static final long DRAWER_CLOSE_DELAY = 230L;
     private SparseArray<Fragment> mFragmentSparseArray;
 
 
@@ -70,10 +73,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     public ActionBarDrawerToggle toggle;
     private boolean backPressed;
     private MenuItem currentMenu;
-    private SparseArray<Fragment> fragmentSparseArray;
     private boolean isFirst = true;
-    private int placeHolderHeight;
-    private boolean secretMode;
     private List<Disposable> mDisposableList = new ArrayList<>();
 
     //侧滑栏
@@ -97,9 +97,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         setupDrawer();
         initToolbar();
         initNavigationView();
-        initListener();
         initFragments(savedInstanceState);
-
 
         // FIXME: 2018/3/4 仿照就看天气或者DonateGrils
         //Update();
@@ -124,16 +122,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     }
 
-
-    private void initListener() {
-        mDrawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
-            @Override
-            public void onDrawerClosed(View drawerView) {
-//                showGuideBuild();
-            }
-        });
-
-    }
 
     @TargetApi(Build.VERSION_CODES.M)
     private void initNavigationView() {
@@ -165,16 +153,18 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_todo:
-                DiaryEntity entity = new DiaryEntity();
-                entity.time = new Date().getTime();
+                break;
+            case R.id.menu_privacy:
                 break;
             case R.id.menu_recycle_bin:
                 break;
             case R.id.menu_more_service:
+                switchMenu(R.id.menu_more_service, mFragmentSparseArray);
                 break;
             case R.id.menu_setting:
                 break;
             case R.id.menu_about:
+                AboutActivity.launch(MainActivity.this);
                 break;
             default:
                 break;
@@ -208,10 +198,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 //            //favorite
 //            mFragmentSparseArray.put(R.taskId.nav_favorite, new FavoriteFragment());
 
+            //-主页
+            mFragmentSparseArray.put(R.id.menu_todo, MainTabsFragment.newInstance());
+
             //weather
-//            mFragmentSparseArray.put(R.id.menu_weather, WeatherFragment.newInstance());
+            mFragmentSparseArray.put(R.id.menu_more_service, OtherServerFragment.newInstance());
         }
-//        setMainFragment(R.id.menu_todo, mFragmentSparseArray, savedInstanceState == null);
+        setMainFragment(R.id.menu_todo, mFragmentSparseArray, savedInstanceState == null);
     }
 
     /**
@@ -243,50 +236,38 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @OnClick(R.id.fab)
     void fabClick() {
-        String fragmentName = currentFragment.getClass().getSimpleName();
-        switch (fragmentName) {
-            case "WeatherFragment":
-                startActivityForResult(new Intent(this,
-                        AddressCheckActivity.class), ADDRESS_REQUEST_CODE);
-                break;
-            case "0":
-                //点击今天
-                //            Intent intent = new Intent(MainActivity.this, PlanTaskActivity.class);
-//            intent.putExtra(PlanTaskActivity.KEY_SHOW_TYPE, PlanTaskActivity.TYPE_NEW_BUILD);
-//            if (mLastSelectedSideId == ID_TOMORROW) {
-//                intent.putExtra(PlanTaskActivity.KEY_IS_TOMORROW, true);
-//            }
-//            startActivity(intent);
-                break;
-            default:
-                break;
+        EditNoteActivity.launch(MainActivity.this,null);
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_activity_main, menu);
+        initShowModeMenuIcon(menu.findItem(R.id.menu_note_show_mode));
+        return true;
+    }
+
+    private void initShowModeMenuIcon(MenuItem item) {
+        Resources res = Utils.getApp().getResources();
+        if (C.noteListShowMode == C.STYLE_LINEAR) {
+            item.setIcon(res.getDrawable(R.drawable.ic_border_all_white_24dp));
+        } else {
+            item.setIcon(res.getDrawable(R.drawable.ic_format_list_bulleted_white_24dp));
         }
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode != RESULT_OK) return;
-        switch (requestCode) {
-            case ADDRESS_REQUEST_CODE: {
-                parseAddress(data);
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_note_search:
                 break;
-            }
+            case R.id.menu_note_show_mode:
+                break;
+            default:
+                break;
         }
+        return true;
     }
-
-
-    /**
-     * 解析地址。
-     */
-    private void parseAddress(Intent intent) {
-        String cityName = AddressCheckActivity.parse(intent);
-        if (!TextUtils.isEmpty(cityName)) {
-//            CacheManager.getInstance().saveCityName(cityName);
-//            RxBus.getDefault().post(new ChangeCityEvent(cityName));
-        }
-
-    }
-
 
     public void setFabVisible(boolean visible) {
         int visibility = visible ? View.VISIBLE : View.GONE;

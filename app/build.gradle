@@ -14,6 +14,7 @@ android {
         versionName app.versionName
         resConfigs app.resConfigs
 
+
         ndk {
             // 设置支持的 SO 库构架，一般而言，取你所有的库支持的构架的`交集`。
             abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a', 'x86'// 'x86_64', 'mips', 'mips64'
@@ -77,7 +78,6 @@ def getLocalValue(String key, boolean quot) {
     return value
 }
 
-
 //Bugtags 插件配置
 //bugtags {
 //    appKey "5ff84cf247fb1b4036f535d97796884c"
@@ -98,13 +98,13 @@ dependencies {
 
     // RecycleViewBaseAdapter  https://github.com/CymChad/BaseRecyclerViewAdapterHelper
     compile "com.github.CymChad:BaseRecyclerViewAdapterHelper:$rootProject.ext.base_recyclerview_adapter_helper_version"
-    //ucrop https://github.com/Yalantis/uCrop
-    compile "com.github.yalantis:ucrop:$rootProject.ext.ucrop_version"
-
 
     // 做地址选择器用到 地址选择器借鉴:https://github.com/yanzhenjie/AddressChecker
     compile "com.yanzhenjie:loading:$rootProject.ext.loading_version"
     compile 'com.alibaba:fastjson:1.1.52.android'
+
+    //PhotoView https://github.com/chrisbanes/PhotoView
+    implementation "com.github.chrisbanes:PhotoView:$rootProject.ext.photoview_version"
 
     //数据库 litepal https://github.com/LitePalFramework/LitePal
     compile "org.litepal.android:core:$rootProject.ext.litepal_version"
@@ -133,7 +133,6 @@ dependencies {
     //okhttp https://github.com/square/okhttp
     implementation "com.squareup.okhttp3:okhttp:$rootProject.ext.okhttp_version"
 
-
     //assist相关的
     //glide https://github.com/bumptech/glide
     implementation "com.github.bumptech.glide:glide:$rootProject.ext.glide_version"
@@ -144,8 +143,6 @@ dependencies {
     compile "moe.feng:AlipayZeroSdk:$rootProject.ext.alipayzerosdk_version"
     //AndroidUtilCode https://github.com/Blankj/AndroidUtilCode
     compile "com.blankj:utilcode:$rootProject.ext.android_utilcode_version"
-
-
 
     //bugtags https://work.bugtags.com
 //    implementation 'com.bugtags.library:bugtags-lib:latest.integration'

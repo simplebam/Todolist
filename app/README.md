@@ -80,6 +80,7 @@ App体验：[Todolist - fir.im ](https://fir.im/tolist)
     * SwipeRefreshLayout:
         * [SwipeRefreshLayout详解和自定义上拉加载更多 - 简书 ](https://www.jianshu.com/p/d23b42b6360b)
         * [SwipeRefreshLayout+RecyclerView冲突的几种解决方案 - 简书](https://www.jianshu.com/p/34cbaddb668b)
+    * NestedScrollView :[NestedScrollView的使用 - CSDN博客 ](http://blog.csdn.net/mchenys/article/details/51541306)
     * 看不懂物料设计的话建议买郭霖先生的《第二行代码》好一点，这本书内容对于初级
       开发者来说还是蛮不错的
   * 异步消息机制:[Android异步消息处理机制完全解析，带你从源码的角度彻底理解](http://blog.csdn.net/guolin_blog/article/details/9991569)
@@ -92,12 +93,18 @@ App体验：[Todolist - fir.im ](https://fir.im/tolist)
      以及 [android打开系统图库终极适配 - CSDN博客](http://blog.csdn.net/nbalichaoq/article/details/51992151)
    * 矢量图:[SVG 的 PathData 在 Android 中的使用 - CSDN博客 ](http://blog.csdn.net/zwlove5280/article/details/73196543)
      以及 [Android：获取并制作矢量图动画 - Android - 掘金](https://juejin.im/entry/5948c1ea8d6d81cc72fd1bbe)
-   * 文本你还可以这样玩:[Android TextView中文字通过SpannableString来设置超链接
-     、颜色、字体等属性- CSDN博客 ](http://blog.csdn.net/snowdream86/article/details/6776629)
    * 文本合成图片:[在代码中合成图片然后分享 - Android开发过程中的一些个人总结](https://segmentfault.com/a/1190000004554721)
 * Android进阶
    * Gradle:
      * [Android 开发之版本统一规范 | Blankj's Blog ](https://blankj.com/2016/09/21/android-keep-version-unity/)
+   * LruCache (最近最少使用)
+     * [LinkedHashMap 的实现原理 - Java 集合学习指南 - 极客学院Wiki](http://wiki.jikexueyuan.com/project/java-collection/linkedhashmap.html)
+     * [LruCache详解以及实战 - CSDN博客 ](http://blog.csdn.net/simplebam/article/details/79574368)
+   * Span 使用
+     * [Android TextView中文字通过SpannableString来设置超链接、颜色、字体等属性](http://blog.csdn.net/snowdream86/article/details/6776629))
+     * [用SpannableString和ImageSpan在textview中插入图片 - 泡在网上的日子](http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2013/0731/1497.html)
+     * [Android中ImageSpan的使用 - CSDN博客 ](http://blog.csdn.net/isee361820238/article/details/52425700)
+   * 内存泄漏:[Android内存优化（三）避免可控的内存泄漏 - CSDN博客](http://blog.csdn.net/itachi85/article/details/73522042)
 
 
 ### 项目中的用到的开源框架
@@ -162,8 +169,8 @@ App体验：[Todolist - fir.im ](https://fir.im/tolist)
   * [Google推荐的图片加载库Glide介绍 - 泡在网上的日子](http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/0327/2650.html)
   * [Glide 一个专注于平滑滚动的图片加载和缓存库 - 简书](https://www.jianshu.com/p/4a3177b57949)
   * [Glide V4 框架新特性（Migrating from v3 to v4） - HeXinGen的博客 - CSDN博客](http://blog.csdn.net/hexingen/article/details/72578066)
-* uCrop:[uCrop使用及源码浅析 | 吴小龙同學](http://wuxiaolong.me/2016/06/20/uCrop/)
 * BaseRecyclerViewAdapterHelper:[BRVAH官方使用指南（持续更新） - 简书](https://www.jianshu.com/p/b343fcff51b0)
+* PhotoView : [android 开源photoView的使用 - 简书](https://www.jianshu.com/p/6e38712e310f)
 
 
 ### Android 开发Tips && 性能优化
@@ -174,6 +181,18 @@ App体验：[Todolist - fir.im ](https://fir.im/tolist)
   * [Android内存优化（使用SparseArray和ArrayMap代替HashMap） - CSDN博客 ](http://blog.csdn.net/u010687392/article/details/47809295)
   * [Android 基础1：SparseArray 和 ArrayMap （HashMap替代） - 简书 ](https://www.jianshu.com/p/38b3e72d6fea)
   * [Android布局优化之ViewStub、include、merge使用与源码分析 - CSDN博客 ](http://blog.csdn.net/bboyfeiyu/article/details/45869393)
+* Bitmap 使用：
+  * [Android 之 Bitmap - 简书 ](https://www.jianshu.com/p/98c88f9ceafa)
+  * [Android高效加载大图、多图解决方案，有效避免程序OOM - CSDN博客 ](http://blog.csdn.net/guolin_blog/article/details/9316683)
+  * [Android DiskLruCache完全解析，硬盘缓存的最佳方案 - CSDN博客 ](http://blog.csdn.net/guolin_blog/article/details/28863651)
+  * [Android照片墙应用实现，再多的图片也不怕崩溃 - CSDN博客](http://blog.csdn.net/guolin_blog/article/details/9526203)
+* 摆脱AsyncTask：
+  * [用RxJava.Observable取代AsyncTask和AsyncTaskLoader-RxJava Android](http://blog.csdn.net/zhaokaiqiang1992/article/details/44751003)
+  * [详细解读AsyncTask的黑暗面以及一种替代方案 - 简书 ](https://www.jianshu.com/p/d83fd0e8a062)
+  * 第二篇只是让你知道 AsyncTask 的弊端,最建议使用RxJava 来解决
+* 使用 Channel 或者 okio 提升读写能力
+  * Okio:[大概是最完全的Okio源码解析文章 - 简书](https://www.jianshu.com/p/f033a64539a1)
+  * Channel:[通俗编程——白话 NIO 之 Channel - 后端 - 掘金 ](https://juejin.im/entry/57a4aac3a633bd00603e83e5)
 
 
 ### 开发中遇到的问题
@@ -199,6 +218,12 @@ App体验：[Todolist - fir.im ](https://fir.im/tolist)
    android:windowSoftInputMode="adjustResize"
   ```
   参考博客:[EditText弹出输入键盘后页面往上顶的问题 - CSDN博客](http://blog.csdn.net/u012319317/article/details/51135813)
+* RxJava中map()操作符里面的线城是在下游线程进行操作的,即observeOn()所订阅的线程
+* 在开发中遇到了就是保存图片到本地,但是本地图库没有刷新,查看了网上才知道需要发送
+  广播通知图库进行获取的:[Android保存图片到系统相册 - CSDN博客 ](http://blog.csdn.net/fengyenom1/article/details/78202955)
+  ,还有就是一直分不清内部存储跟外部存储的区别,这篇文章写的很好:[安卓内外部存储完全解析](https://www.jianshu.com/p/116025bf51f7)
+* 在开发过程中,在 sutsupportActionbar(toolbar) 之后,调用 toolbar.setTitle()
+  设置标题无效,解决办法:[为什么 Android 中 Toolbar.setTitle() 没有效果](http://blog.csdn.net/zhyh1986/article/details/52220907)
 
 
 ### 项目中的缺点

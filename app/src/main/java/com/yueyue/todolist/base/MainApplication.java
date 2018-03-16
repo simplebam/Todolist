@@ -21,7 +21,8 @@ public class MainApplication extends Application {
     public void onCreate() {
         super.onCreate();
         sContext = this;
-
+        //一定要先初始化AndroidUtilCode,因为很多类初始化都用到Utils.getApp()获得全局的Context
+        Utils.init(sContext);
         initTools();
         initBugsHandle();
 
@@ -29,22 +30,11 @@ public class MainApplication extends Application {
     }
 
     private void initTools() {
-        //初始化AndroidUtilCode
-        Utils.init(sContext);
         LitePal.initialize(sContext);
     }
 
     private void initBugsHandle() {
         CrashHandler.init(new CrashHandler(sContext));
 //        Bugtags.start(BuildConfig.BugtagsKey, sContext, Bugtags.BTGInvocationEventBubble);
-    }
-
-
-    public static Context getAppContext() {
-        return sContext;
-    }
-
-    public static String getAppCacheDir() {
-        return sContext.getCacheDir().toString();
     }
 }

@@ -5,6 +5,7 @@ package com.yueyue.todolist.base;
  * desc   :
  */
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
@@ -29,14 +30,27 @@ public abstract class BaseFragment extends RxFragment {
 
     protected View rootView;
     protected Toolbar toolbar;
+    protected Activity mActivity;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        this.mActivity = activity;
+    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (rootView == null) {
             rootView = inflater.inflate(initLayoutId(), container, false);
+            ButterKnife.bind(this, rootView);
         }
-        ButterKnife.bind(this, rootView);
+
+        ViewGroup parent = (ViewGroup) rootView.getParent();
+        if (parent != null) {
+            parent.removeView(rootView);
+        }
+
         initViews();
         onCreateView();
         return rootView;
@@ -86,7 +100,7 @@ public abstract class BaseFragment extends RxFragment {
 //    }
 
     protected void setToolBarTitle(String title) {
-        if (toolbar != null && title!=null) {
+        if (toolbar != null && title != null) {
             toolbar.setTitle(title);
         }
     }
