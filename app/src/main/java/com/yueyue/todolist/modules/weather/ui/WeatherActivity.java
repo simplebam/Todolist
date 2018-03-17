@@ -23,7 +23,6 @@ import com.yueyue.todolist.base.BaseActivity;
 import com.yueyue.todolist.common.utils.Util;
 import com.yueyue.todolist.component.AMapLocationer;
 import com.yueyue.todolist.component.PreferencesManager;
-import com.yueyue.todolist.component.PLog;
 import com.yueyue.todolist.component.RetrofitSingleton;
 import com.yueyue.todolist.modules.address.ui.AddressCheckActivity;
 import com.yueyue.todolist.modules.weather.adapter.WeatherAdapter;
@@ -140,37 +139,31 @@ public class WeatherActivity extends BaseActivity {
             return;
         }
 
-        try {
-            fetchDataByNetWork()
-                    .doOnSubscribe(aLong -> changeSwipeRefreshState(true))
-                    .doOnError(throwable -> {
-                        mRecyclerView.setVisibility(View.GONE);
-                        PreferencesManager.getInstance().saveCityName("广州");
-                        setToolbarTitle("找不到城市啦");
-                    })
-                    .doOnNext(weather -> {
-                        mRecyclerView.setVisibility(View.VISIBLE);
-                        setToolbarTitle(weather.basic.city);
-                        mWeather.status = weather.status;
-                        mWeather.aqi = weather.aqi;
-                        mWeather.basic = weather.basic;
-                        mWeather.suggestion = weather.suggestion;
-                        mWeather.now = weather.now;
-                        mWeather.dailyForecast = weather.dailyForecast;
-                        mWeather.hourlyForecast = weather.hourlyForecast;
-                        mAdapter.notifyDataSetChanged();
-                        //NotificationHelper.showWeatherNotification(getActivity(), weather);
-                    })
-                    .doOnComplete(() -> {
-                        changeSwipeRefreshState(false);
-                        ToastUtils.showShort(getString(R.string.refreshing_complete));
-                    })
-                    .subscribe();
-        } catch (Exception e) {
-            PLog.e(TAG, "fetchDataByNetWork: " + e.toString());
-            e.printStackTrace();
-        }
-
+        fetchDataByNetWork()
+                .doOnSubscribe(aLong -> changeSwipeRefreshState(true))
+                .doOnError(throwable -> {
+                    mRecyclerView.setVisibility(View.GONE);
+                    PreferencesManager.getInstance().saveCityName("广州");
+                    setToolbarTitle("找不到城市啦");
+                })
+                .doOnNext(weather -> {
+                    mRecyclerView.setVisibility(View.VISIBLE);
+                    setToolbarTitle(weather.basic.city);
+                    mWeather.status = weather.status;
+                    mWeather.aqi = weather.aqi;
+                    mWeather.basic = weather.basic;
+                    mWeather.suggestion = weather.suggestion;
+                    mWeather.now = weather.now;
+                    mWeather.dailyForecast = weather.dailyForecast;
+                    mWeather.hourlyForecast = weather.hourlyForecast;
+                    mAdapter.notifyDataSetChanged();
+                    //NotificationHelper.showWeatherNotification(getActivity(), weather);
+                })
+                .doOnComplete(() -> {
+                    changeSwipeRefreshState(false);
+                    ToastUtils.showShort(getString(R.string.refreshing_complete));
+                })
+                .subscribe();
     }
 
     /**
@@ -193,8 +186,6 @@ public class WeatherActivity extends BaseActivity {
                     }
                 });
     }
-
-
 
 
     /**

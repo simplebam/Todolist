@@ -113,39 +113,48 @@ dependencies {
     implementation files('libs/AMap_Location_V3.8.0_20180201.jar')
 
     // rx
+
     //RxJava https://github.com/ReactiveX/RxAndroid
     compile "io.reactivex.rxjava2:rxandroid:$rootProject.ext.rxandroid_version"
     compile "io.reactivex.rxjava2:rxjava:$rootProject.ext.rxjava_version"
+
     //rxpermissions  https://github.com/tbruyelle/RxPermissions
     compile "com.tbruyelle.rxpermissions2:rxpermissions:$rootProject.ext.rxpermissions2_version"
+
     //rxlifecycle  https://github.com/trello/RxLifecycle
     compile "com.trello.rxlifecycle2:rxlifecycle:$rootProject.ext.rxlifecycle_version"
     compile "com.trello.rxlifecycle2:rxlifecycle-android:$rootProject.ext.rxlifecycle_version"
     compile "com.trello.rxlifecycle2:rxlifecycle-components:$rootProject.ext.rxlifecycle_version"
 
     //network
+
     //gson https://github.com/google/gson
     compile "com.google.code.gson:gson:$rootProject.ext.gson_version"
+
     //retrofit https://github.com/square/retrofit
     compile "com.squareup.retrofit2:retrofit:$rootProject.ext.retrofit_version"
     compile "com.squareup.retrofit2:adapter-rxjava2:$rootProject.ext.retrofit_version"
     compile "com.squareup.retrofit2:converter-gson:$rootProject.ext.retrofit_version"
+
     //okhttp https://github.com/square/okhttp
     implementation "com.squareup.okhttp3:okhttp:$rootProject.ext.okhttp_version"
 
     //assist相关的
+
     //glide https://github.com/bumptech/glide
     implementation "com.github.bumptech.glide:glide:$rootProject.ext.glide_version"
+
     //butterknife https://github.com/JakeWharton/butterknife
     compile "com.jakewharton:butterknife:$rootProject.ext.butterknife_version"
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.butterknife_version"
+
     //AlipayZeroSdk https://github.com/fython/AlipayZeroSdk
     compile "moe.feng:AlipayZeroSdk:$rootProject.ext.alipayzerosdk_version"
+
     //AndroidUtilCode https://github.com/Blankj/AndroidUtilCode
     compile "com.blankj:utilcode:$rootProject.ext.android_utilcode_version"
 
     //bugtags https://work.bugtags.com
-//    implementation 'com.bugtags.library:bugtags-lib:latest.integration'
 
-
+    //    implementation 'com.bugtags.library:bugtags-lib:latest.integration'
 }

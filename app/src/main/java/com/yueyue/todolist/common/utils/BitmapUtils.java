@@ -11,7 +11,6 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 
 import com.blankj.utilcode.util.EncryptUtils;
-import com.yueyue.todolist.R;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -163,9 +162,16 @@ public class BitmapUtils {
         return BitmapFactory.decodeFile(filePath, options);
     }
 
-    public static Bitmap getDefaultPictureForAlbum(Context context, int reqWidth, int reqHeight) {
-        return bitmapResizeFromResource(context.getResources(), R.drawable.bing_default,
-                reqWidth, reqHeight);
+    public static void recycleBitamp(Bitmap... bitmaps) {
+        if (bitmaps == null || bitmaps.length == 0) {
+            return;
+        }
+
+        for (Bitmap bitmap : bitmaps) {
+            if (bitmap != null && !bitmap.isRecycled()) {
+                bitmap.recycle();
+            }
+        }
     }
 
 

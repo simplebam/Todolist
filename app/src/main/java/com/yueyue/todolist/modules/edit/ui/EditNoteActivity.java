@@ -38,6 +38,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.yueyue.todolist.R;
 import com.yueyue.todolist.base.BaseActivity;
+import com.yueyue.todolist.common.utils.MyFileUtils;
 import com.yueyue.todolist.common.utils.ProgressDialogUtils;
 import com.yueyue.todolist.component.ImageLoader;
 import com.yueyue.todolist.component.PLog;
@@ -176,11 +177,16 @@ public class EditNoteActivity extends BaseActivity {
         try {
             //创建File对象,用于存储拍照后的照片
             String imageName = TimeUtils.getNowString() + ".jpg";
-            mImageFile = createNewFile(imageName);
+            mImageFile = MyFileUtils.createNewFile(getExternalCacheDir(), imageName);
         } catch (IOException e) {
             PLog.e(TAG, "takePhoto:" + e.toString());
             e.printStackTrace();
         }
+
+        if (mImageFile == null) {
+            return;
+        }
+
 
         Uri takePhotoUri;
         if (Build.VERSION.SDK_INT >= 24) {
@@ -276,8 +282,7 @@ public class EditNoteActivity extends BaseActivity {
                 imagePath = getImagePath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, selection);
             } else if ("com.android.providers.downloads.documents".equals(uri.getAuthority())) {
                 Uri contentUri = ContentUris.withAppendedId(
-                        Uri.parse("content://downloads/public_downloads"),
-                        Long.valueOf(docId));
+                        Uri.parse("content://downloads/public_downloads"), Long.valueOf(docId));
                 imagePath = getImagePath(contentUri, null);
             }
         } else if ("content".equalsIgnoreCase(uri.getScheme())) {
@@ -349,15 +354,6 @@ public class EditNoteActivity extends BaseActivity {
     }
 
 
-    private File createNewFile(@NonNull String fileName) throws IOException {
-        File saveFile = new File(getExternalCacheDir(), fileName);
-        if (saveFile.exists()) {
-            saveFile.delete();
-        }
-        saveFile.createNewFile();
-        return saveFile;
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_note, menu);
@@ -372,7 +368,7 @@ public class EditNoteActivity extends BaseActivity {
                 break;
             case R.id.menu_note_statistics:
                 KeyboardUtils.hideSoftInput(this);
-                calculateContentAndImageCount(mEtContent);
+                countTextAndImage(mEtContent);
                 break;
             case R.id.menu_note_share:
                 KeyboardUtils.hideSoftInput(this);
@@ -382,7 +378,7 @@ public class EditNoteActivity extends BaseActivity {
         return true;
     }
 
-    private void calculateContentAndImageCount(MyEditText myEditText) {
+    private void countTextAndImage(MyEditText myEditText) {
         int count = myEditText.getText().length();
         int imageCount = myEditText.mImageList.size();
         for (int i = 0; i < imageCount; i++) {
@@ -446,15 +442,19 @@ public class EditNoteActivity extends BaseActivity {
         Observable.timer(0, TimeUnit.SECONDS)
                 .compose(this.bindToLifecycle())
                 .subscribeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(onSubscribe -> mProgressDialog.show(getString(R.string.creating_image)))
+                .doOnSubscribe(onSubscribe -> {
+                    //为了合成时候没有光标影子
+                    setEditTextState(false);
+                    mProgressDialog.show(getString(R.string.creating_image));
+                })
                 .observeOn(Schedulers.io())
                 .map(aLong -> createShareBitmap(mEtContent))
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext(bitmap -> startShareActivity(bitmap))
                 .doOnComplete(() -> {
                     ToastUtils.showShort(getString(R.string.success_on_create_image));
-                    setEditTextState(true);
                     mProgressDialog.hide();
+                    setEditTextState(true);
                 })
                 .subscribe();
     }
@@ -471,7 +471,16 @@ public class EditNoteActivity extends BaseActivity {
 
 
     private void startShareActivity(Bitmap bitmap) {
-        ShareActivity.launch(EditNoteActivity.this, bitmap);
+        String desPath = MyFileUtils.getDiskPicturesDirFileStr(EditNoteActivity.this, ShareActivity.SHARE_PHOTO_NAME);
+        boolean b = MyFileUtils.saveImageToLoacl(bitmap, Bitmap.CompressFormat.JPEG, 80, desPath);
+
+        if (!b) {
+            ToastUtils.showShort(getString(R.string.unable_to_send_picture_and_try_later));
+            return;
+        }
+
+        bitmap.recycle();
+        ShareActivity.launch(EditNoteActivity.this, desPath);
     }
 
 
@@ -496,13 +505,12 @@ public class EditNoteActivity extends BaseActivity {
     }
 
     public void saveNote(String content) {
-        Intent intent = getIntent();
         // 内容改变时才保存
         if (!content.equals(mNoteEntity.noteContent)) {
             mNoteEntity.modifiedTime = TimeUtils.getNowMills();
             mNoteEntity.noteContent = content;
 //            intent.putExtra("position", mPosition);
-            setResult(RESULT_OK, intent);
+            setResult(RESULT_OK, getIntent());
         }
     }
 

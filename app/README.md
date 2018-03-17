@@ -30,6 +30,10 @@ App体验：[Todolist - fir.im ](https://fir.im/tolist)
   * Android基础知识复习:
      * [尚硅谷15天Android基础(复习笔记) - CSDN博客](http://blog.csdn.net/simplebam/article/details/70213167)
      * [《Android 第一行代码》](http://blog.csdn.net/guolin_blog/article/details/52032038)
+     * 内部存储跟外部存储的区别,
+        * [Android存储访问及目录 - 圣骑士wind - 博客园](http://www.cnblogs.com/mengdd/p/3742623.html)
+        * [安卓内外部存储完全解析](https://www.jianshu.com/p/116025bf51f7)
+        * [彻底搞懂Android文件存储---内部存储，外部存储以及各种存储路径解惑](http://blog.csdn.net/u010937230/article/details/73303034)
   * 四大组件:
      * Activity:
         * 启动模式:[Activity的四种启动模式-图文并茂 – Android开发中文站](http://www.androidchina.net/3173.html)
@@ -105,6 +109,15 @@ App体验：[Todolist - fir.im ](https://fir.im/tolist)
      * [用SpannableString和ImageSpan在textview中插入图片 - 泡在网上的日子](http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2013/0731/1497.html)
      * [Android中ImageSpan的使用 - CSDN博客 ](http://blog.csdn.net/isee361820238/article/details/52425700)
    * 内存泄漏:[Android内存优化（三）避免可控的内存泄漏 - CSDN博客](http://blog.csdn.net/itachi85/article/details/73522042)
+   * 注解:
+     * 注解就是元数据，即一种描述数据的数据，可以描述类、方法、参数、变量、构造器及包声明中的特殊修饰符。
+     * 元注解(在 java.lang.annotation提供了四种元注解)：
+       * @Documented –注解是否将包含在JavaDoc中 ：
+       * @Target? –注解用于什么地方 ：[JDK5.0新特性Annotation之自定义注解和@Target注解和@Documented注解](http://blog.csdn.net/jadyer/article/details/6219208)
+       * @Retention –什么时候使用该注解 ：[JDK5.0新特性Annotation之@Retention注解](http://blog.csdn.net/jadyer/article/details/6219252)
+       * @Inherited – 是否允许子类继承该注解：[JDK5.0新特性Annotation之@Inherited注解](http://blog.csdn.net/jadyer/article/details/6219285)
+     * [android注解入门 并来自己写一个框架 - CSDN博客 ](http://blog.csdn.net/qfanmingyiq/article/details/53394783)
+     * [Android 注解指南 - Android - 掘金 ](https://juejin.im/entry/58fc7ca744d9040069e65197)
 
 
 ### 项目中的用到的开源框架
@@ -133,7 +146,9 @@ App体验：[Todolist - fir.im ](https://fir.im/tolist)
   * RxJava:
      * 目前最好的RxJava文章,没有之一:[给初学者的RxJava2.0教程(一) - 简书 ](https://www.jianshu.com/p/464fa025229e)
      * 其他RxJava文章推荐:[RxJava2 学习资料推荐](http://mp.weixin.qq.com/s/UAEgdC2EtqSpEqvog0aoZQ)
+     * [RxJava的观察者模式(二) - 简书 ](https://www.jianshu.com/p/238e350f7f3f)
      * [RxJava之过滤操作符 - 行云间 - CSDN博客](http://blog.csdn.net/io_field/article/details/51378909)
+     * [RxJava之转换操作符 - CSDN博客](http://blog.csdn.net/io_field/article/details/51406910)
      * [RxJava2.0你不知道的事 - 简书](https://www.jianshu.com/p/785d9dfb0a5b)
   * RxLifecycle:[解决RxJava内存泄漏（前篇）：RxLifecycle详解及原理分析 -
     CSDN博客](http://blog.csdn.net/mq2553299/article/details/78927617)
@@ -221,9 +236,35 @@ App体验：[Todolist - fir.im ](https://fir.im/tolist)
 * RxJava中map()操作符里面的线城是在下游线程进行操作的,即observeOn()所订阅的线程
 * 在开发中遇到了就是保存图片到本地,但是本地图库没有刷新,查看了网上才知道需要发送
   广播通知图库进行获取的:[Android保存图片到系统相册 - CSDN博客 ](http://blog.csdn.net/fengyenom1/article/details/78202955)
-  ,还有就是一直分不清内部存储跟外部存储的区别,这篇文章写的很好:[安卓内外部存储完全解析](https://www.jianshu.com/p/116025bf51f7)
 * 在开发过程中,在 sutsupportActionbar(toolbar) 之后,调用 toolbar.setTitle()
   设置标题无效,解决办法:[为什么 Android 中 Toolbar.setTitle() 没有效果](http://blog.csdn.net/zhyh1986/article/details/52220907)
+* 打签名正式包出现以下这种情况:
+  ```
+  Error:Execution failed for task ':app:validateSigningRelease'.
+  > Keystore file E:\acode\Android_Studio\Todolist\app\todolist.jks not found for signing config 'externalOverride'.
+  ```
+  其实就是你的 jks 密钥配置的路径不对,AS找不到,检查一下路径即可
+  参考博客:[build - Android Error Building Signed APK - Stack Overflow](https://stackoverflow.com/questions/36173983/android-error-building-signed-apk)
+* 之前一直以为Activity的Intent传值没有大小限制,但项目中传bitmap的byte[]数组,
+  出现如下的异常(这里可能会报多个异常,但最核心就是下面这句话了)
+  ```
+    Caused by: android.os.TransactionTooLargeException: data parcel size 1808828 bytes
+  ```
+
+  * 关于Intent的大小问题,这篇是解析Intent传值限制的最好文章:[Activity之间使用
+    intent传递大量数据带来问题总结 - CSDN博客 ](http://blog.csdn.net/Rflyee/article/details/47441405)
+  * 关于常见异常,可以查看:[Binder异常解析 - Gityuan博客 | 袁辉辉博客 ](http://gityuan.com/2017/05/01/binder_exception/)
+  * 解决办法:
+    * 使用 EventBus 或者 RxBus 传送,参考博客:[Intent传递大量数据出现
+      TransactionTooLargeException异常的解决方案](https://github.com/XConstantine/Android-tips-tricks/issues/4)
+      * RxBus :
+        * 这里需要一点RxJava的知识,看上面用到框架Rx系列那里,那里有教程
+        * [用RxJava实现事件总线(Event Bus) - 简书 ](https://www.jianshu.com/p/ca090f6e2fe2)
+        * [[深入RxBus]：异常处理 - 简书 ](https://www.jianshu.com/p/0493cc28a811)
+        * [[深入RxBus]：支持Sticky事件 - 简书 ](https://www.jianshu.com/p/71ab00a2677b)
+    * 但还有一种就是把图片存到本地,然后传送图片路径或者uri过去
+        * 选择这种好处就是我在保存图片以
+        * 本人由于对RxBus等不太熟悉以及对内存的顾虑,所以决定还是使用这种方法解决
 
 
 ### 项目中的缺点

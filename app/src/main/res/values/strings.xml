@@ -147,5 +147,7 @@
     <string name="unable_to_save_photo_because_of_the_stroage_error">手机内存卡有问题,无法保存图片到图库,请检查</string>
     <string name="the_photo_not_exist">图片不存在</string>
     <string name="to_setting">前往设置界面</string>
+    <string name="unable_to_send_picture_and_try_later">无法传送图片,请稍后再试</string>
+    <string name="unable_to_share_picture_and_try_later">无法分享图片,请稍后再试</string>
 
 </resources>

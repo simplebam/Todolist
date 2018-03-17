@@ -1,7 +1,5 @@
 package com.yueyue.todolist.component;
 
-import android.util.Log;
-
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
 import com.yueyue.todolist.common.C;
@@ -110,48 +108,63 @@ public class RetrofitSingleton {
         };
     }
 
+
+    /**
+     *  和风status状态码:  "no more requests"--->/(ㄒoㄒ)/~~,API免费次数已用完
+     *  和风status状态码:  "unknown city"--->API没有这个城市
+     *  和风status状态码:  "param invalid"--->,API没有缺少查询的参数
+     */
     public Observable<Weather> fetchWeather(String city) {
         return sApiService.mWeatherAPI(city, C.HE_WEATHER_KEY)
-                .flatMap(weather -> {
-                    String status = weather.mWeathers.get(0).status;
-                    if ("no more requests".equals(status)) {
-                        return Observable.error(new RuntimeException("/(ㄒoㄒ)/~~,API免费次数已用完"));
-                    } else if ("unknown city".equals(status)) {
-                        return Observable.error(new RuntimeException(String.format("API没有%s", city)));
-                    } else if ("param invalid".equals(status)) {
-                        return Observable.error(new RuntimeException("API没有缺少查询的参数"));
-                    }
-                    return Observable.just(weather);
-                })
+                .filter(weather -> weather != null && "ok".equals(weather.mWeathers.get(0).status))
                 .map(weather -> weather.mWeathers.get(0))
                 .doOnError(RetrofitSingleton::disposeFailureInfo)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread(), true);
+
+               //配置下面这些会导致崩溃,无法捕捉的,还是用filter来过滤好一点
+//            .flatMap(weather -> {
+//            String status = weather.mWeathers.get(0).status;
+//            if ("no more requests".equals(status)) {
+//                return Observable.error(new RuntimeException("/(ㄒoㄒ)/~~,API免费次数已用完"));
+//            } else if ("unknown city".equals(status)) {
+//                return Observable.error(new RuntimeException(String.format("API没有%s", city)));
+//            } else if ("param invalid".equals(status)) {
+//                return Observable.error(new RuntimeException("API没有缺少查询的参数"));
+//            }
+//            return Observable.just(weather);
+//        })
     }
 
 
+    /**
+     * Mob 天气状态吗:10001 -->配置Mob的appkey不合法
+     * Mob 天气状态吗:10020 -->接口维护
+     * Mob 天气状态吗:10021 -->接口停用
+     * Mob 天气状态吗:20402 -->查询不到该城市的天气
+     */
     public Observable<MobWeather> fetchMobWeather(String city) {
         return sApiService.mMobWeatherAPI(city, C.MOB_APP_KEY)
-                .flatMap(weather -> {
-                    int code = weather.retCode;
-                    Log.i("xxxxxxxxxxxxxxxx", "fetchMobWeather---code:"+weather.retCode);
-                    Log.i("xxxxxxxxxxxxxxxx", "fetchMobWeather----city:"+city);
-                    Log.i("xxxxxxxxxxxxxxxx", "fetchMobWeather----list:"+weather.mMobWeathers);
-                    if (10001 == code) {
-                        return Observable.error(new RuntimeException("配置Mob的appkey不合法"));
-                    } else if (10020 == code) {
-                        return Observable.error(new RuntimeException("接口维护"));
-                    } else if (10021 == code) {
-                        return Observable.error(new RuntimeException("接口停用"));
-                    } else if (20402 == code) {
-                        return Observable.error(new RuntimeException("查询不到该城市的天气"));
-                    }
-                    return Observable.just(weather);//code==200
-                })
+                .filter(weather->weather!=null && weather.retCode==200)
                 .map(weather -> weather.mMobWeathers.get(0))
                 .doOnError(RetrofitSingleton::disposeFailureInfo)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread(), true);
+
+             //配置下面这些会导致崩溃,无法捕捉的,还是用filter来过滤好一点
+//            .flatMap(weather -> {
+//            int code = weather.retCode;
+//            if (10001 == code) {
+//                return Observable.error(new RuntimeException("配置Mob的appkey不合法"));
+//            } else if (10020 == code) {
+//                return Observable.error(new RuntimeException("接口维护"));
+//            } else if (10021 == code) {
+//                return Observable.error(new RuntimeException("接口停用"));
+//            } else if (20402 == code) {
+//                return Observable.error(new RuntimeException("查询不到该城市的天气"));
+//            }
+//            return Observable.just(weather);//code==200
+//        })
     }
 
 

@@ -18,8 +18,10 @@ import java.io.OutputStream;
 /**
  * author : yueyue on 2018/3/15 11:37
  * desc   : 位图磁盘缓存
- * quote  : Android DiskLruCache完全解析，硬盘缓存的最佳方案
- * http://blog.csdn.net/guolin_blog/article/details/28863651
+ * quote  :
+ * <a href="http://blog.csdn.net/guolin_blog/article/details/28863651">Android DiskLruCache完全解析，硬盘缓存的最佳方案 </a>
+ *
+ *
  */
 
 public class BitmapDiskHelper {
@@ -27,11 +29,9 @@ public class BitmapDiskHelper {
 
     private DiskLruCache mDiskLruCache = null;
 
-
-
     private final static String DEFAULT_PIC_KEY = "default_key";
 
-    public static final String CACHE_NOTE_IMAGE = "note_image";
+    public static final String CACHE_NOTE_IMAGE = "BitmapCache";
 
     private final String uniqueName;
 
@@ -51,10 +51,7 @@ public class BitmapDiskHelper {
                 cacheDir.mkdirs();
             }
 
-            mDiskLruCache = DiskLruCache.open(cacheDir,
-                    getAppVersion(context),
-                    1,
-                    10 * 1024 * 1024);
+            mDiskLruCache = DiskLruCache.open(cacheDir, getAppVersion(context), 1, 10 * 1024 * 1024);
 
         } catch (IOException e) {
             PLog.e(TAG, "initDiskCacheControl: "+e.toString());

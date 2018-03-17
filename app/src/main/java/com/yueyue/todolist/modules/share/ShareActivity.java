@@ -4,12 +4,11 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -19,14 +18,12 @@ import com.github.chrisbanes.photoview.PhotoView;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.yueyue.todolist.R;
 import com.yueyue.todolist.base.BaseActivity;
+import com.yueyue.todolist.common.utils.BitmapUtils;
 import com.yueyue.todolist.common.utils.MyFileUtils;
 import com.yueyue.todolist.common.utils.Util;
-import com.yueyue.todolist.component.PLog;
+import com.yueyue.todolist.component.Sharer;
 
-import java.io.BufferedOutputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,30 +36,25 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * author : yueyue on 2018/3/16 16:41
  * desc   :
+ * qoute  : <a href="http://yifeng.studio/2017/03/21/android-obtain-view-width-and-heigth-not-zero/">Android 获取 View 宽高的常用正确方式，避免为零 | YiFeng's Zone </a>
  */
 
 public class ShareActivity extends BaseActivity {
 
     private static final String TAG = ShareActivity.class.getSimpleName();
-    private static final String EXTRA_BITMAP_BYTES = "bitmap_bytes";
+    public static final String SHARE_PHOTO_NAME = "share.jpg";
+    private static final String EXTRA_BITMAP_PATH = "bitmap_path";
 
     @BindView(R.id.pv_share_preview)
     PhotoView mPvPreview;
 
-    private List<Disposable> mDisposableList = new ArrayList<>();
 
     private Bitmap mBitmap;
+    private List<Disposable> mDisposableList = new ArrayList<>();
 
-    public static void launch(Context context, Bitmap bitmap) {
+    public static void launch(Context context, String desPath) {
         Intent intent = new Intent(context, ShareActivity.class);
-        if (bitmap != null) {
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-            bitmap.recycle();//回收
-            byte[] bytes = stream.toByteArray();
-            intent.putExtra(EXTRA_BITMAP_BYTES, bytes);
-            Log.i(TAG, "launch: bytes:"+bytes.length);
-        }
+        intent.putExtra(EXTRA_BITMAP_PATH, desPath);
         context.startActivity(intent);
     }
 
@@ -76,6 +68,7 @@ public class ShareActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setupView();
         initData();
+
     }
 
 
@@ -84,12 +77,28 @@ public class ShareActivity extends BaseActivity {
     }
 
     private void initData() {
-        byte[] bytes = getIntent().getByteArrayExtra(EXTRA_BITMAP_BYTES);
-        if (bytes != null) {
-            mBitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-            mPvPreview.setImageBitmap(mBitmap);
+        String desPath = getIntent().getStringExtra(EXTRA_BITMAP_PATH);
+
+        if (TextUtils.isEmpty(desPath)) {
+            return;
         }
 
+        //Android 获取 View 宽高的常用正确方式，避免为零 | YiFeng's Zone
+        //  http://yifeng.studio/2017/03/21/android-obtain-view-width-and-heigth-not-zero/
+        mPvPreview.post(() -> {
+            int reqWidth = mPvPreview.getWidth();
+            int reqHeight = mPvPreview.getHeight();
+            mBitmap = BitmapUtils.bitmapResizeFromFile(desPath, reqWidth, reqHeight);
+            initPhotoView(mBitmap);
+        });
+    }
+
+
+    private void initPhotoView(Bitmap bitmap) {
+        if (bitmap == null) {
+            return;
+        }
+        mPvPreview.setImageBitmap(bitmap);
     }
 
 
@@ -106,13 +115,45 @@ public class ShareActivity extends BaseActivity {
                 onBackPressed();
                 break;
             case R.id.menu_share_send:
-//                mPresenter.sendBitmap();
+                ShareImage();
                 break;
             case R.id.menu_share_save:
                 applyForStorage();
                 break;
         }
         return true;
+    }
+
+    private void ShareImage() {
+        String desPath = getIntent().getStringExtra(EXTRA_BITMAP_PATH);
+
+        if (!TextUtils.isEmpty(desPath)) {
+            sendImage(desPath);
+            return;
+        }
+
+        //下面这些代码是防止前一个 Activity 保存在本地图片被人为(用户/清理软件)清理,所以再生成一次试试
+
+        if (mBitmap == null) {
+            return;
+        }
+
+        desPath = MyFileUtils.getDiskPicturesDirFileStr(ShareActivity.this, SHARE_PHOTO_NAME);
+        boolean b = MyFileUtils.saveImageToLoacl(mBitmap, Bitmap.CompressFormat.JPEG,
+                100, desPath);
+
+        if (!b) {
+            ToastUtils.showShort(getString(R.string.unable_to_share_picture_and_try_later));
+            return;
+        }
+
+        sendImage(desPath);
+
+    }
+
+    private void sendImage(String desPath) {
+        Uri uri = Uri.fromFile(new File(desPath));
+        Sharer.shareImage(ShareActivity.this, getString(R.string.share), uri);
     }
 
 
@@ -154,47 +195,47 @@ public class ShareActivity extends BaseActivity {
         }
 
 
-        File parentFile = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-        String fileName = System.currentTimeMillis() + ".jpg";
-        File file = new File(parentFile, fileName);
-        FileOutputStream fos = null;
+        File desFile = null;
         try {
-            fos = new FileOutputStream(file);
-            BufferedOutputStream bos = new BufferedOutputStream(fos);
-            //通过io流的方式来压缩保存图片
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 60, bos);
-            fos.flush();
-
-            //把文件插入到系统图库
-            //MediaStore.Images.Media.insertImage(context.getContentResolver(), file.getAbsolutePath(), fileName, null);
-
-            //保存图片后发送广播通知更新数据库
-            sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file)));
-
-            ToastUtils.showShort(getString(R.string.save_success)+":"+file.getPath());
+            File parentFile = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+            String fileName = System.currentTimeMillis() + ".jpg";
+            desFile = MyFileUtils.createNewFile(parentFile, fileName);
         } catch (IOException e) {
-            PLog.e(TAG, "saveImageToGallery: " + e.toString());
+
             e.printStackTrace();
-        } finally {
-            if (fos != null) {
-                try {
-                    fos.close();
-                } catch (IOException e) {
-                    PLog.e(TAG, "saveImageToGallery: " + e.toString());
-                    e.printStackTrace();
-                }
-            }
         }
+
+        if (desFile == null) {
+            return;
+        }
+
+        boolean b = MyFileUtils.saveImageToLoacl(bitmap, Bitmap.CompressFormat.JPEG,
+                60, desFile.getPath());
+
+        if (!b) {
+            ToastUtils.showShort(getString(R.string.save_error));
+            return;
+        }
+
+        //把文件插入到系统图库
+        //MediaStore.Images.Media.insertImage(context.getContentResolver(), file.getAbsolutePath(), fileName, null);
+
+        //保存图片后发送广播通知更新数据库
+        sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(desFile)));
+        ToastUtils.showShort(getString(R.string.save_success) + ":" + desFile.getPath());
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        BitmapUtils.recycleBitamp(mBitmap);
+
         //释放资源
         for (Disposable disposable : mDisposableList) {
             if (disposable != null && !disposable.isDisposed()) {
                 disposable.dispose();
             }
         }
+
     }
 }

@@ -10,8 +10,11 @@ import com.blankj.utilcode.util.Utils;
 /**
  * author : yueyue on 2018/3/16 09:13
  * desc   : BitMap 内存管理以及Disk管理
- * quote  : <a href="http://blog.csdn.net/guolin_blog/article/details/9316683">Android高效加载大图、多图解决方案，有效避免程序OOM - CSDN博客</a>
+ * quote  :
+ * <p>
+ * <a href="http://blog.csdn.net/guolin_blog/article/details/9316683">Android高效加载大图、多图解决方案，有效避免程序OOM - CSDN博客</a>
  * <a href="http://blog.csdn.net/jxxfzgy/article/details/44885623">LruCache详解之 Android 内存优化 - CSDN博客</a>
+ * </p>
  */
 
 public class BitMapHelper {
