@@ -25,7 +25,7 @@ public class BitMapHelper {
 
     //  this();//使用运行内存的1/8
     public BitMapHelper(@NonNull Context context) {
-        int maxSize = (int) (Runtime.getRuntime().maxMemory() / 8);
+        int maxSize = (int) (Runtime.getRuntime().maxMemory() / 4);
         this.mContext = context;
         initBitmapDisk(context);
         initLruCache(maxSize);
@@ -35,7 +35,7 @@ public class BitMapHelper {
         if (context == null) {
             context = Utils.getApp();
         }
-        mBitmapDiskHelper = new BitmapDiskHelper(context, BitmapDiskHelper.CACHE_NOTE_IMAGE);
+        mBitmapDiskHelper = new BitmapDiskHelper(context, BitmapDiskHelper.BITMAP_CACHE);
     }
 
     private void initLruCache(int maxSize) {

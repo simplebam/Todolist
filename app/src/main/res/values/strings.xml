@@ -75,7 +75,7 @@
     <string name="database_content_three">在设置中，可以切换主题颜色！</string>
     <string name="database_content_four">点击右下角，创建新的便签！</string>
     <string name="database_content_five">
-        您现在使用的是该软件的第四个版本，使用中如果遇到问题，或者有什么建议,请一定要记得给我们发送反馈！\n本软件无毒无广告，功能也会在后续的开发中逐渐完善，如果您觉得好用，可以在支持一下开发者！\n开发这个软件纯粹是出于兴趣，也没有想加入广告，软件的进一步完善也需要你们的反馈和支持！\n非常感谢！
+        您现在使用的是该软件的第一个版本，使用中如果遇到问题，或者有什么建议,请一定要记得给我们发送反馈！\n本软件无毒无广告，功能也会在后续的开发中逐渐完善，如果您觉得好用，可以在支持一下开发者！\n开发这个软件纯粹是出于兴趣，也没有想加入广告，软件的进一步完善也需要你们的反馈和支持！\n非常感谢！
     </string>
     <string name="note_privacy_and_recycle">私密便签无法直接预览，请先恢复！</string>
     <string name="search">搜索</string>
@@ -133,7 +133,8 @@
     <string name="need_storge_permission_to_open_album">需要读写内存权限才可以打开系统相册~</string>
     <string name="share">分享</string>
     <string name="statistics">统计</string>
-    <string name="creating_image">生成图片中...</string>
+    <!--&#8230;代表...-->
+    <string name="creating_image">生成图片中&#8230;</string>
     <string name="error_on_create_image">生成图片发生错误</string>
     <string name="success_on_create_image">成功生成图片</string>
     <string name="from_todolist">来自：Todolist</string>
@@ -149,5 +150,11 @@
     <string name="to_setting">前往设置界面</string>
     <string name="unable_to_send_picture_and_try_later">无法传送图片,请稍后再试</string>
     <string name="unable_to_share_picture_and_try_later">无法分享图片,请稍后再试</string>
+    <string name="download">下载</string>
+    <string name="delete">删除</string>
+    <string name="photo">图片</string>
+    <string name="delete_photo">删除图片</string>
+    <string name="are_you_sure_to_delete_the_photo">确定删除该图片吗？</string>
+    <string name="cancel">取消</string>
 
 </resources>

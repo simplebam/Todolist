@@ -20,8 +20,6 @@ import java.io.OutputStream;
  * desc   : 位图磁盘缓存
  * quote  :
  * <a href="http://blog.csdn.net/guolin_blog/article/details/28863651">Android DiskLruCache完全解析，硬盘缓存的最佳方案 </a>
- *
- *
  */
 
 public class BitmapDiskHelper {
@@ -31,7 +29,7 @@ public class BitmapDiskHelper {
 
     private final static String DEFAULT_PIC_KEY = "default_key";
 
-    public static final String CACHE_NOTE_IMAGE = "BitmapCache";
+    public static final String BITMAP_CACHE = "BITMAP_CACHE";
 
     private final String uniqueName;
 
@@ -51,10 +49,11 @@ public class BitmapDiskHelper {
                 cacheDir.mkdirs();
             }
 
-            mDiskLruCache = DiskLruCache.open(cacheDir, getAppVersion(context), 1, 10 * 1024 * 1024);
+            int maxSize = 30 * 1024 * 1024;
+            mDiskLruCache = DiskLruCache.open(cacheDir, getAppVersion(context), 1, maxSize);
 
         } catch (IOException e) {
-            PLog.e(TAG, "initDiskCacheControl: "+e.toString());
+            PLog.e(TAG, "initDiskCacheControl: " + e.toString());
             e.printStackTrace();
         }
     }
@@ -70,7 +69,7 @@ public class BitmapDiskHelper {
         try {
             mDiskLruCache.remove(key);
         } catch (IOException e) {
-            PLog.e(TAG, "remove: "+ e.toString());
+            PLog.e(TAG, "remove: " + e.toString());
             e.printStackTrace();
         }
     }
@@ -93,7 +92,7 @@ public class BitmapDiskHelper {
 
             return result;
         } catch (IOException e) {
-            PLog.e(TAG, "get: "+ e.toString());
+            PLog.e(TAG, "get: " + e.toString());
             e.printStackTrace();
             return result;
         } finally {
@@ -101,7 +100,7 @@ public class BitmapDiskHelper {
                 try {
                     is.close();
                 } catch (IOException e) {
-                    PLog.e(TAG, "get: "+ e.toString());
+                    PLog.e(TAG, "get: " + e.toString());
                     e.printStackTrace();
                 }
             }
@@ -130,12 +129,12 @@ public class BitmapDiskHelper {
             flush();
             return true;
         } catch (IOException e) {
-            PLog.e(TAG, "add: "+ e.toString());
+            PLog.e(TAG, "add: " + e.toString());
             e.printStackTrace();
             try {
                 editor.abort();
             } catch (IOException e1) {
-                PLog.e(TAG, "add: "+ e1.toString());
+                PLog.e(TAG, "add: " + e1.toString());
                 e1.printStackTrace();
             }
             return false;
@@ -144,7 +143,7 @@ public class BitmapDiskHelper {
                 try {
                     os.close();
                 } catch (IOException e) {
-                    PLog.e(TAG, "add: "+ e.toString());
+                    PLog.e(TAG, "add: " + e.toString());
                     e.printStackTrace();
                 }
             }
@@ -160,7 +159,7 @@ public class BitmapDiskHelper {
         try {
             mDiskLruCache.flush();
         } catch (IOException e) {
-            PLog.e(TAG, "flush: "+ e.toString());
+            PLog.e(TAG, "flush: " + e.toString());
             e.printStackTrace();
         }
     }
@@ -170,7 +169,7 @@ public class BitmapDiskHelper {
             PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
             return info.versionCode;
         } catch (PackageManager.NameNotFoundException e) {
-            PLog.e(TAG, "getAppVersion: "+ e.toString());
+            PLog.e(TAG, "getAppVersion: " + e.toString());
             e.printStackTrace();
         }
         return 1;

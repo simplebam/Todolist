@@ -1,6 +1,7 @@
 package com.yueyue.todolist.common.utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,8 +10,13 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
+import android.net.Uri;
+import android.os.Environment;
 
 import com.blankj.utilcode.util.EncryptUtils;
+import com.blankj.utilcode.util.ToastUtils;
+import com.yueyue.todolist.R;
+import com.yueyue.todolist.component.PLog;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -23,6 +29,8 @@ import java.io.IOException;
  */
 
 public class BitmapUtils {
+
+    private static final java.lang.String TAG = BitmapUtils.class.getSimpleName();
 
     private BitmapUtils() {
     }
@@ -160,6 +168,52 @@ public class BitmapUtils {
         options.inSampleSize = inSampleSize;
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeFile(filePath, options);
+    }
+
+    /**
+     * 保存文件到系统图库
+     */
+    public static void saveImageToGallery(Context context, Bitmap bitmap) {
+        // 首先保存图片
+        if (!MyFileUtils.isStorageMounted()) {
+            ToastUtils.showShort(context.getString(R.string.unable_to_save_photo_because_of_the_stroage_error));
+            return;
+        }
+
+        if (bitmap == null) {
+            ToastUtils.showShort(context.getString(R.string.the_photo_not_exist));
+            return;
+        }
+
+
+        File desFile = null;
+        try {
+            File parentFile = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+            String fileName = System.currentTimeMillis() + ".jpg";
+            desFile = MyFileUtils.createNewFile(parentFile, fileName);
+        } catch (IOException e) {
+            PLog.e(TAG, "saveImageToGallery: " + e.toString());
+            e.printStackTrace();
+        }
+
+        if (desFile == null) {
+            return;
+        }
+
+        boolean b = MyFileUtils.saveImageToLoacl(bitmap, Bitmap.CompressFormat.JPEG,
+                60, desFile.getPath());
+
+        if (!b) {
+            ToastUtils.showShort(context.getString(R.string.save_error));
+            return;
+        }
+
+        //把文件插入到系统图库
+        //MediaStore.Images.Media.insertImage(context.getContentResolver(), file.getAbsolutePath(), fileName, null);
+
+        //保存图片后发送广播通知更新数据库
+        context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(desFile)));
+        ToastUtils.showShort(context.getString(R.string.save_success) + ":" + desFile.getPath());
     }
 
     public static void recycleBitamp(Bitmap... bitmaps) {

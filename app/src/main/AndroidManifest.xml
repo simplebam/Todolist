@@ -68,6 +68,11 @@
             android:name=".modules.share.ShareActivity"
             android:screenOrientation="portrait"/>
 
+        <activity
+            android:name=".modules.viewer.ViewerActivity"
+            android:screenOrientation="portrait"/>
+
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.fileProvider"

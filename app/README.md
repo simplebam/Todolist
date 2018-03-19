@@ -262,13 +262,18 @@ App体验：[Todolist - fir.im ](https://fir.im/tolist)
         * [用RxJava实现事件总线(Event Bus) - 简书 ](https://www.jianshu.com/p/ca090f6e2fe2)
         * [[深入RxBus]：异常处理 - 简书 ](https://www.jianshu.com/p/0493cc28a811)
         * [[深入RxBus]：支持Sticky事件 - 简书 ](https://www.jianshu.com/p/71ab00a2677b)
-    * 但还有一种就是把图片存到本地,然后传送图片路径或者uri过去
-        * 选择这种好处就是我在保存图片以
-        * 本人由于对RxBus等不太熟悉以及对内存的顾虑,所以决定还是使用这种方法解决
+    * 把图片存到本地,然后传送图片路径或图片 uri过去
+        * 本项目采用这种,好处就是:ShareActivity里面涉及了分享到第三方应用的功能
+          ,该功能(分享时候使用的是图片的 Uri,即需要保存到图片保存到磁盘上),在
+          跳转到 ShareActivity 之前的界面就已经生成图片了,那么可以提前保存啦
+        * 因为本需求是当开始 ShareActivity 开启之前就生成图片了(即观察者在被观
+          察者发送了普通消息(相对于粘性事件)之后才进行订阅,那么观察者就获不到之
+          前的消息,由于目前的 Rxbus 不支持粘性事件,毕竟粘性事情涉及严重内存泄漏
+          * 关于普通事情以及粘性事件的区别,看这里:[Android事件总线（一）
+            EventBus3.0用法全解析 - CSDN博客 ](http://blog.csdn.net/itachi85/article/details/52205464)
 
 
 ### 项目中的缺点
 * 由于本人理解换肤方面的知识没有透彻,去掉换肤功能
 * 项目转MVP
-* 后续考虑支持md语法,参考:[zeleven/mua](https://github.com/zeleven/mua)
-* 做个懒加载
+* 暂停功能的开发,考虑全局使用DiskLruCache管理

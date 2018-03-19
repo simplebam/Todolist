@@ -46,6 +46,7 @@ import com.yueyue.todolist.component.Sharer;
 import com.yueyue.todolist.component.cache.BitMapHelper;
 import com.yueyue.todolist.modules.edit.domain.ImageEntity;
 import com.yueyue.todolist.modules.edit.impl.EditTextWatcherImpl;
+import com.yueyue.todolist.modules.viewer.ViewerActivity;
 import com.yueyue.todolist.modules.main.domain.NoteEntity;
 import com.yueyue.todolist.modules.share.ShareActivity;
 import com.yueyue.todolist.widget.MyEditText;
@@ -79,6 +80,8 @@ public class EditNoteActivity extends BaseActivity {
     private static final int TAKE_PHOTO_REQUEST_CODE = 0x11;
     //选择图库
     private static final int SELECT_GALLERY_REQUEST_CODE = 0x22;
+    //跳转ViewerActivity
+    private static final int VIEWER_ACTIVITY_REQUEST_CODE = 0x33;
 
     @BindView(R.id.scroll_edit_note)
     ScrollView mScrollView;
@@ -121,17 +124,26 @@ public class EditNoteActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initData();
-        setupView();
-        initListener();
+        initmEtContent();
     }
 
-    private void setupView() {
 
+    private void initData() {
+        Intent intent = getIntent();
+        mNoteEntity = intent.getParcelableExtra(EXTRA_NOTE_DATA);
+
+        if (mNoteEntity == null) {
+            mNoteEntity = new NoteEntity();
+        }
+
+        mNoteEntity.modifiedTime = TimeUtils.getNowMills();
+        setToolbarTitle();
+
+        mBitMapHelper = new BitMapHelper(EditNoteActivity.this);
+    }
+
+    private void initmEtContent() {
         setEditTextState(true);
-    }
-
-
-    private void initListener() {
 
         mEtContent.addTextChangedListener(new EditTextWatcherImpl() {
             @Override
@@ -150,19 +162,6 @@ public class EditNoteActivity extends BaseActivity {
         });
     }
 
-    private void initData() {
-        Intent intent = getIntent();
-        mNoteEntity = intent.getParcelableExtra(EXTRA_NOTE_DATA);
-
-        if (mNoteEntity == null) {
-            mNoteEntity = new NoteEntity();
-        }
-
-        mNoteEntity.modifiedTime = TimeUtils.getNowMills();
-        setToolbarTitle();
-
-        mBitMapHelper = new BitMapHelper(EditNoteActivity.this);
-    }
 
     public void setToolbarTitle() {
         setToolbarTitle("Title");
@@ -239,6 +238,34 @@ public class EditNoteActivity extends BaseActivity {
 
     }
 
+    @OnClick(R.id.et_edit_note_content)
+    void clickNoteEditText() {
+        // 获取光标位置
+        int selectionAfter = mEtContent.getSelectionStart();
+        Log.i(TAG, "光标位置：" + selectionAfter);
+
+        for (int i = 0; i < mEtContent.mImageList.size(); i++) {
+
+            ImageEntity imageEntity = mEtContent.mImageList.get(i);
+
+            if (selectionAfter >= imageEntity.getStart()
+                    && selectionAfter <= imageEntity.getEnd()) { // 光标位置在照片的位置内
+                Log.i(TAG, "起点:" + imageEntity.getStart() + "  终点:" + imageEntity.getEnd());
+                // 隐藏键盘
+                KeyboardUtils.hideSoftInput(EditNoteActivity.this);
+                // 光标移到图片末尾的换行符后面
+                mEtContent.setSelection(imageEntity.getEnd() + 1);
+                startViwerActivity(imageEntity);
+                break;
+            }
+        }
+    }
+
+    private void startViwerActivity(ImageEntity imageEntity) {
+        ViewerActivity.launch(EditNoteActivity.this, imageEntity);
+
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -256,11 +283,30 @@ public class EditNoteActivity extends BaseActivity {
                         handleImageBeforeKitKat(data);
                     }
                     break;
+                case VIEWER_ACTIVITY_REQUEST_CODE:
+                    handleDataFromData(data);
+                    break;
                 default:
                     break;
             }
         }
     }
+
+    private void handleDataFromData(Intent data) {
+        if (data == null) {
+            return;
+        }
+
+        ImageEntity imageEntity = data.getParcelableExtra(ViewerActivity.VIEWER_IMAGE_ENTITY);
+        deleteImage(imageEntity);
+
+    }
+
+    private void deleteImage(ImageEntity imageEntity) {
+        mEtContent.getEditableText().replace(imageEntity.getStart(), imageEntity.getEnd() + 1, "");
+        mBitMapHelper.remove(imageEntity.imageName);
+    }
+
 
     private void handleImageBeforeKitKat(Intent data) {
         Uri uri = data.getData();

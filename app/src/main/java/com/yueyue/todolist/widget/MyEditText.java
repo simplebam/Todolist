@@ -9,6 +9,7 @@ import android.text.style.ImageSpan;
 import android.util.AttributeSet;
 
 import com.yueyue.todolist.common.C;
+import com.yueyue.todolist.component.cache.BitMapHelper;
 import com.yueyue.todolist.modules.edit.domain.ImageEntity;
 
 import java.util.ArrayList;
@@ -21,31 +22,37 @@ import java.util.List;
 
 public class MyEditText extends android.support.v7.widget.AppCompatEditText {
 
+    private BitMapHelper mBitMapHelper;
     // 已插入的图片
     public List<ImageEntity> mImageList = new ArrayList<ImageEntity>();
     // 已删除的图片 在保存便签时应从储存中删除
-    public List<ImageEntity> mDeleteImageList=new ArrayList<>();
+    public List<ImageEntity> mDeleteImageList = new ArrayList<>();
 
     private Editable mEditable = getEditableText();
 
     public MyEditText(Context context) {
-        super(context);
+        this(context, null);
     }
 
     public MyEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
+
+        init(context);
+    }
+
+    private void init(Context context) {
+        mBitMapHelper = new BitMapHelper(context);
     }
 
     /**
-     *   将文本中已有的imageName转换为Bitmap
+     * 将文本中已有的imageName转换为Bitmap
      */
     public void replaceDrawable(Bitmap bitmap, String imageName) {
-        mEditable=getEditableText();
+        mEditable = getEditableText();
 
         String imageFlag = getImageFlag(imageName);
 
         SpannableString spannableString = getSpannableString(imageFlag, bitmap);
-
 
         String content = mEditable.toString();
         int start = content.indexOf(imageFlag);
@@ -67,7 +74,7 @@ public class MyEditText extends android.support.v7.widget.AppCompatEditText {
     }
 
     /**
-     *   插入图片到光标处
+     * 插入图片到光标处
      */
     public void insertDrawable(Bitmap bitmap, String imageName) {
 
@@ -99,16 +106,12 @@ public class MyEditText extends android.support.v7.widget.AppCompatEditText {
     }
 
     private void addImage2List(int start, int end, String imageFlag, String imageName) {
-        ImageEntity imageEntity = new ImageEntity();
-        imageEntity.setStart(start);
-        imageEntity.setEnd(end);
-        imageEntity.setImageFlag(imageFlag);
-        imageEntity.setImageName(imageName);
+        ImageEntity imageEntity = new ImageEntity(start, end, imageName, imageFlag);
         mImageList.add(imageEntity);
     }
 
     /**
-     *   文字改变后，应更新图片列表中的位置参数
+     * 文字改变后，应更新图片列表中的位置参数
      */
     public void setTextCountChange(int start, int before, int count) {
         for (int i = 0; i < mImageList.size(); i++) {

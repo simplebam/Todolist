@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.github.chrisbanes.photoview.PhotoView
+        android:id="@+id/pv_viewer_preview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <include layout="@layout/toolbar_edit_note"/>
+
+    <LinearLayout
+        android:id="@+id/ll_viewer_bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_alignParentBottom="true"
+        android:background="?colorPrimary"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/tv_viewer_save"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:drawableTop="@drawable/tv_down_pressed"
+            android:gravity="center"
+            android:onClick="onClick"
+            android:text="@string/save"
+            android:textColor="@color/white"
+            android:textSize="12sp"/>
+
+        <TextView
+            android:id="@+id/tv_viewer_del"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:drawableTop="@drawable/tv_delete_pressed"
+            android:gravity="center"
+            android:onClick="onClick"
+            android:text="@string/delete"
+            android:textColor="@color/white"
+            android:textSize="12sp"/>
+    </LinearLayout>
+</RelativeLayout>
+
