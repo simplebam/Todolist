@@ -4,7 +4,6 @@ import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,14 +24,19 @@ import android.view.ViewGroup;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.blankj.utilcode.util.Utils;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.yueyue.todolist.R;
 import com.yueyue.todolist.base.BaseActivity;
 import com.yueyue.todolist.common.C;
+import com.yueyue.todolist.component.PreferencesManager;
+import com.yueyue.todolist.component.RxBus;
+import com.yueyue.todolist.event.MainTabsShowModeEvent;
+import com.yueyue.todolist.event.MainTabsUpdateEvent;
 import com.yueyue.todolist.modules.about.ui.AboutActivity;
 import com.yueyue.todolist.modules.edit.ui.EditNoteActivity;
 import com.yueyue.todolist.modules.main.component.WeatherExecutor;
+import com.yueyue.todolist.modules.main.db.NoteDbHelper;
+import com.yueyue.todolist.modules.main.domain.NoteEntity;
 import com.yueyue.todolist.modules.other.ui.OtherServerFragment;
 
 import java.util.ArrayList;
@@ -52,8 +56,19 @@ public class MainActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
+    // 显示模式菜单的图标
+    public static final int DRAWABLE_MODE_LIST = R.drawable.ic_format_list_bulleted_white_24dp;
+    public static final int DRAWABLE_MODE_GRID = R.drawable.ic_border_all_white_24dp;
+
+    private static final int ADD_NOTE_REQUEST_CODE = 0x01;
 
     public static final long DRAWER_CLOSE_DELAY = 230L;
+
+    public static final int ITEM_ALL = -1;     //主页
+    public static final int ITEM_PRIMARY = -2; //私有
+    public static final int ITEM_RECYCLE = -3; //垃圾篓
+    public static final int ITEM_CURRENT = -1;     //主页
+
     private SparseArray<Fragment> mFragmentSparseArray;
 
 
@@ -70,15 +85,15 @@ public class MainActivity
     @BindView(R.id.root)
     CoordinatorLayout root;
 
+    //侧滑栏
+    @BindView(R.id.nav_view)
+    NavigationView mNavView;
+
     public ActionBarDrawerToggle toggle;
     private boolean backPressed;
     private MenuItem currentMenu;
     private boolean isFirst = true;
     private List<Disposable> mDisposableList = new ArrayList<>();
-
-    //侧滑栏
-    @BindView(R.id.nav_view)
-    NavigationView mNavView;
 
 
     public static void launch(Context context) {
@@ -153,6 +168,7 @@ public class MainActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_todo:
+                setToolbarTitle(getString(R.string.todo));
                 break;
             case R.id.menu_privacy:
                 break;
@@ -176,32 +192,10 @@ public class MainActivity
     private void initFragments(Bundle savedInstanceState) {
         if (mFragmentSparseArray == null) {
             mFragmentSparseArray = new SparseArray<>();
-//            String[] titles = getResources().getStringArray(R.array.main_tabs_titles);
-//            String[] types = getResources().getStringArray(R.array.main_tabs_types);
-//
-//            mFragmentSparseArray.put(R.id.menu_todo, MainTabsFragment.newInstance(titles, types));
-//
-//            if (secretMode) {
-//                //Gank & Douban
-//                titles = all;
-//                types = new String[]{TYPE_GANK, TYPE_DB_RANK, TYPE_DB_BREAST, TYPE_DB_BUTT, TYPE_DB_LEG, TYPE_DB_SILK};
-//            } else {
-//                titles = new String[]{all[0]};
-//                types = new String[]{TYPE_GANK};
-//            }
-//
-//
-//            //二次元
-//            titles = getResources().getStringArray(R.array.a_titles);
-//            types = new String[]{TYPE_A_ANIME, TYPE_A_FULI, TYPE_A_HENTAI, TYPE_A_UNIFORM, TYPE_A_ZATU};
-//            mFragmentSparseArray.put(R.taskId.nav_a, MainTabsFragment.newInstance(titles, types));
-//            //favorite
-//            mFragmentSparseArray.put(R.taskId.nav_favorite, new FavoriteFragment());
-
             //-主页
             mFragmentSparseArray.put(R.id.menu_todo, MainTabsFragment.newInstance());
 
-            //weather
+            // OtherServer
             mFragmentSparseArray.put(R.id.menu_more_service, OtherServerFragment.newInstance());
         }
         setMainFragment(R.id.menu_todo, mFragmentSparseArray, savedInstanceState == null);
@@ -236,7 +230,7 @@ public class MainActivity
 
     @OnClick(R.id.fab)
     void fabClick() {
-        EditNoteActivity.launch(MainActivity.this,null);
+        EditNoteActivity.launch(MainActivity.this, null, ADD_NOTE_REQUEST_CODE);
     }
 
 
@@ -248,12 +242,13 @@ public class MainActivity
     }
 
     private void initShowModeMenuIcon(MenuItem item) {
-        Resources res = Utils.getApp().getResources();
-        if (C.noteListShowMode == C.STYLE_LINEAR) {
-            item.setIcon(res.getDrawable(R.drawable.ic_border_all_white_24dp));
-        } else {
-            item.setIcon(res.getDrawable(R.drawable.ic_format_list_bulleted_white_24dp));
-        }
+        int mode = PreferencesManager.getInstance().getNoteListShowMode(C.STYLE_LINEAR);
+        int drawble =
+                mode == C.STYLE_LINEAR ?
+                        R.drawable.ic_border_all_white_24dp :
+                        R.drawable.ic_format_list_bulleted_white_24dp;
+
+        item.setIcon(getResources().getDrawable(drawble));
     }
 
     @Override
@@ -262,6 +257,7 @@ public class MainActivity
             case R.id.menu_note_search:
                 break;
             case R.id.menu_note_show_mode:
+                changeShowModeAndItemIcon(item);
                 break;
             default:
                 break;
@@ -269,9 +265,34 @@ public class MainActivity
         return true;
     }
 
-    public void setFabVisible(boolean visible) {
-        int visibility = visible ? View.VISIBLE : View.GONE;
-        mFab.setVisibility(visibility);
+    public void changeShowModeAndItemIcon(MenuItem item) {
+        int mode = PreferencesManager.getInstance().getNoteListShowMode(C.STYLE_LINEAR);
+        if (mode == C.STYLE_LINEAR) {
+            PreferencesManager.getInstance().saveNoteListShowMode(C.STYLE_GRID);
+            item.setIcon(getResources().getDrawable(DRAWABLE_MODE_LIST));
+            RxBus.getDefault().post(new MainTabsShowModeEvent(C.STYLE_GRID));
+        } else {
+            PreferencesManager.getInstance().saveNoteListShowMode(C.STYLE_LINEAR);
+            item.setIcon(getResources().getDrawable(DRAWABLE_MODE_GRID));
+            RxBus.getDefault().post(new MainTabsShowModeEvent(C.STYLE_LINEAR));
+        }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case ADD_NOTE_REQUEST_CODE:
+                    NoteEntity noteEntity = data.getParcelableExtra(EditNoteActivity.EXTRA_NOTE_DATA);
+                    NoteDbHelper.getInstance().addNote(noteEntity);
+                    RxBus.getDefault().post(new MainTabsUpdateEvent());
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     private void updateWeather() {

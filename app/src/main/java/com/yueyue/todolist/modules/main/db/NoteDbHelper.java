@@ -21,6 +21,8 @@ public class NoteDbHelper implements INoteModel<NoteEntity> {
     private static final String TAG = NoteDbHelper.class.getSimpleName();
 
 
+    private NoteDbHelper(){}
+
     private static final class SingletonHolder {
         private static final NoteDbHelper sInstance = new NoteDbHelper();
     }

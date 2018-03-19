@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewConfiguration;
 
 import com.blankj.utilcode.util.SizeUtils;
 import com.blankj.utilcode.util.Utils;
@@ -18,6 +17,7 @@ import com.yueyue.todolist.base.RecyclerFragment;
 import com.yueyue.todolist.common.C;
 import com.yueyue.todolist.component.PreferencesManager;
 import com.yueyue.todolist.component.RxBus;
+import com.yueyue.todolist.event.MainTabsShowModeEvent;
 import com.yueyue.todolist.event.MainTabsUpdateEvent;
 import com.yueyue.todolist.modules.main.adapter.RvNoteListAdapter;
 import com.yueyue.todolist.modules.main.db.NoteDbHelper;
@@ -39,6 +39,11 @@ public class MainTabsFragment extends RecyclerFragment {
 
     private static final String TAG = MainTabsFragment.class.getSimpleName();
 
+    // 是否显示多选操作
+    public static boolean isShowMultiSelectAction = false;
+
+
+
     private RecyclerView mRecyclerView;
     private RvNoteListAdapter mAdapter;
 
@@ -55,7 +60,9 @@ public class MainTabsFragment extends RecyclerFragment {
         initFab();
         initAdapter();
         registerMainTabsUpdateEvent();
+        registerMainTabsShowModeEvent();
     }
+
 
     private void registerMainTabsUpdateEvent() {
         Disposable disposable = RxBus.getDefault()
@@ -65,6 +72,25 @@ public class MainTabsFragment extends RecyclerFragment {
         mDisposableList.add(disposable);
     }
 
+    private void registerMainTabsShowModeEvent() {
+        Disposable disposable = RxBus.getDefault()
+                .toObservable(MainTabsShowModeEvent.class)
+                .doOnNext(event -> changeShowMode(event.getMode()))
+                .subscribe();
+        mDisposableList.add(disposable);
+
+    }
+
+    private void changeShowMode(int mode) {
+        RecyclerView.LayoutManager manager =
+                mode == C.STYLE_LINEAR ?
+                        new LinearLayoutManager(getContext()) :
+                        new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+
+        mRecyclerView.setLayoutManager(manager);
+        mAdapter.notifyDataSetChanged();
+    }
+
 
     public void initAdapter() {
         int mode = PreferencesManager.getInstance().getNoteListShowMode(C.STYLE_LINEAR);
@@ -72,7 +98,8 @@ public class MainTabsFragment extends RecyclerFragment {
         if (mode == C.STYLE_LINEAR) {
             layoutManager = new LinearLayoutManager(Utils.getApp());
         } else {
-            layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+            layoutManager = new StaggeredGridLayoutManager(2,
+                    StaggeredGridLayoutManager.VERTICAL);
         }
 
         mRecyclerView.setLayoutManager(layoutManager);
@@ -82,39 +109,46 @@ public class MainTabsFragment extends RecyclerFragment {
         //禁止默认第一次加载Item进入回调onLoadMoreRequested方法
         mAdapter.disableLoadMoreIfNotFullPage(mRecyclerView);
         mRecyclerView.setAdapter(mAdapter);
-        mAdapter.setEmptyView(getRecyclerViewEmptyView());
-        mAdapter.notifyDataSetChanged();
-    }
-
-    //recyclerView 为空的时候展示
-    private View getRecyclerViewEmptyView() {
-        return LayoutInflater.from(getContext())
+        //recyclerView 为空的时候展示
+        View recyclerEmptyView = LayoutInflater.from(getContext())
                 .inflate(R.layout.fragment_main_tabs_empty, null, false);
+        mAdapter.setEmptyView(recyclerEmptyView);
+
+        mAdapter.notifyDataSetChanged();
+
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+//            if (isShowMultiSelectAction) {
+//                choiceNote(position);
+//            } else {
+//                if (ITEM_CURRENT == ITEM_RECYCLE) {
+//                    mView.showNoteRecoverDialog(position);
+//                } else {
+//                    mView.toEditNoteForEdit(mAdapter.getData().get(position), position);
+//                }
+//            }
+        });
+        mAdapter.setOnItemChildLongClickListener((adapter, view, position) -> {
+            return true;
+        });
     }
 
 
     private void initFab() {
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            //ViewConfiguration.getScaledTouchSlop () 用法 - CSDN博客
-            // http://blog.csdn.net/axi295309066/article/details/53823061
-            float touchSlop = ViewConfiguration.get(getActivity()).getScaledTouchSlop();
-
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 //大于这个距离mTouchSlop才可以触发
-                if (Math.abs(dy) > touchSlop) {
-                    if (dy > touchSlop) {
-                        setAddFabIn();// 手指向下滑动
-                    } else {
-                        setAddFabOut(); // 手指向上滑动
-                    }
+                if (dy > 0) {
+                    setFabOut(); // 手指向上滑动
+                } else {
+                    setFabIn();// 手指向下滑动
                 }
             }
         });
 
     }
 
-    private void setAddFabOut() {
+    private void setFabOut() {
         FragmentActivity activity = getActivity();
         if (activity != null && activity instanceof MainActivity) {
             final FloatingActionButton fab = ((MainActivity) activity).mFab;
@@ -123,14 +157,14 @@ public class MainTabsFragment extends RecyclerFragment {
             }
             ObjectAnimator
                     .ofFloat(fab, "translationY", SizeUtils.dp2px(80))
-                    .setDuration(150)
+                    .setDuration(200)
                     .start();
         }
 
 
     }
 
-    private void setAddFabIn() {
+    private void setFabIn() {
         FragmentActivity activity = getActivity();
         if (activity != null && activity instanceof MainActivity) {
             final FloatingActionButton fab = ((MainActivity) getActivity()).mFab;
@@ -139,7 +173,7 @@ public class MainTabsFragment extends RecyclerFragment {
             }
             ObjectAnimator
                     .ofFloat(fab, "translationY", SizeUtils.dp2px(0))
-                    .setDuration(150)
+                    .setDuration(200)
                     .start();
         }
 
@@ -147,7 +181,6 @@ public class MainTabsFragment extends RecyclerFragment {
     }
 
     private void load() {
-//        mWeathers.clear();
         //简单的来说, subscribeOn() 指定的是上游发送事件的线程, observeOn() 指定的是下游接收事件的线程.
         Disposable disposable = Observable.timer(0, TimeUnit.SECONDS)
                 .compose(this.bindToLifecycle())
@@ -162,6 +195,7 @@ public class MainTabsFragment extends RecyclerFragment {
                 })
                 .subscribe(noteEntityList -> {
                     changeRefresh(false);
+                    mAdapter.setNewData(noteEntityList);
                     mAdapter.notifyDataSetChanged();
                 });
         mDisposableList.add(disposable);

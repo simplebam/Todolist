@@ -3,6 +3,7 @@ package com.yueyue.todolist.modules.main.domain;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.blankj.utilcode.util.TimeUtils;
 import com.yueyue.todolist.base.BaseEntity;
 
 import org.litepal.annotation.Column;
@@ -19,7 +20,7 @@ public class NoteEntity extends BaseEntity implements Parcelable {
     //设置unique = true时候,taskId已经存在数据库的话,再次存储该taskId(调用save()方法)不会更新
     @Column(unique = true)
     public String noteId = UUID.randomUUID().toString();
-    public long createdTime;
+    public long createdTime = TimeUtils.getNowMills();
     public long modifiedTime;
     public String noteContent = "";
     public int noteFolderId;
@@ -27,7 +28,6 @@ public class NoteEntity extends BaseEntity implements Parcelable {
     public int isPrivacy;    //    1是私密便签  0不是
     @Column(defaultValue = "0")
     public int inRecycleBin; //    1是废纸篓中便签，0不是
-
 
 
     public NoteEntity() {

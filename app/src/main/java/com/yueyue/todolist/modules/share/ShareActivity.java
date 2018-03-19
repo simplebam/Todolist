@@ -180,49 +180,6 @@ public class ShareActivity extends BaseActivity {
     }
 
 
-    //保存文件到系统图库
-//    private void saveImageToGallery(Bitmap bitmap) {
-//        // 首先保存图片
-//        if (!MyFileUtils.isStorageMounted()) {
-//            ToastUtils.showShort(getString(R.string.unable_to_save_photo_because_of_the_stroage_error));
-//            return;
-//        }
-//
-//        if (bitmap == null) {
-//            ToastUtils.showShort(getString(R.string.the_photo_not_exist));
-//            return;
-//        }
-//
-//
-//        File desFile = null;
-//        try {
-//            File parentFile = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-//            String fileName = System.currentTimeMillis() + ".jpg";
-//            desFile = MyFileUtils.createNewFile(parentFile, fileName);
-//        } catch (IOException e) {
-//            PLog.e(TAG, "saveImageToGallery: " + e.toString());
-//            e.printStackTrace();
-//        }
-//
-//        if (desFile == null) {
-//            return;
-//        }
-//
-//        boolean b = MyFileUtils.saveImageToLoacl(bitmap, Bitmap.CompressFormat.JPEG,
-//                60, desFile.getPath());
-//
-//        if (!b) {
-//            ToastUtils.showShort(getString(R.string.save_error));
-//            return;
-//        }
-//
-//        //把文件插入到系统图库
-//        //MediaStore.Images.Media.insertImage(context.getContentResolver(), file.getAbsolutePath(), fileName, null);
-//
-//        //保存图片后发送广播通知更新数据库
-//        sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(desFile)));
-//        ToastUtils.showShort(getString(R.string.save_success) + ":" + desFile.getPath());
-//    }
 
     @Override
     protected void onDestroy() {

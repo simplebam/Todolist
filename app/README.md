@@ -123,6 +123,7 @@ App体验：[Todolist - fir.im ](https://fir.im/tolist)
 ### 项目中的用到的开源框架
 * bugtags-移动时代首选 Bug 管理系统:[Bugtags 使用说明 - CSDN博客](http://blog.csdn.net/ObjectivePLA/article/details/51037804)
 * Blankj/AndroidUtilCode：[终于等到你--权限工具类 - 简书](https://www.jianshu.com/p/333b09b7e000)
+   * 偶然在掘金看到也比较好的utils库:[linqssonny/Utils](https://github.com/linqssonny/Utils)
 * ButterKnife：[[Android开发] ButterKnife8.5.1 使用方法教程总结 - CSDN博客](http://blog.csdn.net/niubitianping/article/details/54893571)
 * LitePal:
    * [Android数据库高手秘籍(一)——SQLite命令 - 郭霖的专栏 - CSDN博客](http://blog.csdn.net/guolin_blog/article/details/38461239)

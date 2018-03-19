@@ -2,8 +2,8 @@ package com.yueyue.todolist.modules.edit.ui;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.ContentUris;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -46,9 +46,9 @@ import com.yueyue.todolist.component.Sharer;
 import com.yueyue.todolist.component.cache.BitMapHelper;
 import com.yueyue.todolist.modules.edit.domain.ImageEntity;
 import com.yueyue.todolist.modules.edit.impl.EditTextWatcherImpl;
-import com.yueyue.todolist.modules.viewer.ViewerActivity;
 import com.yueyue.todolist.modules.main.domain.NoteEntity;
 import com.yueyue.todolist.modules.share.ShareActivity;
+import com.yueyue.todolist.modules.viewer.ViewerActivity;
 import com.yueyue.todolist.widget.MyEditText;
 
 import java.io.File;
@@ -72,7 +72,7 @@ import io.reactivex.schedulers.Schedulers;
 public class EditNoteActivity extends BaseActivity {
 
     private static final String TAG = EditNoteActivity.class.getSimpleName();
-    private static final String EXTRA_NOTE_DATA = "extra_note_data";
+    public static final String EXTRA_NOTE_DATA = "extra_note_data";
     // 图片距离左右的总距离
     private static final float IMAGE_MARGIN = SizeUtils.dp2px(32);
 
@@ -106,12 +106,12 @@ public class EditNoteActivity extends BaseActivity {
 
     private NoteEntity mNoteEntity;
 
-    public static void launch(Context context, NoteEntity noteEntity) {
-        Intent intent = new Intent(context, EditNoteActivity.class);
+    public static void launch(Activity activity, NoteEntity noteEntity, int requestCode) {
+        Intent intent = new Intent(activity, EditNoteActivity.class);
         if (noteEntity != null) {
             intent.putExtra(EXTRA_NOTE_DATA, noteEntity);
         }
-        context.startActivity(intent);
+        activity.startActivityForResult(intent, requestCode);
     }
 
 
@@ -544,19 +544,22 @@ public class EditNoteActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        //et_content.getText().toString().trim()以及mEdContent.getText().toString()
-        // 什么都不输入也会返回""字符串
-        saveNote(mEtContent.getText().toString());
+
+        saveNote();
         super.onBackPressed();
     }
 
-    public void saveNote(String content) {
+    public void saveNote() {
+        //et_content.getText().toString().trim()以及mEdContent.getText().toString()
+        // 什么都不输入也会返回""字符串
+        String content = mEtContent.getText().toString();
         // 内容改变时才保存
         if (!content.equals(mNoteEntity.noteContent)) {
             mNoteEntity.modifiedTime = TimeUtils.getNowMills();
             mNoteEntity.noteContent = content;
-//            intent.putExtra("position", mPosition);
-            setResult(RESULT_OK, getIntent());
+            Intent intent = new Intent();
+            intent.putExtra(EXTRA_NOTE_DATA,mNoteEntity);
+            setResult(RESULT_OK, intent);
         }
     }
 

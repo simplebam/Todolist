@@ -14,7 +14,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.yueyue.todolist.R;
 import com.yueyue.todolist.common.C;
-import com.yueyue.todolist.common.utils.date.DateUtils;
+import com.yueyue.todolist.common.utils.DateUtils;
+import com.yueyue.todolist.component.PreferencesManager;
 import com.yueyue.todolist.modules.main.domain.NoteEntity;
 
 import java.text.SimpleDateFormat;
@@ -37,7 +38,7 @@ public class RvNoteListAdapter extends BaseQuickAdapter<NoteEntity, BaseViewHold
     public List<NoteEntity> mAllDataList;
 
     public void addData(@NonNull Collection<? extends NoteEntity> newData) {
-        addData(newData);
+        addData(0, newData);
         for (int i = 0; i < newData.size(); i++) {
             mCheckList.add(false);
         }
@@ -64,10 +65,11 @@ public class RvNoteListAdapter extends BaseQuickAdapter<NoteEntity, BaseViewHold
 
     @Override
     protected void convert(BaseViewHolder helper, NoteEntity item) {
-        if (isLinearLayoutManager())
+        if (isLinearLayoutManager()) {
             setLinearLayout(helper, item);
-        else if (isGridLayoutManager())
+        } else {
             setGridLayout(helper, item);
+        }
     }
 
     /**
@@ -76,23 +78,9 @@ public class RvNoteListAdapter extends BaseQuickAdapter<NoteEntity, BaseViewHold
      * @describe
      */
     private boolean isLinearLayoutManager() {
-        // FIXME: 2018/3/13 注释了Constans.NoteEntityListShowMode == C.STYLE_LINEAR
-//        if (Constans.NoteEntityListShowMode == C.STYLE_LINEAR)
-//            return true;
-        return false;
+        return PreferencesManager.getInstance().getNoteListShowMode(C.STYLE_LINEAR) == C.STYLE_LINEAR;
     }
 
-    /**
-     * 是否是网格布局
-     *
-     * @describe
-     */
-    private boolean isGridLayoutManager() {
-        // FIXME: 2018/3/13 注释了Constans.NoteEntityListShowMode == C.STYLE_GRID
-//        if (Constans.NoteEntityListShowMode == C.STYLE_GRID)
-        return true;
-//        return false;
-    }
 
     /**
      * 设置网格布局
@@ -104,11 +92,11 @@ public class RvNoteListAdapter extends BaseQuickAdapter<NoteEntity, BaseViewHold
         helper.addOnClickListener(R.id.cv_note_list_grid);
         helper.addOnLongClickListener(R.id.cv_note_list_grid);
 
-        helper.setVisible(R.id.ll_note_list_linear, false);
-        helper.setVisible(R.id.cv_note_list_grid, true);
+        helper.setGone(R.id.ll_note_list_linear, false);
+        helper.setGone(R.id.cv_note_list_grid, true);
 
         TextView tvContent = helper.getView(R.id.tv_note_list_grid_content);
-        if (isPrivacyAndRecycle(item))
+        if (item.isPrivacy == 1)
             helper.setText(R.id.tv_note_list_grid_content, Utils.getApp().getResources().getString(R.string.note_privacy_and_recycle));
         else
             parseTextContent(tvContent, "" + item.noteContent);
@@ -117,12 +105,6 @@ public class RvNoteListAdapter extends BaseQuickAdapter<NoteEntity, BaseViewHold
         setNoteEntityTime(helper, item.modifiedTime);
         // 设置多选按钮
         setCheckBox(helper);
-    }
-
-    private boolean isPrivacyAndRecycle(NoteEntity noteEntity) {
-        return noteEntity.isPrivacy == 1;
-//        return Constans.currentFolder == FolderListConstans.ITEM_RECYCLE
-//                && noteEntity.isPrivacy() == 1;
     }
 
     /**
@@ -168,8 +150,6 @@ public class RvNoteListAdapter extends BaseQuickAdapter<NoteEntity, BaseViewHold
 
     /**
      * 设置线性布局
-     *
-     * @describe
      */
     private void setLinearLayout(BaseViewHolder helper, NoteEntity item) {
 
@@ -177,11 +157,11 @@ public class RvNoteListAdapter extends BaseQuickAdapter<NoteEntity, BaseViewHold
         helper.addOnLongClickListener(R.id.ll_note_list_line);
 
         // 显示竖排布局，隐藏网格布局
-        helper.setVisible(R.id.cv_note_list_grid, false);
-        helper.setVisible(R.id.ll_note_list_linear, true);
+        helper.setGone(R.id.cv_note_list_grid, false);
+        helper.setGone(R.id.ll_note_list_linear, true);
 
         TextView tvContent = helper.getView(R.id.tv_note_list_linear_content);
-        if (isPrivacyAndRecycle(item))
+        if (item.isPrivacy == 1)
             helper.setText(R.id.tv_note_list_linear_content,
                     Utils.getApp().getResources().getString(R.string.note_privacy_and_recycle));
         else
@@ -204,19 +184,20 @@ public class RvNoteListAdapter extends BaseQuickAdapter<NoteEntity, BaseViewHold
      * 其他显示为：yyyy-MM-DD HH:mm
      *
      * @param time 时间戳
-     * @describe
      */
     private void setNoteEntityTime(BaseViewHolder helper, long time) {
+        String dateFormatStr;
+        if (DateUtils.getDistanceDaysToNow(time) == 0) {
+            // 同一天
+            dateFormatStr = DateUtils.DateStyle.HH_MM.getValue();
+        } else if (DateUtils.isSameYear(time)) {
+            //同一年
+            dateFormatStr = DateUtils.DateStyle.MM_DD_HH_MM.getValue();
+        } else {
+            dateFormatStr = DateUtils.DateStyle.YYYY_MM_DD_HH_MM.getValue();
+        }
 
-        // 系统当前时间，用于与便签的修改时间进行对比
-        long nowTime = TimeUtils.getNowMills();
-
-        if (DateUtils.isInSameDay(nowTime, time))  // 同一天
-            setNoteEntityTimeInfo(helper, time, new SimpleDateFormat("HH:mm"));
-        else if (DateUtils.isInSameYear(nowTime, time))  // 同一年
-            setNoteEntityTimeInfo(helper, time, new SimpleDateFormat("MM-dd HH:mm"));
-        else // 其他
-            setNoteEntityTimeInfo(helper, time, new SimpleDateFormat("yyyy-MM-dd HH:mm"));
+        setNoteEntityTimeInfo(helper, time, new SimpleDateFormat(dateFormatStr));
 
     }
 
@@ -226,7 +207,6 @@ public class RvNoteListAdapter extends BaseQuickAdapter<NoteEntity, BaseViewHold
      * @param helper
      * @param time   时间戳
      * @param format 时间格式
-     * @describe
      */
     private void setNoteEntityTimeInfo(BaseViewHolder helper, long time, SimpleDateFormat format) {
         if (isLinearLayoutManager()) {
@@ -248,14 +228,11 @@ public class RvNoteListAdapter extends BaseQuickAdapter<NoteEntity, BaseViewHold
         // 当前position
         int position = helper.getLayoutPosition();
 
-
         // 如果是列表第一项,或者与上一个便签的创建时间不是在同一月，显示分组信息
-        if (position == 0 ||
-                !DateUtils.isInSameMonth(time, getData().get(position - 1).createdTime)) {
-            showLineraLayoutGroup(true, helper, time);
-            return;
-        }
-        showLineraLayoutGroup(false, helper, time);
+        boolean isShow = position == 0 ||
+                !DateUtils.isSameMonth(time, getData().get(position - 1).createdTime);
+        showLineraLayoutGroup(isShow, helper, time);
+
     }
 
     /**
@@ -290,13 +267,18 @@ public class RvNoteListAdapter extends BaseQuickAdapter<NoteEntity, BaseViewHold
      * @describe
      */
     private void setLinearGroupStyle(BaseViewHolder helper, long time) {
-        long nowTime = TimeUtils.getNowMills();
 
-        if (DateUtils.isInSameYear(nowTime, time)) { // 如果同一年 显示为：x月
-            helper.setText(R.id.tv_note_list_linear_month, TimeUtils.millis2String(time, new SimpleDateFormat("MM月")));
-        } else { //否则 显示为：xxxx年x月
-            helper.setText(R.id.tv_note_list_linear_month, TimeUtils.millis2String(time, new SimpleDateFormat("yyyy年MM月")));
+        String dateFormatStr;
+        if (DateUtils.isSameYear(time)) {
+            // 如果同一年 显示为：x月
+            dateFormatStr = DateUtils.DateStyle.MM_CN.getValue();
+        } else {
+            //否则 显示为：xxxx年x月
+            dateFormatStr = DateUtils.DateStyle.YYYY_MM_CN.getValue();
         }
+
+        helper.setText(R.id.tv_note_list_linear_month,
+                TimeUtils.millis2String(time, new SimpleDateFormat(dateFormatStr)));
     }
 
 
@@ -309,10 +291,11 @@ public class RvNoteListAdapter extends BaseQuickAdapter<NoteEntity, BaseViewHold
 
         int position = helper.getLayoutPosition();
         CheckBox checkBox;
-        if (isLinearLayoutManager())
+        if (isLinearLayoutManager()) {
             checkBox = (CheckBox) helper.getView(R.id.cb_note_list_liear_check);
-        else
+        } else {
             checkBox = (CheckBox) helper.getView(R.id.cb_note_list_grid_check);
+        }
         showCheckBox(checkBox, position);
     }
 
@@ -333,6 +316,4 @@ public class RvNoteListAdapter extends BaseQuickAdapter<NoteEntity, BaseViewHold
             checkBox.setChecked(false);
         }
     }
-
-
 }

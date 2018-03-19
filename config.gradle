@@ -9,7 +9,7 @@ ext {
             targetSdkVersion : 27,
             applicationId    : "com.yueyue.todolist",
             versionCode      : 1,
-            versionName      : "1.83",
+            versionName      : "1.90",
             resConfigs       : "zh",
     ]
 

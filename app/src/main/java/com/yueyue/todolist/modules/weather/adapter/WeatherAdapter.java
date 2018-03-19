@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.yueyue.todolist.R;
 import com.yueyue.todolist.base.AnimRecyclerViewAdapter;
 import com.yueyue.todolist.base.BaseViewHolder;
-import com.yueyue.todolist.common.utils.date.DateUtils;
+import com.yueyue.todolist.common.utils.DateUtils;
 import com.yueyue.todolist.common.utils.PreferencesUtil;
 import com.yueyue.todolist.common.utils.Util;
 import com.yueyue.todolist.component.ImageLoader;

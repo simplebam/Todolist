@@ -31,13 +31,12 @@ public abstract class RecyclerFragment extends BaseFragment
 
     @Override
     protected void initViews() {
-        //如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
-        mRecyclerView.setHasFixedSize(true);
-
         //android--SwipeRefreshLayout 设置下拉刷新进度条颜色变化没效果 - qq_33703877的博客 - CSDN博客
         //        http://blog.csdn.net/qq_33703877/article/details/54692461
+        //设置进度的颜色
         mSwipeRefresh.setColorSchemeColors(getColor(R.color.colorPrimary),
-                getColor(R.color.color_f06292), getColor(R.color.color_37bed7)); //设置进度的颜色
+                getColor(R.color.color_f06292),
+                getColor(R.color.color_37bed7));
 
         mSwipeRefresh.setOnRefreshListener(this);
     }
@@ -47,10 +46,6 @@ public abstract class RecyclerFragment extends BaseFragment
 
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
 
     public void changeRefresh(final boolean refreshState) {
         if (mSwipeRefresh != null) {
