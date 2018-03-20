@@ -156,5 +156,7 @@
     <string name="delete_photo">删除图片</string>
     <string name="are_you_sure_to_delete_the_photo">确定删除该图片吗？</string>
     <string name="cancel">取消</string>
+    <string name="recovery">恢复</string>
+    <string name="unable_to_open_note_recover_to_previous_folder">无法直接打开便签，是否恢复至原有便签夹？</string>
 
 </resources>

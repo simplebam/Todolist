@@ -4,15 +4,17 @@
 ## 功能简介
 * 【便签夹分类】 让你的生活井然有序
 * 【图文编辑】  不只是单调的文字
-* 【多彩主题】 每一天都是好心情
 * 【私密便签】 方便且安全
 * 【废纸篓功能】 世上是有后悔药的
 * 【涂鸦功能】 我是画画的小行家
 * 【天气预报】 今天你带伞了吗
-* 【其他功能】 快递查询、基站查询、身份证查询、周公解梦、手机号码归属地、邮编查询等
 
 
 ### 项目截图
+### 项目截图
+<a href="../art/todo1.png"><img src="../art/todo1.png" width="40%"/></a><img height="0" width="8px"/><a href="../art/todo2.png"><img src="../art/todo2.png" width="40%"/></a>
+<a href="../art/todo3.png"><img src="../art/todo3.png" width="40%"/></a><img height="0" width="8px"/><a href="../art/todo4.png"><img src="../art/todo4.png" width="40%"/></a>
+
 
 App体验：[Todolist - fir.im ](https://fir.im/tolist)
 

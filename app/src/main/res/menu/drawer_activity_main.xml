@@ -22,11 +22,11 @@
 
     <item android:title="@string/other">
         <menu>
-            <group android:checkableBehavior="single">
+            <group android:checkableBehavior="none">
                 <item
-                    android:id="@+id/menu_more_service"
+                    android:id="@+id/menu_weather"
                     android:icon="@drawable/ic_menu_multi_cities"
-                    android:title="@string/more_service"/>
+                    android:title="@string/weather"/>
                 <item
                     android:id="@+id/menu_setting"
                     android:icon="@drawable/ic_menu_setting"

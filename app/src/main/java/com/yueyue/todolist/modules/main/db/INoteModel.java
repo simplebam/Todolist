@@ -1,6 +1,6 @@
 package com.yueyue.todolist.modules.main.db;
 
-import com.yueyue.todolist.common.listener.LoadDataCallBack;
+import java.util.List;
 
 /**
  * author : yueyue on 2018/3/13 16:36
@@ -10,13 +10,13 @@ import com.yueyue.todolist.common.listener.LoadDataCallBack;
 public interface INoteModel<T> {
     void initNote(int folderId);
 
-    void loadAllNoteList(LoadDataCallBack<T> callBack);
+    List<T> loadAllNoteList();
 
-    void loadPrivacyNoteList(LoadDataCallBack<T> callBack);
+    List<T> loadPrivacyNoteList();
 
-    void loadRecycleBinNoteList(LoadDataCallBack<T> callBack);
+    List<T> loadRecycleBinNoteList();
 
-    void loadNormalNoteList(int folderId, LoadDataCallBack<T> callBack);
+    List<T> loadNormalNoteList();
 
     void addNote(T note);
 

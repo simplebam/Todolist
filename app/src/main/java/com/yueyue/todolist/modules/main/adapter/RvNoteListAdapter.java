@@ -2,8 +2,6 @@ package com.yueyue.todolist.modules.main.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.view.View;
-import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -32,30 +30,19 @@ import java.util.regex.Pattern;
 
 public class RvNoteListAdapter extends BaseQuickAdapter<NoteEntity, BaseViewHolder> {
 
-    public List<Boolean> mCheckList = new ArrayList<>();
-
-    public List<Boolean> mAllCheckList;
     public List<NoteEntity> mAllDataList;
 
     public void addData(@NonNull Collection<? extends NoteEntity> newData) {
         addData(0, newData);
-        for (int i = 0; i < newData.size(); i++) {
-            mCheckList.add(false);
-        }
     }
 
     public void addData(@NonNull NoteEntity data) {
         addData(0, data);
-        mCheckList.add(false);
         notifyDataSetChanged();
     }
 
     public void setNewData(@Nullable List<NoteEntity> data) {
         super.setNewData(data);
-        mCheckList.clear();
-        for (int i = 0; i < data.size(); i++) {
-            mCheckList.add(false);
-        }
     }
 
     public RvNoteListAdapter() {
@@ -104,7 +91,7 @@ public class RvNoteListAdapter extends BaseQuickAdapter<NoteEntity, BaseViewHold
         // 设置便签的时间显示
         setNoteEntityTime(helper, item.modifiedTime);
         // 设置多选按钮
-        setCheckBox(helper);
+//        setCheckBox(helper);
     }
 
     /**
@@ -173,7 +160,7 @@ public class RvNoteListAdapter extends BaseQuickAdapter<NoteEntity, BaseViewHold
         // 设置便签的分组显示
         setLinearLayoutGroup(helper, item.createdTime);
         // 设置多选按钮
-        setCheckBox(helper);
+//        setCheckBox(helper);
     }
 
     /**
@@ -287,33 +274,33 @@ public class RvNoteListAdapter extends BaseQuickAdapter<NoteEntity, BaseViewHold
      *
      * @describe
      */
-    private void setCheckBox(BaseViewHolder helper) {
-
-        int position = helper.getLayoutPosition();
-        CheckBox checkBox;
-        if (isLinearLayoutManager()) {
-            checkBox = (CheckBox) helper.getView(R.id.cb_note_list_liear_check);
-        } else {
-            checkBox = (CheckBox) helper.getView(R.id.cb_note_list_grid_check);
-        }
-        showCheckBox(checkBox, position);
-    }
+//    private void setCheckBox(BaseViewHolder helper) {
+//
+//        int position = helper.getLayoutPosition();
+//        CheckBox checkBox;
+//        if (isLinearLayoutManager()) {
+//            checkBox = (CheckBox) helper.getView(R.id.cb_note_list_liear_check);
+//        } else {
+//            checkBox = (CheckBox) helper.getView(R.id.cb_note_list_grid_check);
+//        }
+//        showCheckBox(checkBox, position);
+//    }
 
     /**
      * 是否显示多选按钮
      *
      * @describe
      */
-    private void showCheckBox(CheckBox checkBox, int position) {
-        if (C.isShowMultiSelectAction) {
-            checkBox.setVisibility(View.VISIBLE);
-            if (mCheckList.get(position))
-                checkBox.setChecked(true);
-            else
-                checkBox.setChecked(false);
-        } else {
-            checkBox.setVisibility(View.INVISIBLE);
-            checkBox.setChecked(false);
-        }
-    }
+//    private void showCheckBox(CheckBox checkBox, int position) {
+//        if (C.isShowMultiSelectAction) {
+//            checkBox.setVisibility(View.VISIBLE);
+//            if (mCheckList.get(position))
+//                checkBox.setChecked(true);
+//            else
+//                checkBox.setChecked(false);
+//        } else {
+//            checkBox.setVisibility(View.INVISIBLE);
+//            checkBox.setChecked(false);
+//        }
+//    }
 }

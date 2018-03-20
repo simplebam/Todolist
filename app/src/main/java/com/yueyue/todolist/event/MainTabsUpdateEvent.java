@@ -6,4 +6,5 @@ package com.yueyue.todolist.event;
  */
 
 public class MainTabsUpdateEvent {
+
 }

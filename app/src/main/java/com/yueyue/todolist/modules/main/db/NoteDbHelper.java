@@ -3,13 +3,13 @@ package com.yueyue.todolist.modules.main.db;
 import com.blankj.utilcode.util.TimeUtils;
 import com.blankj.utilcode.util.Utils;
 import com.yueyue.todolist.R;
-import com.yueyue.todolist.common.listener.LoadDataCallBack;
 import com.yueyue.todolist.component.PLog;
 import com.yueyue.todolist.modules.main.domain.NoteEntity;
 
 import org.litepal.crud.DataSupport;
 import org.litepal.exceptions.DataSupportException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,7 +21,8 @@ public class NoteDbHelper implements INoteModel<NoteEntity> {
     private static final String TAG = NoteDbHelper.class.getSimpleName();
 
 
-    private NoteDbHelper(){}
+    private NoteDbHelper() {
+    }
 
     private static final class SingletonHolder {
         private static final NoteDbHelper sInstance = new NoteDbHelper();
@@ -78,78 +79,62 @@ public class NoteDbHelper implements INoteModel<NoteEntity> {
 
 
     @Override
-    public void loadAllNoteList(LoadDataCallBack<NoteEntity> callBack) {
+    public List<NoteEntity> loadAllNoteList() {
         try {
             List<NoteEntity> data = DataSupport
                     .where("isPrivacy = ? and inRecycleBin = ?", "0", "0")
                     .order("createdTime desc")
                     .find(NoteEntity.class);
-            if (callBack != null) {
-                callBack.onSuccess(data);
-            }
+            return data;
         } catch (Exception e) {
             PLog.e(TAG, "loadAllNoteList: " + e.toString());
             e.printStackTrace();
-            if (callBack != null) {
-                callBack.onFail();
-            }
+            return new ArrayList<>();
         }
     }
 
     @Override
-    public void loadPrivacyNoteList(LoadDataCallBack<NoteEntity> callBack) {
+    public List<NoteEntity> loadPrivacyNoteList() {
         try {
             List<NoteEntity> data = DataSupport
                     .where("isPrivacy = ? and inRecycleBin = ?", "1", "0")
                     .order("createdTime desc").find(NoteEntity.class);
-            if (callBack != null) {
-                callBack.onSuccess(data);
-            }
+            return data;
         } catch (DataSupportException e) {
             PLog.e(TAG, "loadPrivacyNoteList: " + e.toString());
             e.printStackTrace();
-            if (callBack != null) {
-                callBack.onFail();
-            }
         }
+        return new ArrayList<>();
     }
 
     @Override
-    public void loadRecycleBinNoteList(LoadDataCallBack<NoteEntity> callBack) {
+    public List<NoteEntity> loadRecycleBinNoteList() {
         try {
             List<NoteEntity> data = DataSupport
                     .where("inRecycleBin = ?", "1")
                     .order("createdTime desc")
                     .find(NoteEntity.class);
-            if (callBack != null) {
-                callBack.onSuccess(data);
-            }
+            return data;
         } catch (DataSupportException e) {
             PLog.e(TAG, "loadRecycleBinNoteList: " + e.toString());
             e.printStackTrace();
-            if (callBack != null) {
-                callBack.onFail();
-            }
         }
+        return new ArrayList<>();
     }
 
     @Override
-    public void loadNormalNoteList(int folderId, LoadDataCallBack<NoteEntity> callBack) {
+    public List<NoteEntity> loadNormalNoteList() {
         try {
             List<NoteEntity> data = DataSupport
-                    .where("noteFolderId = ? and isPrivacy = ? and inRecycleBin = ?", folderId + "", "0", "0")
+                    .where("isPrivacy = ? and inRecycleBin = ?", "0", "0")
                     .order("createdTime desc")
                     .find(NoteEntity.class);
-            if (callBack != null) {
-                callBack.onSuccess(data);
-            }
+            return data;
         } catch (Exception e) {
             PLog.e(TAG, "loadNormalNoteList: " + e.toString());
             e.printStackTrace();
-            if (callBack != null) {
-                callBack.onFail();
-            }
         }
+        return new ArrayList<>();
     }
 
     @Override

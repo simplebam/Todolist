@@ -1,1 +1,1 @@
-include ':testapp', ':app', ':oldTodo', ':Beauty', ':SuperNote'
+include ':testapp', ':app', ':SuperNote', ':Beauty'

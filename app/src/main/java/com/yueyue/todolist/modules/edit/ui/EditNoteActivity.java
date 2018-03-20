@@ -17,6 +17,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,6 +39,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.yueyue.todolist.R;
 import com.yueyue.todolist.base.BaseActivity;
+import com.yueyue.todolist.common.utils.DateUtils;
 import com.yueyue.todolist.common.utils.MyFileUtils;
 import com.yueyue.todolist.common.utils.ProgressDialogUtils;
 import com.yueyue.todolist.component.ImageLoader;
@@ -46,6 +48,7 @@ import com.yueyue.todolist.component.Sharer;
 import com.yueyue.todolist.component.cache.BitMapHelper;
 import com.yueyue.todolist.modules.edit.domain.ImageEntity;
 import com.yueyue.todolist.modules.edit.impl.EditTextWatcherImpl;
+import com.yueyue.todolist.modules.main.db.NoteDbHelper;
 import com.yueyue.todolist.modules.main.domain.NoteEntity;
 import com.yueyue.todolist.modules.share.ShareActivity;
 import com.yueyue.todolist.modules.viewer.ViewerActivity;
@@ -54,6 +57,7 @@ import com.yueyue.todolist.widget.MyEditText;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -73,6 +77,8 @@ public class EditNoteActivity extends BaseActivity {
 
     private static final String TAG = EditNoteActivity.class.getSimpleName();
     public static final String EXTRA_NOTE_DATA = "extra_note_data";
+    public static final String EXTRA_ADAPTER_POSITION = "extra_adapter_position";
+
     // 图片距离左右的总距离
     private static final float IMAGE_MARGIN = SizeUtils.dp2px(32);
 
@@ -111,6 +117,7 @@ public class EditNoteActivity extends BaseActivity {
         if (noteEntity != null) {
             intent.putExtra(EXTRA_NOTE_DATA, noteEntity);
         }
+
         activity.startActivityForResult(intent, requestCode);
     }
 
@@ -134,9 +141,11 @@ public class EditNoteActivity extends BaseActivity {
 
         if (mNoteEntity == null) {
             mNoteEntity = new NoteEntity();
+            mNoteEntity.modifiedTime = TimeUtils.getNowMills();
+            mNoteEntity.adapterPos = 0;
         }
 
-        mNoteEntity.modifiedTime = TimeUtils.getNowMills();
+
         setToolbarTitle();
 
         mBitMapHelper = new BitMapHelper(EditNoteActivity.this);
@@ -144,6 +153,9 @@ public class EditNoteActivity extends BaseActivity {
 
     private void initmEtContent() {
         setEditTextState(true);
+
+        mEtContent.setText(mNoteEntity.noteContent);
+        mEtContent.setSelection(mNoteEntity.noteContent.length());
 
         mEtContent.addTextChangedListener(new EditTextWatcherImpl() {
             @Override
@@ -164,10 +176,11 @@ public class EditNoteActivity extends BaseActivity {
 
 
     public void setToolbarTitle() {
-        setToolbarTitle("Title");
+        setToolbarTitle("");
 
         if (toolbar != null) {
-            toolbar.setSubtitle("Subtitle");
+            String subtitle = DateUtils.date2String(new Date(mNoteEntity.modifiedTime));
+            toolbar.setSubtitle(subtitle);
         }
     }
 
@@ -553,12 +566,17 @@ public class EditNoteActivity extends BaseActivity {
         //et_content.getText().toString().trim()以及mEdContent.getText().toString()
         // 什么都不输入也会返回""字符串
         String content = mEtContent.getText().toString();
+        if (TextUtils.isEmpty(content)) {
+            NoteDbHelper.getInstance().deleteNote(mNoteEntity);
+            return;
+        }
+
         // 内容改变时才保存
         if (!content.equals(mNoteEntity.noteContent)) {
             mNoteEntity.modifiedTime = TimeUtils.getNowMills();
             mNoteEntity.noteContent = content;
             Intent intent = new Intent();
-            intent.putExtra(EXTRA_NOTE_DATA,mNoteEntity);
+            intent.putExtra(EXTRA_NOTE_DATA, mNoteEntity);
             setResult(RESULT_OK, intent);
         }
     }

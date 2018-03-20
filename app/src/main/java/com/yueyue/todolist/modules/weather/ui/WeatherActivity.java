@@ -1,6 +1,7 @@
 package com.yueyue.todolist.modules.weather.ui;
 
 import android.Manifest;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,8 +15,6 @@ import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.amap.api.location.AMapLocationClient;
-import com.amap.api.location.AMapLocationClientOption;
 import com.blankj.utilcode.util.ToastUtils;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.yueyue.todolist.R;
@@ -61,11 +60,6 @@ public class WeatherActivity extends BaseActivity {
     private Weather mWeather = new Weather();
     private WeatherAdapter mAdapter;
 
-
-    private AMapLocationClient mLocationClient;
-    private AMapLocationClientOption mLocationOption;
-
-
     public static void launch(Context context) {
         context.startActivity(new Intent(context, WeatherActivity.class));
     }
@@ -80,6 +74,7 @@ public class WeatherActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         setupView();
+        initFab();
         initData();
     }
 
@@ -101,17 +96,40 @@ public class WeatherActivity extends BaseActivity {
         mAdapter = new WeatherAdapter(mWeather);
         mRecyclerView.setAdapter(mAdapter);
 
+
+    }
+
+    private void initFab() {
         //RecyclerView的滚动事件OnScrollListener研究 - 简书
         //               https://www.jianshu.com/p/ce347cf991db
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                int visiblity = RecyclerView.SCROLL_STATE_IDLE == newState ? View.VISIBLE : View.GONE;
-                mFab.setVisibility(visiblity);
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    setFabIn();
+                } else {
+                    setFabOut();
+                }
             }
         });
+
     }
 
+    private void setFabOut() {
+        ObjectAnimator
+                .ofFloat(mFab, "alpha", 0f)
+                .setDuration(200)
+                .start();
+
+
+    }
+
+    private void setFabIn() {
+        ObjectAnimator
+                .ofFloat(mFab, "alpha", 1f)
+                .setDuration(200)
+                .start();
+    }
 
     private void initData() {
 

@@ -37,7 +37,7 @@ import com.yueyue.todolist.modules.edit.ui.EditNoteActivity;
 import com.yueyue.todolist.modules.main.component.WeatherExecutor;
 import com.yueyue.todolist.modules.main.db.NoteDbHelper;
 import com.yueyue.todolist.modules.main.domain.NoteEntity;
-import com.yueyue.todolist.modules.other.ui.OtherServerFragment;
+import com.yueyue.todolist.modules.weather.ui.WeatherActivity;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -51,8 +51,7 @@ import io.reactivex.schedulers.Schedulers;
 
 import static android.support.v4.widget.DrawerLayout.LOCK_MODE_LOCKED_CLOSED;
 
-public class MainActivity
-        extends BaseActivity
+public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -61,13 +60,10 @@ public class MainActivity
     public static final int DRAWABLE_MODE_GRID = R.drawable.ic_border_all_white_24dp;
 
     private static final int ADD_NOTE_REQUEST_CODE = 0x01;
+    public static final int EDIT_NOTE_REQUEST_CODE = 0x02;
 
     public static final long DRAWER_CLOSE_DELAY = 230L;
 
-    public static final int ITEM_ALL = -1;     //主页
-    public static final int ITEM_PRIMARY = -2; //私有
-    public static final int ITEM_RECYCLE = -3; //垃圾篓
-    public static final int ITEM_CURRENT = -1;     //主页
 
     private SparseArray<Fragment> mFragmentSparseArray;
 
@@ -168,14 +164,19 @@ public class MainActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_todo:
+                switchMenu(R.id.menu_todo, mFragmentSparseArray);
                 setToolbarTitle(getString(R.string.todo));
                 break;
             case R.id.menu_privacy:
+                switchMenu(R.id.menu_privacy, mFragmentSparseArray);
+                setToolbarTitle(getString(R.string.privacy));
                 break;
             case R.id.menu_recycle_bin:
+                switchMenu(R.id.menu_recycle_bin, mFragmentSparseArray);
+                setToolbarTitle(getString(R.string.recycle_bin));
                 break;
-            case R.id.menu_more_service:
-                switchMenu(R.id.menu_more_service, mFragmentSparseArray);
+            case R.id.menu_weather:
+                WeatherActivity.launch(MainActivity.this);
                 break;
             case R.id.menu_setting:
                 break;
@@ -193,10 +194,9 @@ public class MainActivity
         if (mFragmentSparseArray == null) {
             mFragmentSparseArray = new SparseArray<>();
             //-主页
-            mFragmentSparseArray.put(R.id.menu_todo, MainTabsFragment.newInstance());
-
-            // OtherServer
-            mFragmentSparseArray.put(R.id.menu_more_service, OtherServerFragment.newInstance());
+            mFragmentSparseArray.put(R.id.menu_todo, MainTabsFragment.newInstance(MainTabsFragment.ITEM_NORMAL));
+            mFragmentSparseArray.put(R.id.menu_privacy, MainTabsFragment.newInstance(MainTabsFragment.ITEM_PRIMARY));
+            mFragmentSparseArray.put(R.id.menu_recycle_bin, MainTabsFragment.newInstance(MainTabsFragment.ITEM_RECYCLE));
         }
         setMainFragment(R.id.menu_todo, mFragmentSparseArray, savedInstanceState == null);
     }
@@ -215,12 +215,6 @@ public class MainActivity
         }
     }
 
-    public String getCurrentMenuTitle() {
-        if (currentMenu == null) {
-            currentMenu = mNavView.getMenu().getItem(0);
-        }
-        return currentMenu.getTitle().toString();
-    }
 
     public void changeDrawer(boolean enable) {
         int lockMode = enable ? DrawerLayout.LOCK_MODE_UNLOCKED : LOCK_MODE_LOCKED_CLOSED;
@@ -230,7 +224,7 @@ public class MainActivity
 
     @OnClick(R.id.fab)
     void fabClick() {
-        EditNoteActivity.launch(MainActivity.this, null, ADD_NOTE_REQUEST_CODE);
+        EditNoteActivity.launch(MainActivity.this, null , ADD_NOTE_REQUEST_CODE);
     }
 
 
@@ -289,6 +283,10 @@ public class MainActivity
                     NoteDbHelper.getInstance().addNote(noteEntity);
                     RxBus.getDefault().post(new MainTabsUpdateEvent());
                     break;
+                case EDIT_NOTE_REQUEST_CODE:
+                    NoteEntity noteEntity1 = data.getParcelableExtra(EditNoteActivity.EXTRA_NOTE_DATA);
+                    NoteDbHelper.getInstance().addNote(noteEntity1);
+                    RxBus.getDefault().post(new MainTabsUpdateEvent());
                 default:
                     break;
             }
