@@ -10,7 +10,6 @@ import java.util.List;
 public interface INoteModel<T> {
     void initNote(int folderId);
 
-    List<T> loadAllNoteList();
 
     List<T> loadPrivacyNoteList();
 

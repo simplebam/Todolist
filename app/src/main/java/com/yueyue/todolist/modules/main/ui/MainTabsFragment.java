@@ -71,8 +71,8 @@ public class MainTabsFragment extends RecyclerFragment {
     @Override
     protected void initViews() {
         super.initViews();
-        setupView();
         initArguments();
+        setupView();
         initFab();
         initAdapter();
         registerMainTabsUpdateEvent();
@@ -177,10 +177,10 @@ public class MainTabsFragment extends RecyclerFragment {
                 .setTitle(getString(R.string.select_your_operation))
                 .setIcon(R.mipmap.ic_launcher)
                 .setSingleChoiceItems(items, 0, (dialog, which) -> {
-                    handleResultFromItems(items[which], noteEntity);
                     if (dialog != null) {
                         dialog.dismiss();
                     }
+                    handleResultFromItems(items[which], noteEntity);
                 })
                 .setNegativeButton(getString(R.string.cancel), null)
                 .setCancelable(false)
@@ -197,6 +197,7 @@ public class MainTabsFragment extends RecyclerFragment {
                     NoteDbHelper.getInstance().deleteNote(noteEntity);
                 } else {
                     noteEntity.inRecycleBin = 1;
+                    NoteDbHelper.getInstance().addNote(noteEntity);
                 }
                 break;
             case "移动":
@@ -215,6 +216,11 @@ public class MainTabsFragment extends RecyclerFragment {
             default:
                 break;
         }
+
+        if (!"删除".equals(item)) {
+            NoteDbHelper.getInstance().addNote(noteEntity);
+        }
+
         load();
 
     }
@@ -266,6 +272,7 @@ public class MainTabsFragment extends RecyclerFragment {
                 .setPositiveButton(getString(R.string.recovery), (dialog, which) -> {
                     NoteEntity note = mAdapter.getData().get(position);
                     note.inRecycleBin = 0;
+                    NoteDbHelper.getInstance().addNote(note);
                     load();
                 })
                 .show();
@@ -338,7 +345,7 @@ public class MainTabsFragment extends RecyclerFragment {
     }
 
     private List<NoteEntity> loadDataFromDB() {
-        List<NoteEntity> list;
+        List<NoteEntity> list = new ArrayList<>(1);
         switch (mItemCurrent) {
             case ITEM_NORMAL:
                 list = NoteDbHelper.getInstance().loadNormalNoteList();
@@ -350,8 +357,6 @@ public class MainTabsFragment extends RecyclerFragment {
                 list = NoteDbHelper.getInstance().loadRecycleBinNoteList();
                 break;
             default:
-                //测试使用
-                list = NoteDbHelper.getInstance().loadAll();
                 break;
         }
 

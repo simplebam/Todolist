@@ -199,6 +199,7 @@ public class MainActivity extends BaseActivity
             mFragmentSparseArray.put(R.id.menu_recycle_bin, MainTabsFragment.newInstance(MainTabsFragment.ITEM_RECYCLE));
         }
         setMainFragment(R.id.menu_todo, mFragmentSparseArray, savedInstanceState == null);
+        setToolbarTitle(getString(R.string.todo));
     }
 
 

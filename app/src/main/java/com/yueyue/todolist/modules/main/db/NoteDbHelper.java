@@ -51,7 +51,6 @@ public class NoteDbHelper implements INoteModel<NoteEntity> {
         NoteEntity note = new NoteEntity();
         note.createdTime = time;
         note.modifiedTime = time;
-        note.noteFolderId = folderId;
         note.noteContent = Utils.getApp().getResources().getString(resId);
         note.isPrivacy = 0;
         note.inRecycleBin = 0;
@@ -78,20 +77,6 @@ public class NoteDbHelper implements INoteModel<NoteEntity> {
     }
 
 
-    @Override
-    public List<NoteEntity> loadAllNoteList() {
-        try {
-            List<NoteEntity> data = DataSupport
-                    .where("isPrivacy = ? and inRecycleBin = ?", "0", "0")
-                    .order("createdTime desc")
-                    .find(NoteEntity.class);
-            return data;
-        } catch (Exception e) {
-            PLog.e(TAG, "loadAllNoteList: " + e.toString());
-            e.printStackTrace();
-            return new ArrayList<>();
-        }
-    }
 
     @Override
     public List<NoteEntity> loadPrivacyNoteList() {

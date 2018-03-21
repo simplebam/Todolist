@@ -82,7 +82,7 @@ public class WeatherExecutor implements IExecutor {
         fetchDataByNetWork(cityName)
                 .doOnError(throwable -> PreferencesManager.getInstance().saveCityName("广州"))
                 .doOnNext(weather -> updateView(weather))
-                .doOnComplete(() -> ToastUtils.showShort(mActivity.getString(R.string.update_complete)))
+                .doOnComplete(() -> ToastUtils.showShort(mActivity.getString(R.string.weather_update_complete)))
                 .subscribe();
 
     }

@@ -67,8 +67,8 @@
     <string name="time">时间</string>
     <string name="date">日期</string>
     <string name="no_permission_location">没有位置信息权限，无法更新天气！</string>
-    <string name="update_complete">更新完毕</string>
-    <string name="updating_weather">更新天气</string>
+    <string name="weather_update_complete">天气更新完成</string>
+    <string name="updating_weather">更新天气中</string>
 
     <string name="database_content_one">点击右上角，可以切换视图样式！</string>
     <string name="database_content_two">长按便签，可以进行批量操作！</string>

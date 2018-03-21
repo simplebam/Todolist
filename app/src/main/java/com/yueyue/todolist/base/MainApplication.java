@@ -2,11 +2,16 @@ package com.yueyue.todolist.base;
 
 import android.app.Application;
 import android.content.Context;
+import android.util.Log;
 
 import com.blankj.utilcode.util.Utils;
 import com.yueyue.todolist.component.CrashHandler;
+import com.yueyue.todolist.modules.main.db.NoteDbHelper;
+import com.yueyue.todolist.modules.main.domain.NoteEntity;
 
 import org.litepal.LitePal;
+
+import java.util.List;
 
 /**
  * author : yueyue on 2018/3/2 00:11
@@ -14,6 +19,8 @@ import org.litepal.LitePal;
  */
 
 public class MainApplication extends Application {
+
+    private static final String TAG = MainApplication.class.getSimpleName();
 
     private static Context sContext;
 
@@ -26,6 +33,8 @@ public class MainApplication extends Application {
         initTools();
         initBugsHandle();
 
+        List<NoteEntity> list = NoteDbHelper.getInstance().loadAll();
+        Log.i(TAG, "onCreate: "+ list.toString());
 
     }
 

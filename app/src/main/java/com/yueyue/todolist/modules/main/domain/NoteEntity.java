@@ -23,14 +23,13 @@ public class NoteEntity extends BaseEntity implements Parcelable {
     public long createdTime = TimeUtils.getNowMills();
     public long modifiedTime;
     public String noteContent = "";
-    public int noteFolderId;
     @Column(defaultValue = "0")
     public int isPrivacy;    //    1是私密便签  0不是
     @Column(defaultValue = "0")
     public int inRecycleBin; //    1是废纸篓中便签，0不是
 
     @Column(ignore = true)
-    public int adapterPos=-1;
+    public int adapterPos = -1;
 
 
     public NoteEntity() {
@@ -42,7 +41,6 @@ public class NoteEntity extends BaseEntity implements Parcelable {
         createdTime = in.readLong();
         modifiedTime = in.readLong();
         noteContent = in.readString();
-        noteFolderId = in.readInt();
         isPrivacy = in.readInt();
         inRecycleBin = in.readInt();
     }
@@ -71,8 +69,21 @@ public class NoteEntity extends BaseEntity implements Parcelable {
         dest.writeLong(createdTime);
         dest.writeLong(modifiedTime);
         dest.writeString(noteContent);
-        dest.writeInt(noteFolderId);
         dest.writeInt(isPrivacy);
         dest.writeInt(inRecycleBin);
+    }
+
+    @Override
+    public String toString() {
+        return NoteEntity.class.getSimpleName() + "{" +
+                "id=" + id +
+                ", noteId='" + noteId + '\'' +
+                ", createdTime=" + createdTime +
+                ", modifiedTime=" + modifiedTime +
+                ", noteContent='" + noteContent + '\'' +
+                ", isPrivacy=" + isPrivacy +
+                ", inRecycleBin=" + inRecycleBin +
+                ", adapterPos=" + adapterPos +
+                '}';
     }
 }
