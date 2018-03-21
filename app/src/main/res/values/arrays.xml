@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="normal_selections">
+        <item name="normal_set_privacy">设为私密</item>
+        <item name="normal_delete">删除</item>
+        <item name="normal_move">移动</item>
+    </string-array>
+
+    <string-array name="privacy_selections">
+        <item name="privacy_remove">移除私密</item>
+        <item name="privacy_delete">删除</item>
+        <item name="privacy_move">移动</item>
+    </string-array>
+
+    <string-array name="recycle_selections">
+        <item name="recycle_delete">删除</item>
+        <item name="privacy_recovery">恢复</item>
+    </string-array>
+</resources>

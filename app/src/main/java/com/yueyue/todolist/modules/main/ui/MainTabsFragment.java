@@ -2,14 +2,15 @@ package com.yueyue.todolist.modules.main.ui;
 
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.blankj.utilcode.util.SizeUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -21,6 +22,7 @@ import com.yueyue.todolist.component.RxBus;
 import com.yueyue.todolist.event.MainTabsShowModeEvent;
 import com.yueyue.todolist.event.MainTabsUpdateEvent;
 import com.yueyue.todolist.modules.edit.ui.EditNoteActivity;
+import com.yueyue.todolist.modules.main.adapter.NoteBottomSheetFolderAdapter;
 import com.yueyue.todolist.modules.main.adapter.NoteListAdapter;
 import com.yueyue.todolist.modules.main.db.NoteDbHelper;
 import com.yueyue.todolist.modules.main.domain.NoteEntity;
@@ -69,13 +71,17 @@ public class MainTabsFragment extends RecyclerFragment {
     @Override
     protected void initViews() {
         super.initViews();
-        mRecyclerView = getRecyclerView();
+        setupView();
         initArguments();
         initFab();
         initAdapter();
         registerMainTabsUpdateEvent();
         registerMainTabsShowModeEvent();
         load();
+    }
+
+    private void setupView() {
+        mRecyclerView = getRecyclerView();
     }
 
     private void initArguments() {
@@ -146,43 +152,139 @@ public class MainTabsFragment extends RecyclerFragment {
         });
 
         mAdapter.setOnItemChildLongClickListener((adapter, view, position) -> {
+            NoteEntity noteEntity = (NoteEntity) adapter.getData().get(position);
+            showSingleChioceDialog(noteEntity);
             return true;
         });
     }
 
+    /**
+     * 显示单选对话框
+     */
+    public void showSingleChioceDialog(NoteEntity noteEntity) {
+        String[] items;
+
+        if (mItemCurrent == ITEM_NORMAL) {
+            items = getResources().getStringArray(R.array.normal_selections);
+        } else if (mItemCurrent == ITEM_PRIMARY) {
+            items = getResources().getStringArray(R.array.privacy_selections);
+        } else {
+            items = getResources().getStringArray(R.array.recycle_selections);
+        }
+
+
+        new AlertDialog.Builder(mActivity)
+                .setTitle(getString(R.string.select_your_operation))
+                .setIcon(R.mipmap.ic_launcher)
+                .setSingleChoiceItems(items, 0, (dialog, which) -> {
+                    handleResultFromItems(items[which], noteEntity);
+                    if (dialog != null) {
+                        dialog.dismiss();
+                    }
+                })
+                .setNegativeButton(getString(R.string.cancel), null)
+                .setCancelable(false)
+                .show();
+    }
+
+    private void handleResultFromItems(String item, NoteEntity noteEntity) {
+        switch (item) {
+            case "设为私密":
+                noteEntity.isPrivacy = 1;
+                break;
+            case "删除":
+                if (mItemCurrent == ITEM_RECYCLE) {
+                    NoteDbHelper.getInstance().deleteNote(noteEntity);
+                } else {
+                    noteEntity.inRecycleBin = 1;
+                }
+                break;
+            case "移动":
+                if (mItemCurrent == ITEM_RECYCLE) {
+                    noteEntity.inRecycleBin = 0;
+                } else {
+                    showMoveBottomSheet(noteEntity);
+                }
+                break;
+            case "移除私密":
+                noteEntity.isPrivacy = 0;
+                break;
+            case "恢复":
+                noteEntity.inRecycleBin = 0;
+                break;
+            default:
+                break;
+        }
+        load();
+
+    }
+
+    public void showMoveBottomSheet(NoteEntity noteEntity) {
+        //BottomSheet、BottomSheetDialog使用详解 - 简书 https://www.jianshu.com/p/0a7383e0ad0f
+        final BottomSheetDialog dialog = new BottomSheetDialog(mActivity);
+//                    获取contentView
+        ViewGroup contentView = (ViewGroup) ((ViewGroup) mActivity.findViewById(android.R.id.content)).getChildAt(0);
+        View root = LayoutInflater.from(mActivity).inflate(R.layout.bottom_sheet_folder, contentView, false);
+        RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.recycler_bottom_sheet_folder);
+        recyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
+        dialog.setContentView(root);
+        recyclerView.setAdapter(getBottomSheetRvAdapter(dialog, noteEntity));
+        dialog.show();
+    }
+
+    private NoteBottomSheetFolderAdapter getBottomSheetRvAdapter(final BottomSheetDialog dialog,
+                                                                 NoteEntity noteEntity) {
+        final NoteBottomSheetFolderAdapter folderAdapter = new NoteBottomSheetFolderAdapter();
+        ArrayList<String> list = new ArrayList<String>() {{
+            add(getString(R.string.todo));
+            add(getString(R.string.privacy));
+            add(getString(R.string.recycle_bin));
+        }};
+        folderAdapter.setNewData(list);
+        folderAdapter.setOnItemClickListener((adapter, view, position) -> {
+            if (position == 0) {
+                noteEntity.inRecycleBin = 0;
+                noteEntity.isPrivacy = 0;
+            } else if (position == 1) {
+                noteEntity.inRecycleBin = 0;
+                noteEntity.isPrivacy = 1;
+            } else {
+                noteEntity.inRecycleBin = 1;
+            }
+            if (dialog != null) {
+                dialog.dismiss();
+            }
+        });
+        return folderAdapter;
+    }
+
+
     public void showNoteRecoverDialog(final int position) {
-        new AlertDialog.Builder(getActivity())
+        new AlertDialog.Builder(mActivity)
                 .setMessage(getString(R.string.unable_to_open_note_recover_to_previous_folder))
                 .setNegativeButton(getString(R.string.cancel), null)
                 .setPositiveButton(getString(R.string.recovery), (dialog, which) -> {
-                    recoverNote(position);
+                    NoteEntity note = mAdapter.getData().get(position);
+                    note.inRecycleBin = 0;
+                    load();
                 })
                 .show();
     }
 
-    private void recoverNote(int position) {
-        NoteEntity note = mAdapter.getData().get(position);
-        mAdapter.getData().remove(position);
-
-        //  inRecycleBin 设为0
-        note.inRecycleBin = 0;
-        load();
-    }
 
     public void toEditNoteForEdit(NoteEntity note, int position) {
         note.adapterPos = position;
-        EditNoteActivity.launch(getActivity(), note, EDIT_NOTE_REQUEST_CODE);
+        EditNoteActivity.launch(mActivity, note, EDIT_NOTE_REQUEST_CODE);
     }
 
     private void initFab() {
-        FragmentActivity activity = getActivity();
-        if (activity != null && activity instanceof MainActivity) {
-            final FloatingActionButton fab = ((MainActivity) getActivity()).mFab;
+        if (mActivity instanceof MainActivity) {
+            final FloatingActionButton fab = ((MainActivity) mActivity).mFab;
             if (fab == null) return;
 
 
             fab.setOnClickListener(v -> {
-                EditNoteActivity.launch(getActivity(), null, MainActivity.ADD_NOTE_REQUEST_CODE);
+                EditNoteActivity.launch(mActivity, null, MainActivity.ADD_NOTE_REQUEST_CODE);
             });
 
             mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -230,6 +332,7 @@ public class MainTabsFragment extends RecyclerFragment {
                     changeRefresh(false);
                     mAdapter.setNewData(noteEntityList);
                     mAdapter.notifyDataSetChanged();
+                    mRecyclerView.scrollToPosition(0);
                 });
         mDisposableList.add(disposable);
     }

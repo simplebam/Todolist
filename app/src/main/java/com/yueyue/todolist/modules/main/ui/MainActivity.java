@@ -82,7 +82,7 @@ public class MainActivity extends BaseActivity
     @BindView(R.id.nav_view)
     NavigationView mNavView;
 
-    public ActionBarDrawerToggle toggle;
+
     private boolean backPressed;
     private MenuItem currentMenu;
     private boolean isFirst = true;
@@ -114,7 +114,7 @@ public class MainActivity extends BaseActivity
 
 
     private void setupDrawer() {
-        toggle = new ActionBarDrawerToggle(
+        ActionBarDrawerToggle toggle= new ActionBarDrawerToggle(
                 this, mDrawerLayout, toolbar, R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close);
         mDrawerLayout.addDrawerListener(toggle);
@@ -163,14 +163,17 @@ public class MainActivity extends BaseActivity
             case R.id.menu_todo:
                 switchMenu(R.id.menu_todo, mFragmentSparseArray);
                 setToolbarTitle(getString(R.string.todo));
+                RxBus.getDefault().post(new MainTabsUpdateEvent());
                 break;
             case R.id.menu_privacy:
                 switchMenu(R.id.menu_privacy, mFragmentSparseArray);
                 setToolbarTitle(getString(R.string.privacy));
+                RxBus.getDefault().post(new MainTabsUpdateEvent());
                 break;
             case R.id.menu_recycle_bin:
                 switchMenu(R.id.menu_recycle_bin, mFragmentSparseArray);
                 setToolbarTitle(getString(R.string.recycle_bin));
+                RxBus.getDefault().post(new MainTabsUpdateEvent());
                 break;
             case R.id.menu_weather:
                 WeatherActivity.launch(MainActivity.this);

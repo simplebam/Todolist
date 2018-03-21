@@ -74,7 +74,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:clickable="false"
-                    android:textColor="@color/color_89000000"/>
+                    android:textColor="@color/color_89000000"
+                    android:visibility="invisible"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
@@ -130,7 +131,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:clickable="false"
-                    android:visibility="gone"/>
+                    android:visibility="invisible"/>
             </LinearLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>

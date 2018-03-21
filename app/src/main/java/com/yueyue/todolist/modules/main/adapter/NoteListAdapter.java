@@ -1,7 +1,5 @@
 package com.yueyue.todolist.modules.main.adapter;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -18,7 +16,6 @@ import com.yueyue.todolist.modules.main.domain.NoteEntity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -29,20 +26,6 @@ import java.util.regex.Pattern;
  */
 
 public class NoteListAdapter extends BaseQuickAdapter<NoteEntity, BaseViewHolder> {
-
-
-    public void addData(@NonNull Collection<? extends NoteEntity> newData) {
-        addData(0, newData);
-    }
-
-    public void addData(@NonNull NoteEntity data) {
-        addData(0, data);
-        notifyDataSetChanged();
-    }
-
-    public void setNewData(@Nullable List<NoteEntity> data) {
-        super.setNewData(data);
-    }
 
     public NoteListAdapter() {
         super(R.layout.item_note);

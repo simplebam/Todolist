@@ -158,5 +158,9 @@
     <string name="cancel">取消</string>
     <string name="recovery">恢复</string>
     <string name="unable_to_open_note_recover_to_previous_folder">无法直接打开便签，是否恢复至原有便签夹？</string>
+    <string name="set_privacy">设为私密</string>
+    <string name="move">移动</string>
+    <string name="select_your_operation">请选择你的操作：</string>
+    <string name="move_to">移动到</string>
 
 </resources>
