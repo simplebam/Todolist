@@ -44,12 +44,9 @@ import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-
-import static android.support.v4.widget.DrawerLayout.LOCK_MODE_LOCKED_CLOSED;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -59,7 +56,7 @@ public class MainActivity extends BaseActivity
     public static final int DRAWABLE_MODE_LIST = R.drawable.ic_format_list_bulleted_white_24dp;
     public static final int DRAWABLE_MODE_GRID = R.drawable.ic_border_all_white_24dp;
 
-    private static final int ADD_NOTE_REQUEST_CODE = 0x01;
+    public static final int ADD_NOTE_REQUEST_CODE = 0x01;
     public static final int EDIT_NOTE_REQUEST_CODE = 0x02;
 
     public static final long DRAWER_CLOSE_DELAY = 230L;
@@ -201,31 +198,7 @@ public class MainActivity extends BaseActivity
         setMainFragment(R.id.menu_todo, mFragmentSparseArray, savedInstanceState == null);
     }
 
-    /**
-     * DrawerLayout侧滑菜单 - summerjing - 博客园
-     * https://www.cnblogs.com/blogljj/p/5016588.html?utm_source=tuicool&utm_medium=referral
-     */
-    public void changeNavigator(boolean enable) {
-        if (toggle == null) return;
-        if (enable) {
-            toggle.setDrawerIndicatorEnabled(true);//true的时候会走系统的逻辑，展示的是系统图标
-        } else {
-            toggle.setDrawerIndicatorEnabled(false);
-            toggle.setToolbarNavigationClickListener(v -> onBackPressed());
-        }
-    }
 
-
-    public void changeDrawer(boolean enable) {
-        int lockMode = enable ? DrawerLayout.LOCK_MODE_UNLOCKED : LOCK_MODE_LOCKED_CLOSED;
-        mDrawerLayout.setDrawerLockMode(lockMode);
-
-    }
-
-    @OnClick(R.id.fab)
-    void fabClick() {
-        EditNoteActivity.launch(MainActivity.this, null , ADD_NOTE_REQUEST_CODE);
-    }
 
 
     @Override

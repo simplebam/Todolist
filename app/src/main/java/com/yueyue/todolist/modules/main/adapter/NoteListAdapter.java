@@ -28,9 +28,8 @@ import java.util.regex.Pattern;
  * desc   :
  */
 
-public class RvNoteListAdapter extends BaseQuickAdapter<NoteEntity, BaseViewHolder> {
+public class NoteListAdapter extends BaseQuickAdapter<NoteEntity, BaseViewHolder> {
 
-    public List<NoteEntity> mAllDataList;
 
     public void addData(@NonNull Collection<? extends NoteEntity> newData) {
         addData(0, newData);
@@ -45,7 +44,7 @@ public class RvNoteListAdapter extends BaseQuickAdapter<NoteEntity, BaseViewHold
         super.setNewData(data);
     }
 
-    public RvNoteListAdapter() {
+    public NoteListAdapter() {
         super(R.layout.item_note);
     }
 
