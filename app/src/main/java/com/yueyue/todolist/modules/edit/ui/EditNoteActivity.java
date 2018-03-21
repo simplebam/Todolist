@@ -39,6 +39,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.yueyue.todolist.R;
 import com.yueyue.todolist.base.BaseActivity;
+import com.yueyue.todolist.common.C;
 import com.yueyue.todolist.common.utils.DateUtils;
 import com.yueyue.todolist.common.utils.MyFileUtils;
 import com.yueyue.todolist.common.utils.ProgressDialogUtils;
@@ -60,6 +61,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -130,12 +133,15 @@ public class EditNoteActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setEditTextState(true);
         initData();
-        initmEtContent();
+        setToolbarTitle();
+        initListener();
     }
 
 
     private void initData() {
+        mBitMapHelper = new BitMapHelper(EditNoteActivity.this);
         Intent intent = getIntent();
         mNoteEntity = intent.getParcelableExtra(EXTRA_NOTE_DATA);
 
@@ -145,18 +151,39 @@ public class EditNoteActivity extends BaseActivity {
             mNoteEntity.adapterPos = 0;
         }
 
+        parseNoteContent(mNoteEntity);
 
-        setToolbarTitle();
 
-        mBitMapHelper = new BitMapHelper(EditNoteActivity.this);
     }
 
-    private void initmEtContent() {
-        setEditTextState(true);
+    private void parseNoteContent(NoteEntity noteEntity) {
+        mEtContent.setText(noteEntity.noteContent);
+        mEtContent.setSelection(noteEntity.noteContent.length());
 
-        mEtContent.setText(mNoteEntity.noteContent);
-        mEtContent.setSelection(mNoteEntity.noteContent.length());
+        String flag = C.imageTabBefore + "([^<]*)" + C.imageTabAfter;
 
+        // 利用正则找出文档中的图片
+        Pattern p = Pattern.compile(flag);
+        Matcher m = p.matcher(noteEntity.noteContent);
+        List<String> array = new ArrayList<>();
+        while (m.find()) {
+//            匹配到的数据中，第一个括号的中的内容（这里只有一个括号）
+            String temp = m.group(1);
+            array.add(temp);
+        }
+        for (int i = 0; i < array.size(); i++) {
+            String imageName = array.get(i);
+            Bitmap bitmap = mBitMapHelper.get(imageName);
+            replaceImage(imageName, bitmap);
+        }
+
+    }
+
+    private void replaceImage(String imageName, Bitmap bitmap) {
+        mEtContent.replaceDrawable(bitmap, imageName);
+    }
+
+    private void initListener() {
         mEtContent.addTextChangedListener(new EditTextWatcherImpl() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
