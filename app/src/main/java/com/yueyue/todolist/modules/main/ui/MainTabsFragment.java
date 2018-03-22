@@ -223,6 +223,7 @@ public class MainTabsFragment extends RecyclerFragment {
 
         load();
 
+
     }
 
     public void showMoveBottomSheet(NoteEntity noteEntity) {
@@ -257,6 +258,8 @@ public class MainTabsFragment extends RecyclerFragment {
             } else {
                 noteEntity.inRecycleBin = 1;
             }
+            NoteDbHelper.getInstance().addNote(noteEntity);
+            load();
             if (dialog != null) {
                 dialog.dismiss();
             }

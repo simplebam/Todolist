@@ -176,5 +176,10 @@
     <string name="willUrl">http://blog.csdn.net/simplebam</string>
     <string name="githubUrl">https://github.com/simplebam</string>
     <string name="email">3421448373@qq.com</string>
+    <string name="contacts">Contacts</string>
+    <string name="simpelbam">Simplebam</string>
+    <string name="blog">Blog</string>
+    <string name="github">Github</string>
+    <string name="email_name">E-mail</string>
 
 </resources>

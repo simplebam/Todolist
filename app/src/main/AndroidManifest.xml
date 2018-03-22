@@ -80,8 +80,9 @@
             android:name=".modules.lock.UnlockActivity"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".modules.personal.PersonalActivity"
-                  android:screenOrientation="portrait"/>
+        <activity
+            android:name=".modules.personal.PersonalActivity"
+            android:screenOrientation="portrait"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"

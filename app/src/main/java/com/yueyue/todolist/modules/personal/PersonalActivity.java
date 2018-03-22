@@ -31,19 +31,19 @@ public class PersonalActivity extends BaseActivity {
     ImageView mIvAuthor;
     @BindView(R.id.tvContacts)
     TextView mTvContacts;
-    @BindView(R.id.tvName)
+    @BindView(R.id.tv_name)
     TextView mTvName;
-    @BindView(R.id.tvBlog)
+    @BindView(R.id.tv_blog)
     TextView mTvBlog;
-    @BindView(R.id.tvGithub)
+    @BindView(R.id.tv_github)
     TextView mTvGithub;
     @BindView(R.id.tvEmail)
     TextView mTvEmail;
-    @BindView(R.id.tvUrl)
+    @BindView(R.id.tv_url)
     TextView mTvUrl;
-    @BindView(R.id.tvGithubUrl)
+    @BindView(R.id.tv_github_url)
     TextView mTvGithubUrl;
-    @BindView(R.id.tvEmailUrl)
+    @BindView(R.id.tv_email_url)
     TextView mTvEmailUrl;
 
     public static void launch(Context context) {
@@ -78,13 +78,13 @@ public class PersonalActivity extends BaseActivity {
         mTvEmailUrl.setTypeface(typeface);
     }
 
-    @OnClick({R.id.tvUrl, R.id.tvGithubUrl})
+    @OnClick({R.id.tv_url, R.id.tv_github_url})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.tvUrl:
+            case R.id.tv_url:
                 toWeb(getResources().getString(R.string.willUrl));
                 break;
-            case R.id.tvGithubUrl:
+            case R.id.tv_github_url:
                 toWeb(getResources().getString(R.string.githubUrl));
                 break;
 

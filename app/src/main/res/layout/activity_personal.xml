@@ -8,7 +8,6 @@
     android:orientation="vertical"
     tools:layout_editor_absoluteY="25dp">
 
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="0dp"
@@ -35,8 +34,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvContacts"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:srcCompat="@drawable/hughjackman"
-        />
+        app:srcCompat="@drawable/hughjackman"/>
 
     <TextView
         android:id="@+id/tvContacts"
@@ -45,83 +43,87 @@
         android:layout_marginBottom="60dp"
         android:layout_marginEnd="83dp"
         android:layout_marginStart="15dp"
-        android:text="Contacts"
+        android:text="@string/contacts"
+        android:textAllCaps="false"
         android:textColor="@android:color/black"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/tvBlog"
+        app:layout_constraintBottom_toTopOf="@+id/tv_blog"
         app:layout_constraintEnd_toStartOf="@+id/iv_author"
-        app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
-        android:id="@+id/tvName"
+        android:textAllCaps="false"
+        android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Will"
-        android:textColor="#3c3c3c"
+        android:text="@string/simpelbam"
+        android:textColor="@color/color_3c3c3c"
         app:layout_constraintEnd_toEndOf="@+id/iv_author"
         app:layout_constraintStart_toStartOf="@+id/iv_author"
         app:layout_constraintTop_toBottomOf="@+id/iv_author"/>
 
     <TextView
-        android:id="@+id/tvBlog"
+        android:textAllCaps="false"
+        android:id="@+id/tv_blog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="121dp"
-        android:text="Blog"
+        android:text="@string/blog"
         android:textColor="@android:color/darker_gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/tvContacts"/>
 
     <TextView
-        android:id="@+id/tvGithub"
+        android:textAllCaps="false"
+        android:id="@+id/tv_github"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Github"
+        android:text="@string/github"
         android:textColor="@android:color/darker_gray"
-        app:layout_constraintStart_toStartOf="@+id/tvBlog"
-        app:layout_constraintTop_toBottomOf="@+id/tvBlog"
+        app:layout_constraintStart_toStartOf="@+id/tv_blog"
+        app:layout_constraintTop_toBottomOf="@+id/tv_blog"
         />
 
     <TextView
+        android:textAllCaps="false"
         android:id="@+id/tvEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="E-mail"
+        android:text="@string/email_name"
         android:textColor="@android:color/darker_gray"
         app:layout_constraintStart_toStartOf="@+id/tvContacts"
-        app:layout_constraintTop_toBottomOf="@+id/tvGithub"/>
+        app:layout_constraintTop_toBottomOf="@+id/tv_github"/>
 
     <TextView
-        android:id="@+id/tvUrl"
+        android:id="@+id/tv_url"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/willUrl"
-        android:textColor="#3c3c3c"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tvBlog"
+        android:textColor="@color/color_3c3c3c"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tv_blog"
         app:layout_constraintStart_toEndOf="@+id/tvContacts"/>
 
     <TextView
-        android:id="@+id/tvGithubUrl"
+        android:id="@+id/tv_github_url"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/githubUrl"
-        android:textColor="#3c3c3c"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tvGithub"
+        android:textColor="@color/color_3c3c3c"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tv_github"
         app:layout_constraintStart_toEndOf="@+id/tvContacts"/>
 
     <TextView
-        android:id="@+id/tvEmailUrl"
+        android:id="@+id/tv_email_url"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/email"
-        android:textColor="#3c3c3c"
+        android:textColor="@color/color_3c3c3c"
         app:layout_constraintBaseline_toBaselineOf="@+id/tvEmail"
         app:layout_constraintStart_toEndOf="@+id/tvContacts"/>
 
