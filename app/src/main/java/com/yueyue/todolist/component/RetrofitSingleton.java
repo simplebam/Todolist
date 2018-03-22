@@ -86,7 +86,7 @@ public class RetrofitSingleton {
 
     private static void initRetrofit() {
         sRetrofit = new Retrofit.Builder()
-                .baseUrl(ApiInterface.HOST)
+                .baseUrl(ApiInterface.HEWEATHER_HOST)
                 .client(sOkHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())  //设置 Json 转换器
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())   //RxJava 适配器
@@ -110,9 +110,9 @@ public class RetrofitSingleton {
 
 
     /**
-     *  和风status状态码:  "no more requests"--->/(ㄒoㄒ)/~~,API免费次数已用完
-     *  和风status状态码:  "unknown city"--->API没有这个城市
-     *  和风status状态码:  "param invalid"--->,API没有缺少查询的参数
+     * 和风status状态码:  "no more requests"--->/(ㄒoㄒ)/~~,API免费次数已用完
+     * 和风status状态码:  "unknown city"--->API没有这个城市
+     * 和风status状态码:  "param invalid"--->,API没有缺少查询的参数
      */
     public Observable<Weather> fetchWeather(String city) {
         return sApiService.mWeatherAPI(city, C.HE_WEATHER_KEY)
@@ -122,7 +122,7 @@ public class RetrofitSingleton {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread(), true);
 
-               //配置下面这些会导致崩溃,无法捕捉的,还是用filter来过滤好一点
+        //配置下面这些会导致崩溃,无法捕捉的,还是用filter来过滤好一点
 //            .flatMap(weather -> {
 //            String status = weather.mWeathers.get(0).status;
 //            if ("no more requests".equals(status)) {
@@ -145,13 +145,13 @@ public class RetrofitSingleton {
      */
     public Observable<MobWeather> fetchMobWeather(String city) {
         return sApiService.mMobWeatherAPI(city, C.MOB_APP_KEY)
-                .filter(weather->weather!=null && weather.retCode==200)
+                .filter(weather -> weather != null && weather.retCode == 200)
                 .map(weather -> weather.mMobWeathers.get(0))
                 .doOnError(RetrofitSingleton::disposeFailureInfo)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread(), true);
 
-             //配置下面这些会导致崩溃,无法捕捉的,还是用filter来过滤好一点
+        //配置下面这些会导致崩溃,无法捕捉的,还是用filter来过滤好一点
 //            .flatMap(weather -> {
 //            int code = weather.retCode;
 //            if (10001 == code) {
@@ -169,7 +169,7 @@ public class RetrofitSingleton {
 
 
     public Observable<Version> fetchVersion() {
-        return sApiService.mVersionAPI(C.FIR_API_TOKEN)
+        return sApiService.mVersionAPI(C.FIR_API_APPID, C.FIR_API_TOKEN)
                 .doOnError(RetrofitSingleton::disposeFailureInfo)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread(), true);
