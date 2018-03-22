@@ -34,8 +34,8 @@ import com.blankj.utilcode.util.SizeUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
-import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.yueyue.todolist.R;
 import com.yueyue.todolist.base.BaseActivity;
@@ -407,7 +407,7 @@ public class EditNoteActivity extends BaseActivity {
         ImageLoader.load(EditNoteActivity.this, imagePath, imageReqWidth, imageReqHeight,
                 new SimpleTarget<Bitmap>() {
                     @Override
-                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
                         //根据Bitmap对象创建ImageSpan对象
                         Log.i(TAG, "bitmap width:" + resource.getWidth() + "   height:" + resource.getHeight());
                         insertImage(imagePath, resource);

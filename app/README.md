@@ -192,6 +192,7 @@ App体验：[Todolist - fir.im ](https://fir.im/tolist)
 * PhotoView : [android 开源photoView的使用 - 简书](https://www.jianshu.com/p/6e38712e310f)
 * LockPattern : [zhuanghongji/LockPattern: Android 九宫格图案解锁源码解析](https://github.com/zhuanghongji/LockPattern)
 
+
 ### Android 开发Tips && 性能优化
 * Android开发Tips ：
   * [Android开发一点小技巧和建议献上 - 掘金](https://juejin.im/post/5a66bea86fb9a01caf378d33)
@@ -282,5 +283,3 @@ App体验：[Todolist - fir.im ](https://fir.im/tolist)
 
 ### 项目中的缺点
 * 由于本人理解换肤方面的知识没有透彻,去掉换肤功能
-* 项目转MVP
-* 暂停功能的开发,考虑全局使用DiskLruCache管理

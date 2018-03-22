@@ -155,7 +155,7 @@
                 tools:targetApi="lollipop"/>
 
             <Button
-                android:id="@+id/bt_bug"
+                android:id="@+id/bt_personal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
@@ -165,7 +165,7 @@
                 android:gravity="start|center_vertical"
                 android:paddingEnd="12dp"
                 android:paddingStart="12dp"
-                android:text="@string/commit_bugs"
+                android:text="@string/link_me"
                 android:textColor="@color/color_6f6f6f"
                 tools:targetApi="lollipop"/>
         </GridLayout>

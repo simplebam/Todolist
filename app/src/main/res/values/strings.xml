@@ -116,6 +116,7 @@
     <string name="support_me_with_your_donation">随意捐赠支持</string>
     <string name="share_todolist">分享Todolist</string>
     <string name="check_update">检查软件更新</string>
+    <string name="link_me">联系作者方式</string>
     <string name="commit_bugs">意见错误反馈</string>
     <string name="thx_for_open_source_and_resource">感谢开源的世界和开放的资源</string>
     <string name="app_html">https://github.com/simplebam/Todolist</string>
@@ -169,5 +170,11 @@
     <string name="correct_password">密码正确</string>
     <string name="set_gestures_password_success">设置手势密码成功</string>
     <string name="app_lock">应用锁</string>
+
+
+    <!--PersonalActvity-->
+    <string name="willUrl">http://blog.csdn.net/simplebam</string>
+    <string name="githubUrl">https://github.com/simplebam</string>
+    <string name="email">3421448373@qq.com</string>
 
 </resources>

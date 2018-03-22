@@ -2,7 +2,6 @@ package com.yueyue.todolist.common;
 
 import com.blankj.utilcode.util.Utils;
 import com.yueyue.todolist.BuildConfig;
-import com.yueyue.todolist.R;
 import com.yueyue.todolist.common.utils.MyFileUtils;
 
 /**
@@ -39,11 +38,13 @@ public class C {
     public static String imageTabBefore="<image>";
     public static String imageTabAfter="</image>";
 
-    // 是否显示多选操作
-    public static boolean isShowMultiSelectAction = false;
 
-    // 便签显示样式
-    public static int noteListShowMode = R.drawable.ic_border_all_white_24dp;
+
+
+    public static String AVATARS_PERSONAL_URL ="https://avatars1.githubusercontent.com/u/25021641?s=460&v=4";
+
+
+
 
 
 }

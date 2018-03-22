@@ -9,7 +9,7 @@ ext {
             targetSdkVersion : 27,
             applicationId    : "com.yueyue.todolist",
             versionCode      : 1,
-            versionName      : "1.98",
+            versionName      : "1.99",
             resConfigs       : "zh",
     ]
 
@@ -57,7 +57,7 @@ ext {
     retrofit_version='2.3.0'
     okhttp_version='3.9.1'
 
-    glide_version='3.7.0'
+    glide_version='4.6.1'
     butterknife_version='8.8.1'
     litepal_version='1.6.1'
     android_utilcode_version='1.13.0'

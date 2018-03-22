@@ -24,6 +24,8 @@ App体验：[Todolist - fir.im ](https://fir.im/tolist)
 * 主框架：[ifadai/SuperNote: 发呆便签/SuperNote是一款开源的Android便签](https://github.com/ifadai/SuperNote)
 * 侧划栏天气显示：[wangchenyan/PonyMusic](https://github.com/wangchenyan/PonyMusic)
 * 天气显示：[xcc3641/SeeWeather](https://github.com/xcc3641/SeeWeather)
+* 应用锁界面:[lizixian18/AppLock: AppLock应用锁，保护你的隐私。 ](https://github.com/lizixian18/AppLock)
+* 关于我界面参考微阅里面me界面
 
 
 ### 数据支持

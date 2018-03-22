@@ -21,6 +21,7 @@ import com.yueyue.todolist.common.C;
 import com.yueyue.todolist.common.utils.StatusBarUtil;
 import com.yueyue.todolist.common.utils.VersionUtil;
 import com.yueyue.todolist.component.Sharer;
+import com.yueyue.todolist.modules.personal.PersonalActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -72,7 +73,7 @@ public class AboutActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.bt_code, R.id.bt_blog, R.id.bt_pay, R.id.bt_share, R.id.bt_bug, R.id.bt_update})
+    @OnClick({R.id.bt_code, R.id.bt_blog, R.id.bt_pay, R.id.bt_share, R.id.bt_personal, R.id.bt_update})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bt_code:
@@ -89,8 +90,9 @@ public class AboutActivity extends BaseActivity {
                         getString(R.string.share_app),
                         getString(R.string.share_txt));
                 break;
-            case R.id.bt_bug:
-                ToastUtils.showShort(getString(R.string.bugs_tips));
+            case R.id.bt_personal:
+                PersonalActivity.launch(AboutActivity.this);
+                finish();
                 break;
             case R.id.bt_update:
                 VersionUtil.checkVersion(this, true);
