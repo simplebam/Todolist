@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/top_layout"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:background="@color/color_2dac7c">
+
+    <ImageView
+        android:contentDescription="@string/app_name"
+        android:id="@+id/iv_back"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:adjustViewBounds="true"
+        android:padding="10dp"
+        android:src="@drawable/ic_back"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_toRightOf="@+id/iv_back"
+        android:gravity="center"
+        android:text="@string/app_lock"
+        android:textColor="@color/white"
+        android:textSize="14sp"/>
+
+    <ImageView
+        android:id="@+id/lock_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:src="@drawable/ic_lock"/>
+
+    <TextView
+        android:id="@+id/tv_activity_set_lock_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lock_icon"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="@string/set_gestures_password"
+        android:textColor="@color/white"
+        android:textSize="14sp"/>
+</RelativeLayout>

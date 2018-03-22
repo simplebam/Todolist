@@ -6,6 +6,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ConvertUtils;
@@ -26,10 +27,14 @@ import butterknife.OnClick;
 
 public class SetLockActivity extends BaseActivity {
 
+    @BindView(R.id.iv_back)
+    ImageView mIvBack;
+
     @BindView(R.id.tv_activity_set_lock_title)
     TextView mTitleTv;
     @BindView(R.id.lock_pattern_view)
     LockPatternView mLockPatternView;
+
     @BindView(R.id.btn_password_clear)
     Button mClearBtn;
 
@@ -47,7 +52,7 @@ public class SetLockActivity extends BaseActivity {
 
     @Override
     protected int initLayoutId() {
-        return R.layout.activity_set_lock;
+        return R.layout.activity_lock;
     }
 
     @Override
@@ -97,6 +102,11 @@ public class SetLockActivity extends BaseActivity {
             }
         });
 
+    }
+
+    @OnClick(R.id.iv_back)
+    void back() {
+        onBackPressed();
     }
 
     @OnClick(R.id.btn_password_clear)

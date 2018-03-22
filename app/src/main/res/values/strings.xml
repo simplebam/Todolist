@@ -168,5 +168,6 @@
     <string name="incorrect_password">密码不正确</string>
     <string name="correct_password">密码正确</string>
     <string name="set_gestures_password_success">设置手势密码成功</string>
+    <string name="app_lock">应用锁</string>
 
 </resources>

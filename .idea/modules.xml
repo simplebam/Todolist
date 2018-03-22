@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/LockPattern/LockPattern.iml" filepath="$PROJECT_DIR$/LockPattern/LockPattern.iml" />
-      <module fileurl="file://$PROJECT_DIR$/SuperNote/SuperNote.iml" filepath="$PROJECT_DIR$/SuperNote/SuperNote.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AppLock/AppLock.iml" filepath="$PROJECT_DIR$/AppLock/AppLock.iml" />
       <module fileurl="file://$PROJECT_DIR$/Todolist.iml" filepath="$PROJECT_DIR$/Todolist.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>

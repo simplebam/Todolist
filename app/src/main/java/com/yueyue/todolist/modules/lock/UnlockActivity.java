@@ -3,6 +3,7 @@ package com.yueyue.todolist.modules.lock;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.yueyue.todolist.R;
@@ -12,6 +13,7 @@ import com.yueyue.todolist.modules.main.ui.MainActivity;
 import com.yueyue.todolist.widget.lock.LockPatternView;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * author : yueyue on 2018/3/22 09:34
@@ -20,6 +22,8 @@ import butterknife.BindView;
 
 public class UnlockActivity extends BaseActivity {
 
+    @BindView(R.id.iv_back)
+    ImageView mIvBack;
 
     @BindView(R.id.lock_pattern_view)
     LockPatternView mLockPatternView;
@@ -33,7 +37,7 @@ public class UnlockActivity extends BaseActivity {
 
     @Override
     protected int initLayoutId() {
-        return R.layout.activity_unlock;
+        return R.layout.activity_lock;
     }
 
     @Override
@@ -66,5 +70,9 @@ public class UnlockActivity extends BaseActivity {
         });
     }
 
+    @OnClick(R.id.iv_back)
+    void back() {
+        onBackPressed();
+    }
 
 }
