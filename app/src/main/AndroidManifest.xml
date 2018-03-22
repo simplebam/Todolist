@@ -72,6 +72,13 @@
             android:name=".modules.viewer.ViewerActivity"
             android:screenOrientation="portrait"/>
 
+        <activity
+            android:name=".modules.lock.SetLockActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".modules.lock.UnlockActivity"
+            android:screenOrientation="portrait"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"

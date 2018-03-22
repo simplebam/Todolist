@@ -12,6 +12,8 @@ import com.yueyue.todolist.common.utils.PreferencesUtil;
 public class PreferencesManager {
 
     private static final String IS_FIRST = "is_first";
+
+
     private static final String VERSION_NAME = "version_name";
 
     private static final String WEATHER_CITY = "weather_city";
@@ -20,13 +22,9 @@ public class PreferencesManager {
 
 
     private static final String NOTE_LIST_SHOW_MODE = "note_list_show_mode";
-    public static final String CURRENT_FOLDER = "current_folder";
-    public static final String LOCK_PASSWORD = "lock_password";
-    public static final String IS_USE_RECYCLE = "is_use_recycle";
+    private static final String LOCK_PASSWORD = "lock_password";
     public static final String IS_LOCKED = "is_locked";
 
-    //OtherServerFragment
-    public static final String OTHER_SERVER_FRAGMENT_IS_GRID = "other_server_fragment_is_grid";
 
     private PreferencesManager() {
     }
@@ -43,7 +41,7 @@ public class PreferencesManager {
      * 应用版本号
      */
     public String getVersioName() {
-        return PreferencesUtil.getString(VERSION_NAME,"");
+        return PreferencesUtil.getString(VERSION_NAME, "");
     }
 
     public void saveVersioName(String value) {
@@ -101,7 +99,6 @@ public class PreferencesManager {
     //----便签方面-----------
 
 
-
     /**
      * 便签列表显示模式
      */
@@ -113,17 +110,27 @@ public class PreferencesManager {
         return PreferencesUtil.getInt(NOTE_LIST_SHOW_MODE, defShowMode);
     }
 
-    // OtherServerFragment
 
     /**
-     * 第一次进入应用
+     * 第一次进入锁应用
      */
-    public boolean getOtherServerFragmentIsGrid(boolean defValue) {
-        return PreferencesUtil.getBoolean(OTHER_SERVER_FRAGMENT_IS_GRID, defValue);
+    public boolean getIsLocked(boolean defValue) {
+        return PreferencesUtil.getBoolean(IS_LOCKED, defValue);
     }
 
-    public void saveOtherServerFragmentIsGrid(boolean value) {
-        PreferencesUtil.saveBoolean(OTHER_SERVER_FRAGMENT_IS_GRID, value);
+    public void saveIsLocked(boolean value) {
+        PreferencesUtil.saveBoolean(IS_LOCKED, value);
+    }
+
+    /**
+     * lock密码
+     */
+    public String getLockPassword(String defValue) {
+        return PreferencesUtil.getString(LOCK_PASSWORD, defValue);
+    }
+
+    public void saveLockPassword(String password) {
+        PreferencesUtil.saveString(LOCK_PASSWORD, password);
     }
 
 }

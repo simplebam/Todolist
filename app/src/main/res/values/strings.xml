@@ -162,5 +162,11 @@
     <string name="move">移动</string>
     <string name="select_your_operation">请选择你的操作：</string>
     <string name="move_to">移动到</string>
+    <string name="set_gestures_password">设置手势密码</string>
+    <string name="reset">重新设置</string>
+    <string name="reset_gestures_password">再次输入手势密码</string>
+    <string name="incorrect_password">密码不正确</string>
+    <string name="correct_password">密码正确</string>
+    <string name="set_gestures_password_success">设置手势密码成功</string>
 
 </resources>

@@ -15,6 +15,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.text.TextUtils;
 import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,6 +35,8 @@ import com.yueyue.todolist.event.MainTabsShowModeEvent;
 import com.yueyue.todolist.event.MainTabsUpdateEvent;
 import com.yueyue.todolist.modules.about.ui.AboutActivity;
 import com.yueyue.todolist.modules.edit.ui.EditNoteActivity;
+import com.yueyue.todolist.modules.lock.SetLockActivity;
+import com.yueyue.todolist.modules.lock.UnlockActivity;
 import com.yueyue.todolist.modules.main.component.WeatherExecutor;
 import com.yueyue.todolist.modules.main.db.NoteDbHelper;
 import com.yueyue.todolist.modules.main.domain.NoteEntity;
@@ -58,6 +61,8 @@ public class MainActivity extends BaseActivity
 
     public static final int ADD_NOTE_REQUEST_CODE = 0x01;
     public static final int EDIT_NOTE_REQUEST_CODE = 0x02;
+    public static final int SET_LOCK_REQUEST_CODE = 0x03;
+    public static final int UNLOCK_REQUEST_CODE = 0x04;
 
     public static final long DRAWER_CLOSE_DELAY = 230L;
 
@@ -85,7 +90,6 @@ public class MainActivity extends BaseActivity
 
     private boolean backPressed;
     private MenuItem currentMenu;
-    private boolean isFirst = true;
     private List<Disposable> mDisposableList = new ArrayList<>();
 
 
@@ -114,7 +118,7 @@ public class MainActivity extends BaseActivity
 
 
     private void setupDrawer() {
-        ActionBarDrawerToggle toggle= new ActionBarDrawerToggle(
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, mDrawerLayout, toolbar, R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close);
         mDrawerLayout.addDrawerListener(toggle);
@@ -166,9 +170,7 @@ public class MainActivity extends BaseActivity
                 RxBus.getDefault().post(new MainTabsUpdateEvent());
                 break;
             case R.id.menu_privacy:
-                switchMenu(R.id.menu_privacy, mFragmentSparseArray);
-                setToolbarTitle(getString(R.string.privacy));
-                RxBus.getDefault().post(new MainTabsUpdateEvent());
+                statrLock();
                 break;
             case R.id.menu_recycle_bin:
                 switchMenu(R.id.menu_recycle_bin, mFragmentSparseArray);
@@ -190,6 +192,15 @@ public class MainActivity extends BaseActivity
         return true;
     }
 
+    private void statrLock() {
+        String passwordStr = PreferencesManager.getInstance().getLockPassword("");
+        if (TextUtils.isEmpty(passwordStr)) {
+            SetLockActivity.launch(MainActivity.this);
+        } else {
+            UnlockActivity.launch(MainActivity.this);
+        }
+    }
+
     private void initFragments(Bundle savedInstanceState) {
         if (mFragmentSparseArray == null) {
             mFragmentSparseArray = new SparseArray<>();
@@ -201,8 +212,6 @@ public class MainActivity extends BaseActivity
         setMainFragment(R.id.menu_todo, mFragmentSparseArray, savedInstanceState == null);
         setToolbarTitle(getString(R.string.todo));
     }
-
-
 
 
     @Override
@@ -225,8 +234,6 @@ public class MainActivity extends BaseActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_note_search:
-                break;
             case R.id.menu_note_show_mode:
                 changeShowModeAndItemIcon(item);
                 break;
@@ -256,14 +263,17 @@ public class MainActivity extends BaseActivity
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case ADD_NOTE_REQUEST_CODE:
+                case EDIT_NOTE_REQUEST_CODE:
                     NoteEntity noteEntity = data.getParcelableExtra(EditNoteActivity.EXTRA_NOTE_DATA);
                     NoteDbHelper.getInstance().addNote(noteEntity);
                     RxBus.getDefault().post(new MainTabsUpdateEvent());
                     break;
-                case EDIT_NOTE_REQUEST_CODE:
-                    NoteEntity noteEntity1 = data.getParcelableExtra(EditNoteActivity.EXTRA_NOTE_DATA);
-                    NoteDbHelper.getInstance().addNote(noteEntity1);
+                case UNLOCK_REQUEST_CODE:
+                case SET_LOCK_REQUEST_CODE:
+                    switchMenu(R.id.menu_privacy, mFragmentSparseArray);
+                    setToolbarTitle(getString(R.string.privacy));
                     RxBus.getDefault().post(new MainTabsUpdateEvent());
+                    break;
                 default:
                     break;
             }

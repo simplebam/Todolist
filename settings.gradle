@@ -1,1 +1,1 @@
-include ':testapp', ':app', ':SuperNote', ':Beauty'
+include ':app', ':SuperNote', ':LockPattern'

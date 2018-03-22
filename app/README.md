@@ -36,6 +36,7 @@ App体验：[Todolist - fir.im ](https://fir.im/tolist)
         * [Android存储访问及目录 - 圣骑士wind - 博客园](http://www.cnblogs.com/mengdd/p/3742623.html)
         * [安卓内外部存储完全解析](https://www.jianshu.com/p/116025bf51f7)
         * [彻底搞懂Android文件存储---内部存储，外部存储以及各种存储路径解惑](http://blog.csdn.net/u010937230/article/details/73303034)
+     * [Android之各分辨率定义的图片规格 ](http://www.nljb.net/default/Android%E4%B9%8B%E5%90%84%E5%88%86%E8%BE%A8%E7%8E%87%E5%AE%9A%E4%B9%89%E7%9A%84%E5%9B%BE%E7%89%87%E8%A7%84%E6%A0%BC/)
   * 四大组件:
      * Activity:
         * 启动模式:[Activity的四种启动模式-图文并茂 – Android开发中文站](http://www.androidchina.net/3173.html)
@@ -189,7 +190,7 @@ App体验：[Todolist - fir.im ](https://fir.im/tolist)
   * [Glide V4 框架新特性（Migrating from v3 to v4） - HeXinGen的博客 - CSDN博客](http://blog.csdn.net/hexingen/article/details/72578066)
 * BaseRecyclerViewAdapterHelper:[BRVAH官方使用指南（持续更新） - 简书](https://www.jianshu.com/p/b343fcff51b0)
 * PhotoView : [android 开源photoView的使用 - 简书](https://www.jianshu.com/p/6e38712e310f)
-
+* LockPattern : [zhuanghongji/LockPattern: Android 九宫格图案解锁源码解析](https://github.com/zhuanghongji/LockPattern)
 
 ### Android 开发Tips && 性能优化
 * Android开发Tips ：
@@ -274,6 +275,9 @@ App体验：[Todolist - fir.im ](https://fir.im/tolist)
           前的消息,由于目前的 Rxbus 不支持粘性事件,毕竟粘性事情涉及严重内存泄漏
           * 关于普通事情以及粘性事件的区别,看这里:[Android事件总线（一）
             EventBus3.0用法全解析 - CSDN博客 ](http://blog.csdn.net/itachi85/article/details/52205464)
+* 这里在导入[zhuanghongji/LockPattern: Android 九宫格图案解锁源码解析，"程序锁"模拟场景使用](https://github.com/zhuanghongji/LockPattern)
+   的时候,设置好图案密码之后会再进入会报mPoint为null从而导致崩溃,这里修正办法:
+   将LockPatternView 类中的 isInitPoint 变量不要设置为静态即可
 
 
 ### 项目中的缺点
