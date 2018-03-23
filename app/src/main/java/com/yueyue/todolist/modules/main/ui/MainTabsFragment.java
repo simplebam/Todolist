@@ -159,7 +159,8 @@ public class MainTabsFragment extends RecyclerFragment {
             if (mItemCurrent == ITEM_RECYCLE) {
                 showNoteRecoverDialog(position);
             } else {
-                toEditNoteForEdit(mAdapter.getData().get(position), position);
+                NoteEntity noteEntity = mAdapter.getData().get(position);
+                toEditNoteForEdit(noteEntity);
             }
         });
 
@@ -294,8 +295,7 @@ public class MainTabsFragment extends RecyclerFragment {
     }
 
 
-    public void toEditNoteForEdit(NoteEntity note, int position) {
-        note.adapterPos = position;
+    public void toEditNoteForEdit(NoteEntity note) {
         EditNoteActivity.launch(mActivity, note, EDIT_NOTE_REQUEST_CODE);
     }
 
@@ -305,9 +305,7 @@ public class MainTabsFragment extends RecyclerFragment {
             if (fab == null) return;
 
 
-            fab.setOnClickListener(v -> {
-                EditNoteActivity.launch(mActivity, null, MainActivity.ADD_NOTE_REQUEST_CODE);
-            });
+            fab.setOnClickListener(v -> toEditNoteForEdit(null));
 
             mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
                 @Override

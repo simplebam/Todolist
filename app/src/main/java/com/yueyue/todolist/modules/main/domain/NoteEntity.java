@@ -28,8 +28,6 @@ public class NoteEntity extends BaseEntity implements Parcelable {
     @Column(defaultValue = "0")
     public int inRecycleBin; //    1是废纸篓中便签，0不是
 
-    @Column(ignore = true)
-    public int adapterPos = -1;
 
 
     public NoteEntity() {
@@ -83,7 +81,6 @@ public class NoteEntity extends BaseEntity implements Parcelable {
                 ", noteContent='" + noteContent + '\'' +
                 ", isPrivacy=" + isPrivacy +
                 ", inRecycleBin=" + inRecycleBin +
-                ", adapterPos=" + adapterPos +
                 '}';
     }
 }

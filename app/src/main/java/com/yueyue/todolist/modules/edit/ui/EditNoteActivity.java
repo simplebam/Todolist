@@ -148,7 +148,6 @@ public class EditNoteActivity extends BaseActivity {
         if (mNoteEntity == null) {
             mNoteEntity = new NoteEntity();
             mNoteEntity.modifiedTime = TimeUtils.getNowMills();
-            mNoteEntity.adapterPos = 0;
         }
 
         parseNoteContent(mNoteEntity);
