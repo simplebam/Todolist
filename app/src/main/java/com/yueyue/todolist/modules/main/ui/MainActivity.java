@@ -28,7 +28,8 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.yueyue.todolist.R;
 import com.yueyue.todolist.base.BaseActivity;
-import com.yueyue.todolist.common.C;
+import com.yueyue.todolist.common.Constants;
+import com.yueyue.todolist.common.utils.VersionUtil;
 import com.yueyue.todolist.component.PreferencesManager;
 import com.yueyue.todolist.component.RxBus;
 import com.yueyue.todolist.event.MainTabsShowModeEvent;
@@ -40,6 +41,7 @@ import com.yueyue.todolist.modules.lock.UnlockActivity;
 import com.yueyue.todolist.modules.main.component.WeatherExecutor;
 import com.yueyue.todolist.modules.main.db.NoteDbHelper;
 import com.yueyue.todolist.modules.main.domain.NoteEntity;
+import com.yueyue.todolist.modules.setting.ui.SettingActivity;
 import com.yueyue.todolist.modules.weather.ui.WeatherActivity;
 
 import java.util.ArrayList;
@@ -111,9 +113,10 @@ public class MainActivity extends BaseActivity
         initNavigationView();
         initFragments(savedInstanceState);
 
-        // FIXME: 2018/3/4 仿照就看天气或者DonateGrils
-        //Update();
         updateWeather();
+        checkVersion();
+
+
     }
 
 
@@ -181,6 +184,7 @@ public class MainActivity extends BaseActivity
                 WeatherActivity.launch(MainActivity.this);
                 break;
             case R.id.menu_setting:
+                SettingActivity.launch(MainActivity.this);
                 break;
             case R.id.menu_about:
                 AboutActivity.launch(MainActivity.this);
@@ -222,9 +226,9 @@ public class MainActivity extends BaseActivity
     }
 
     private void initShowModeMenuIcon(MenuItem item) {
-        int mode = PreferencesManager.getInstance().getNoteListShowMode(C.STYLE_LINEAR);
+        int mode = PreferencesManager.getInstance().getNoteListShowMode(Constants.STYLE_LINEAR);
         int drawble =
-                mode == C.STYLE_LINEAR ?
+                mode == Constants.STYLE_LINEAR ?
                         R.drawable.ic_border_all_white_24dp :
                         R.drawable.ic_format_list_bulleted_white_24dp;
 
@@ -244,15 +248,15 @@ public class MainActivity extends BaseActivity
     }
 
     public void changeShowModeAndItemIcon(MenuItem item) {
-        int mode = PreferencesManager.getInstance().getNoteListShowMode(C.STYLE_LINEAR);
-        if (mode == C.STYLE_LINEAR) {
-            PreferencesManager.getInstance().saveNoteListShowMode(C.STYLE_GRID);
+        int mode = PreferencesManager.getInstance().getNoteListShowMode(Constants.STYLE_LINEAR);
+        if (mode == Constants.STYLE_LINEAR) {
+            PreferencesManager.getInstance().saveNoteListShowMode(Constants.STYLE_GRID);
             item.setIcon(getResources().getDrawable(DRAWABLE_MODE_LIST));
-            RxBus.getDefault().post(new MainTabsShowModeEvent(C.STYLE_GRID));
+            RxBus.getDefault().post(new MainTabsShowModeEvent(Constants.STYLE_GRID));
         } else {
-            PreferencesManager.getInstance().saveNoteListShowMode(C.STYLE_LINEAR);
+            PreferencesManager.getInstance().saveNoteListShowMode(Constants.STYLE_LINEAR);
             item.setIcon(getResources().getDrawable(DRAWABLE_MODE_GRID));
-            RxBus.getDefault().post(new MainTabsShowModeEvent(C.STYLE_LINEAR));
+            RxBus.getDefault().post(new MainTabsShowModeEvent(Constants.STYLE_LINEAR));
         }
     }
 
@@ -279,6 +283,14 @@ public class MainActivity extends BaseActivity
             }
         }
     }
+
+    private void checkVersion() {
+        boolean autoCheckVersion = PreferencesManager.getInstance().getIsAutoCheckVersion(true);
+        if (autoCheckVersion) {
+            VersionUtil.checkVersion(this);
+        }
+    }
+
 
     private void updateWeather() {
         //使用RxPermissions（基于RxJava2） - CSDN博客

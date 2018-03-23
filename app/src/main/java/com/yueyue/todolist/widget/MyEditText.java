@@ -8,7 +8,7 @@ import android.text.SpannableString;
 import android.text.style.ImageSpan;
 import android.util.AttributeSet;
 
-import com.yueyue.todolist.common.C;
+import com.yueyue.todolist.common.Constants;
 import com.yueyue.todolist.component.cache.BitMapHelper;
 import com.yueyue.todolist.modules.edit.domain.ImageEntity;
 
@@ -70,7 +70,7 @@ public class MyEditText extends android.support.v7.widget.AppCompatEditText {
     }
 
     private String getImageFlag(String imageName) {
-        return C.imageTabBefore + imageName + C.imageTabAfter;
+        return Constants.imageTabBefore + imageName + Constants.imageTabAfter;
     }
 
     /**

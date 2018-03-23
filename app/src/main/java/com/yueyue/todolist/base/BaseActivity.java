@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
+import com.bugtags.library.Bugtags;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.yueyue.todolist.R;
 import com.yueyue.todolist.modules.main.ui.MainActivity;
@@ -88,19 +89,19 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-//        Bugtags.onResume(this);
+        Bugtags.onResume(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-//        Bugtags.onPause(this);
+        Bugtags.onPause(this);
     }
 
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-//        Bugtags.onDispatchTouchEvent(this, ev);
+        Bugtags.onDispatchTouchEvent(this, ev);
         return super.dispatchTouchEvent(ev);
     }
 

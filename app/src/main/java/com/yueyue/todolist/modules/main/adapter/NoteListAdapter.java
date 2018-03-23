@@ -9,7 +9,7 @@ import com.blankj.utilcode.util.Utils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.yueyue.todolist.R;
-import com.yueyue.todolist.common.C;
+import com.yueyue.todolist.common.Constants;
 import com.yueyue.todolist.common.utils.DateUtils;
 import com.yueyue.todolist.component.PreferencesManager;
 import com.yueyue.todolist.modules.main.domain.NoteEntity;
@@ -47,7 +47,7 @@ public class NoteListAdapter extends BaseQuickAdapter<NoteEntity, BaseViewHolder
      * @describe
      */
     private boolean isLinearLayoutManager() {
-        return PreferencesManager.getInstance().getNoteListShowMode(C.STYLE_LINEAR) == C.STYLE_LINEAR;
+        return PreferencesManager.getInstance().getNoteListShowMode(Constants.STYLE_LINEAR) == Constants.STYLE_LINEAR;
     }
 
 
@@ -84,7 +84,7 @@ public class NoteListAdapter extends BaseQuickAdapter<NoteEntity, BaseViewHolder
 
         textView.setText("");
 
-        Pattern p = Pattern.compile(C.imageTabBefore + "([^<]*)" + C.imageTabAfter);
+        Pattern p = Pattern.compile(Constants.imageTabBefore + "([^<]*)" + Constants.imageTabAfter);
         Matcher m = p.matcher(content);
         int tempIndex = 0;
         List<String> textList = new ArrayList<>();
@@ -94,14 +94,14 @@ public class NoteListAdapter extends BaseQuickAdapter<NoteEntity, BaseViewHolder
             String temp = m.group(1);
 
             //  查找图片标签的位置
-            int index = content.indexOf(C.imageTabBefore, tempIndex);
+            int index = content.indexOf(Constants.imageTabBefore, tempIndex);
 
             //  将本次开始位置到图片标签间的图片储存起来
             String text = content.substring(tempIndex, index);
             textList.add(text);
 
             // 将查询起始位置升级
-            int flagLength = C.imageTabBefore.length() + C.imageTabAfter.length();
+            int flagLength = Constants.imageTabBefore.length() + Constants.imageTabAfter.length();
             tempIndex = index + flagLength + temp.length();
         }
 
@@ -274,7 +274,7 @@ public class NoteListAdapter extends BaseQuickAdapter<NoteEntity, BaseViewHolder
      * @describe
      */
 //    private void showCheckBox(CheckBox checkBox, int position) {
-//        if (C.isShowMultiSelectAction) {
+//        if (Constants.isShowMultiSelectAction) {
 //            checkBox.setVisibility(View.VISIBLE);
 //            if (mCheckList.get(position))
 //                checkBox.setChecked(true);

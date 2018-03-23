@@ -2,16 +2,13 @@ package com.yueyue.todolist.base;
 
 import android.app.Application;
 import android.content.Context;
-import android.util.Log;
 
 import com.blankj.utilcode.util.Utils;
+import com.bugtags.library.Bugtags;
+import com.yueyue.todolist.BuildConfig;
 import com.yueyue.todolist.component.CrashHandler;
-import com.yueyue.todolist.modules.main.db.NoteDbHelper;
-import com.yueyue.todolist.modules.main.domain.NoteEntity;
 
 import org.litepal.LitePal;
-
-import java.util.List;
 
 /**
  * author : yueyue on 2018/3/2 00:11
@@ -33,9 +30,6 @@ public class MainApplication extends Application {
         initTools();
         initBugsHandle();
 
-        List<NoteEntity> list = NoteDbHelper.getInstance().loadAll();
-        Log.i(TAG, "onCreate: "+ list.toString());
-
     }
 
     private void initTools() {
@@ -44,6 +38,6 @@ public class MainApplication extends Application {
 
     private void initBugsHandle() {
         CrashHandler.init(new CrashHandler(sContext));
-//        Bugtags.start(BuildConfig.BugtagsKey, sContext, Bugtags.BTGInvocationEventBubble);
+        Bugtags.start(BuildConfig.BugtagsKey, this, Bugtags.BTGInvocationEventBubble);
     }
 }

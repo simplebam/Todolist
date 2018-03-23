@@ -22,6 +22,7 @@ import butterknife.OnClick;
 
 public class UnlockActivity extends BaseActivity {
 
+
     @BindView(R.id.iv_back)
     ImageView mIvBack;
 
@@ -34,6 +35,7 @@ public class UnlockActivity extends BaseActivity {
         Intent intent = new Intent(activity, UnlockActivity.class);
         activity.startActivityForResult(intent, MainActivity.UNLOCK_REQUEST_CODE);
     }
+
 
     @Override
     protected int initLayoutId() {

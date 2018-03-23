@@ -14,7 +14,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.yueyue.todolist.R;
 import com.yueyue.todolist.base.BaseActivity;
-import com.yueyue.todolist.common.C;
+import com.yueyue.todolist.common.Constants;
 import com.yueyue.todolist.component.ImageLoader;
 
 import butterknife.BindView;
@@ -64,7 +64,7 @@ public class PersonalActivity extends BaseActivity {
     }
 
     private void setupViews() {
-        ImageLoader.LoadImage(this, C.AVATARS_PERSONAL_URL, mIvAuthor,
+        ImageLoader.LoadImage(this, Constants.AVATARS_PERSONAL_URL, mIvAuthor,
                 new RequestOptions().circleCrop().diskCacheStrategy(DiskCacheStrategy.ALL));
         Typeface mtypeface = Typeface.createFromAsset(getAssets(), "font/consolab.ttf");
         mTvContacts.setTypeface(mtypeface);

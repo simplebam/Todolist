@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="便签">
+        <Preference
+            android:key="modify_lock"
+            android:title="修改私密便签密码"/>
+        <Preference
+            android:key="clear_recycle_in"
+            android:title="清空回收站"/>
+
+    </PreferenceCategory>
+    <PreferenceCategory android:title="天气">
+        <Preference
+            android:key="change_update_time"
+            android:title="自动刷新频率"/>
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="notification_model"
+            android:title="通知栏常驻"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="其他">
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="auto_check_version"
+            android:title="检查更新"/>
+        <Preference
+            android:key="clear_cache"
+            android:title="清除缓存"/>
+        <EditTextPreference
+            android:key="app_feedback"
+            android:summary="@string/feedback_description"
+            android:title="应用反馈"/>
+        <Preference
+            android:key="link_me"
+            android:summary="你主动一点,或者我们就有故事了"
+            android:title="联系我"/>
+    </PreferenceCategory>
+</PreferenceScreen>

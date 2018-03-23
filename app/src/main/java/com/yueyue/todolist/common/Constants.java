@@ -9,7 +9,7 @@ import com.yueyue.todolist.common.utils.MyFileUtils;
  * desc   : Common constants for activities and fragments.
  */
 
-public class C {
+public class Constants {
 
     //public static final String NET_CACHE = MainApplication.getAppCacheDir() + File.separator + "NetCache";
     public static final String NET_CACHE = MyFileUtils.getDiskCacheDirFileStr(Utils.getApp(),"NetCache");

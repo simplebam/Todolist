@@ -1,7 +1,5 @@
 package com.yueyue.todolist.component;
 
-import android.app.Notification;
-
 import com.yueyue.todolist.common.utils.PreferencesUtil;
 
 /**
@@ -23,7 +21,7 @@ public class PreferencesManager {
 
     private static final String NOTE_LIST_SHOW_MODE = "note_list_show_mode";
     private static final String LOCK_PASSWORD = "lock_password";
-    public static final String IS_LOCKED = "is_locked";
+    private static final String IS_AUTO_CHECK_VERSION = "is_auto_check_version";
 
 
     private PreferencesManager() {
@@ -86,14 +84,14 @@ public class PreferencesManager {
 
 
     /**
-     * 通知栏模式 默认为常驻
+     * 通知栏模式 默认不常驻
      */
-    public void saveNotificationModel(int t) {
-        PreferencesUtil.saveInt(NOTIFICATION_MODEL, t);
+    public void saveNotificationResident(boolean value) {
+        PreferencesUtil.saveBoolean(NOTIFICATION_MODEL, value);
     }
 
-    public int getNotificationModel() {
-        return PreferencesUtil.getInt(NOTIFICATION_MODEL, Notification.FLAG_ONGOING_EVENT);
+    public boolean getNotificationResident() {
+        return PreferencesUtil.getBoolean(NOTIFICATION_MODEL,false);
     }
 
     //----便签方面-----------
@@ -112,14 +110,14 @@ public class PreferencesManager {
 
 
     /**
-     * 第一次进入锁应用
+     * 是否自动更新
      */
-    public boolean getIsLocked(boolean defValue) {
-        return PreferencesUtil.getBoolean(IS_LOCKED, defValue);
+    public boolean getIsAutoCheckVersion(boolean defValue) {
+        return PreferencesUtil.getBoolean(IS_AUTO_CHECK_VERSION, defValue);
     }
 
-    public void saveIsLocked(boolean value) {
-        PreferencesUtil.saveBoolean(IS_LOCKED, value);
+    public void saveIsAutoCheckVersion(boolean value) {
+        PreferencesUtil.saveBoolean(IS_AUTO_CHECK_VERSION, value);
     }
 
     /**

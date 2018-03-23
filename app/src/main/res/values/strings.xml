@@ -72,7 +72,7 @@
 
     <string name="database_content_one">点击右上角，可以切换视图样式！</string>
     <string name="database_content_two">长按便签，可以进行批量操作！</string>
-    <string name="database_content_three">在设置中，可以切换主题颜色！</string>
+    <string name="database_content_three">在设置中，还可以清空缓存呢！</string>
     <string name="database_content_four">点击右下角，创建新的便签！</string>
     <string name="database_content_five">
         您现在使用的是该软件的第一个版本，使用中如果遇到问题，或者有什么建议,请一定要记得给我们发送反馈！\n本软件无毒无广告，功能也会在后续的开发中逐渐完善，如果您觉得好用，可以在支持一下开发者！\n开发这个软件纯粹是出于兴趣，也没有想加入广告，软件的进一步完善也需要你们的反馈和支持！\n非常感谢！
@@ -181,5 +181,8 @@
     <string name="blog">Blog</string>
     <string name="github">Github</string>
     <string name="email_name">E-mail</string>
+    <string name="clear_complete">清除完成</string>
+    <string name="thanks_for_feedback">感谢你的反馈</string>
+    <string name="set_current_cache">当前缓存为</string>
 
 </resources>

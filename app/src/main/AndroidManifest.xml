@@ -84,6 +84,12 @@
             android:name=".modules.personal.PersonalActivity"
             android:screenOrientation="portrait"/>
 
+        <activity
+            android:name=".modules.setting.ui.SettingActivity"
+            android:screenOrientation="portrait"/>
+
+        <service android:name=".modules.service.AutoUpdateService"/>
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.fileProvider"

@@ -39,7 +39,7 @@ import com.bumptech.glide.request.transition.Transition;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.yueyue.todolist.R;
 import com.yueyue.todolist.base.BaseActivity;
-import com.yueyue.todolist.common.C;
+import com.yueyue.todolist.common.Constants;
 import com.yueyue.todolist.common.utils.DateUtils;
 import com.yueyue.todolist.common.utils.MyFileUtils;
 import com.yueyue.todolist.common.utils.ProgressDialogUtils;
@@ -160,7 +160,7 @@ public class EditNoteActivity extends BaseActivity {
         mEtContent.setText(noteEntity.noteContent);
         mEtContent.setSelection(noteEntity.noteContent.length());
 
-        String flag = C.imageTabBefore + "([^<]*)" + C.imageTabAfter;
+        String flag = Constants.imageTabBefore + "([^<]*)" + Constants.imageTabAfter;
 
         // 利用正则找出文档中的图片
         Pattern p = Pattern.compile(flag);

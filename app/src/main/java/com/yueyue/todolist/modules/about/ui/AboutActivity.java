@@ -17,7 +17,7 @@ import com.blankj.utilcode.util.Utils;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.yueyue.todolist.R;
 import com.yueyue.todolist.base.BaseActivity;
-import com.yueyue.todolist.common.C;
+import com.yueyue.todolist.common.Constants;
 import com.yueyue.todolist.common.utils.StatusBarUtil;
 import com.yueyue.todolist.common.utils.VersionUtil;
 import com.yueyue.todolist.component.Sharer;
@@ -106,10 +106,10 @@ public class AboutActivity extends BaseActivity {
                 .subscribe(granted -> {
                     if (granted) {
                         if (AlipayZeroSdk.hasInstalledAlipayClient(Utils.getApp())) {
-                            ToastUtils.showShort(Utils.getApp().getResources().getText(R.string.transfer_to_author).toString());
-                            AlipayZeroSdk.startAlipayClient(AboutActivity.this, C.ALI_PAY);
+                            ToastUtils.showShort(Utils.getApp().getResources().getText(R.string.transfer_to_author));
+                            AlipayZeroSdk.startAlipayClient(AboutActivity.this, Constants.ALI_PAY);
                         } else {
-                            ToastUtils.showShort(Utils.getApp().getResources().getText(R.string.alipay_not_found).toString());
+                            ToastUtils.showShort(Utils.getApp().getResources().getText(R.string.alipay_not_found));
                         }
 
                     } else {

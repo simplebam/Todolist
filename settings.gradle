@@ -1,1 +1,1 @@
-include ':app', ':AppLock'
+include ':app'

@@ -2,7 +2,7 @@ package com.yueyue.todolist.component;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
-import com.yueyue.todolist.common.C;
+import com.yueyue.todolist.common.Constants;
 import com.yueyue.todolist.common.utils.Util;
 import com.yueyue.todolist.modules.about.domain.Version;
 import com.yueyue.todolist.modules.main.domain.MobWeather;
@@ -52,7 +52,7 @@ public class RetrofitSingleton {
     private static void initOkHttp() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         // 缓存 http://www.jianshu.com/p/93153b34310e
-        File cacheFile = new File(C.NET_CACHE);
+        File cacheFile = new File(Constants.NET_CACHE);
         Cache cache = new Cache(cacheFile, 1024 * 1024 * 50);
         Interceptor cacheInterceptor = chain -> {
             Request request = chain.request();
@@ -115,7 +115,7 @@ public class RetrofitSingleton {
      * 和风status状态码:  "param invalid"--->,API没有缺少查询的参数
      */
     public Observable<Weather> fetchWeather(String city) {
-        return sApiService.mWeatherAPI(city, C.HE_WEATHER_KEY)
+        return sApiService.mWeatherAPI(city, Constants.HE_WEATHER_KEY)
                 .filter(weather -> weather != null && "ok".equals(weather.mWeathers.get(0).status))
                 .map(weather -> weather.mWeathers.get(0))
                 .doOnError(RetrofitSingleton::disposeFailureInfo)
@@ -144,7 +144,7 @@ public class RetrofitSingleton {
      * Mob 天气状态吗:20402 -->查询不到该城市的天气
      */
     public Observable<MobWeather> fetchMobWeather(String city) {
-        return sApiService.mMobWeatherAPI(city, C.MOB_APP_KEY)
+        return sApiService.mMobWeatherAPI(city, Constants.MOB_APP_KEY)
                 .filter(weather -> weather != null && weather.retCode == 200)
                 .map(weather -> weather.mMobWeathers.get(0))
                 .doOnError(RetrofitSingleton::disposeFailureInfo)
@@ -169,7 +169,7 @@ public class RetrofitSingleton {
 
 
     public Observable<Version> fetchVersion() {
-        return sApiService.mVersionAPI(C.FIR_API_APPID, C.FIR_API_TOKEN)
+        return sApiService.mVersionAPI(Constants.FIR_API_APPID, Constants.FIR_API_TOKEN)
                 .doOnError(RetrofitSingleton::disposeFailureInfo)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread(), true);

@@ -91,17 +91,19 @@ App体验：[Todolist - fir.im ](https://fir.im/tolist)
     * 看不懂物料设计的话建议买郭霖先生的《第二行代码》好一点，这本书内容对于初级
       开发者来说还是蛮不错的
   * 异步消息机制:[Android异步消息处理机制完全解析，带你从源码的角度彻底理解](http://blog.csdn.net/guolin_blog/article/details/9991569)
+  * 通知:[Android 通知栏Notification的整合 全面学习 （一个DEMO让你完全了解它）](https://www.kancloud.cn/digest/protectyoureyes/122214)
+    以及[如何检测应用通知权限？如何跳转通知权限设置页？ - 掘金 ](https://juejin.im/post/5a2508656fb9a0450407b638)
+  * 拍照以及选择图库:[Android 7.0调用相机拍照，返回后显示拍照照片 - CSDN博客](http://blog.csdn.net/ww897532167/article/details/71525514)
+    以及 [android打开系统图库终极适配 - CSDN博客](http://blog.csdn.net/nbalichaoq/article/details/51992151)
+  * 矢量图:[SVG 的 PathData 在 Android 中的使用 - CSDN博客 ](http://blog.csdn.net/zwlove5280/article/details/73196543)
+    以及 [Android：获取并制作矢量图动画 - Android - 掘金](https://juejin.im/entry/5948c1ea8d6d81cc72fd1bbe)
+  * 文本合成图片:[在代码中合成图片然后分享 - Android开发过程中的一些个人总结](https://segmentfault.com/a/1190000004554721)
+* Android进阶
   * Android换肤:
     * [Android 探究 LayoutInflater setFactory - CSDN博客](http://blog.csdn.net/lmj623565791/article/details/51503977)
     * [Android主题换肤 无缝切换 - 简书](https://www.jianshu.com/p/af7c0585dd5b)
     * [fengjundev/Android-Skin-Loader: 一个通过动态加载本地皮肤包进行换肤的皮肤框架](https://github.com/fengjundev/Android-Skin-Loader)
   * Android混淆:[Android混淆备忘录 - 简书 ](https://www.jianshu.com/p/a48b49e9e2a8)
-   * 拍照以及选择图库:[Android 7.0调用相机拍照，返回后显示拍照照片 - CSDN博客](http://blog.csdn.net/ww897532167/article/details/71525514)
-     以及 [android打开系统图库终极适配 - CSDN博客](http://blog.csdn.net/nbalichaoq/article/details/51992151)
-   * 矢量图:[SVG 的 PathData 在 Android 中的使用 - CSDN博客 ](http://blog.csdn.net/zwlove5280/article/details/73196543)
-     以及 [Android：获取并制作矢量图动画 - Android - 掘金](https://juejin.im/entry/5948c1ea8d6d81cc72fd1bbe)
-   * 文本合成图片:[在代码中合成图片然后分享 - Android开发过程中的一些个人总结](https://segmentfault.com/a/1190000004554721)
-* Android进阶
    * Gradle:
      * [Android 开发之版本统一规范 | Blankj's Blog ](https://blankj.com/2016/09/21/android-keep-version-unity/)
    * LruCache (最近最少使用)
@@ -279,6 +281,14 @@ App体验：[Todolist - fir.im ](https://fir.im/tolist)
 * 这里在导入[zhuanghongji/LockPattern: Android 九宫格图案解锁源码解析，"程序锁"模拟场景使用](https://github.com/zhuanghongji/LockPattern)
    的时候,设置好图案密码之后会再进入会报mPoint为null从而导致崩溃,这里修正办法:
    将LockPatternView 类中的 isInitPoint 变量不要设置为静态即可
+* 当我打开settingFragment时候,老是出现下面这个问题:
+  ```
+   Caused by: java.lang.ClassCastException: java.lang.Integer cannot be cast to java.lang.Boolean
+   at com.yueyue.todolist.modules.setting.SettingFragment.onCreate(SettingFragment.java:81)
+  ```
+  其实这个问题我在伟大的[android - java.lang.Integer cannot be cast to java.lang.String on addPreferencesFromResource - Stack Overflow ](https://stackoverflow.com/questions/35833845/java-lang-integer-cannot-be-cast-to-java-lang-string-on-addpreferencesfromresour)
+  里面找到了解决办法,我这里的问题是之前的缓存存储错误,存储到都是Boolean类型,但
+  Fragment想拿Integer,那么就GG了,解决就是每次调试时候,手机先卸载旧版本
 
 
 ### 项目中的缺点

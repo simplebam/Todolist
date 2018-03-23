@@ -8,9 +8,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.1'
-        classpath 'org.greenrobot:greendao-gradle-plugin:3.2.2'  //到时需要删除
-        classpath "io.realm:realm-gradle-plugin:3.1.3"  //到时需要删除
-        classpath 'com.bugtags.library:bugtags-gradle:latest.integration' //到时需要删除
+        classpath 'com.bugtags.library:bugtags-gradle:latest.integration'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -21,9 +19,6 @@ allprojects {
         google()
         jcenter()
         maven { url 'https://jitpack.io' }
-        //Bmob的maven仓库地址--必填
-        maven { url "https://raw.github.com/bmob/bmob-android-sdk/master" }
-        maven { url "http://dl.bintray.com/piasy/maven" }
     }
 }
 

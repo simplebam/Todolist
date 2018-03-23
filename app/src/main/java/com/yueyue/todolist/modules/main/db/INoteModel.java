@@ -8,7 +8,7 @@ import java.util.List;
  */
 
 public interface INoteModel<T> {
-    void initNote(int folderId);
+    void initNote();
 
 
     List<T> loadPrivacyNoteList();
@@ -22,4 +22,6 @@ public interface INoteModel<T> {
     void deleteNote(T note);
 
     void deleteNotes();
+
+    void deleteAllNoteRecycleIn();
 }

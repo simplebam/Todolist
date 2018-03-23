@@ -24,6 +24,7 @@ public class NoteDbHelper implements INoteModel<NoteEntity> {
     private NoteDbHelper() {
     }
 
+
     private static final class SingletonHolder {
         private static final NoteDbHelper sInstance = new NoteDbHelper();
     }
@@ -33,21 +34,21 @@ public class NoteDbHelper implements INoteModel<NoteEntity> {
     }
 
     @Override
-    public void initNote(int folderId) {
+    public void initNote() {
         long years = (long) 12 * 30 * 24 * 60 * 60 * 1000;
         long month = (long) 24 * 60 * 60 * 1000 * 30;
         long days = (long) 24 * 60 * 60 * 1000;
         long m = (long) 60 * 1000;
 
         long time = TimeUtils.getNowMills();
-        createNoteEntity(folderId, time - 4 * m, R.string.database_content_three);
-        createNoteEntity(folderId, time - 3 * m, R.string.database_content_four);
-        createNoteEntity(folderId, time - 2 * m, R.string.database_content_five);
-        createNoteEntity(folderId, time - m, R.string.database_content_one);
-        createNoteEntity(folderId, time, R.string.database_content_two);
+        createNoteEntity(time - 4 * m, R.string.database_content_three);
+        createNoteEntity(time - 3 * m, R.string.database_content_four);
+        createNoteEntity(time - 2 * m, R.string.database_content_five);
+        createNoteEntity(time - m, R.string.database_content_one);
+        createNoteEntity(time, R.string.database_content_two);
     }
 
-    private void createNoteEntity(int folderId, long time, int resId) {
+    private void createNoteEntity(long time, int resId) {
         NoteEntity note = new NoteEntity();
         note.createdTime = time;
         note.modifiedTime = time;
@@ -75,7 +76,6 @@ public class NoteDbHelper implements INoteModel<NoteEntity> {
     public List<NoteEntity> loadAll() throws DataSupportException {
         return DataSupport.findAll(NoteEntity.class);
     }
-
 
 
     @Override
@@ -151,4 +151,12 @@ public class NoteDbHelper implements INoteModel<NoteEntity> {
 
     }
 
+    public void deleteAllNoteRecycleIn() {
+        try {
+            DataSupport.deleteAll(NoteEntity.class, "inRecycleBin=?", "1");
+        } catch (Exception e) {
+            PLog.e(TAG, "deleteNote: " + e.toString());
+            e.printStackTrace();
+        }
+    }
 }

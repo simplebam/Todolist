@@ -16,7 +16,7 @@ import com.blankj.utilcode.util.SizeUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.yueyue.todolist.R;
 import com.yueyue.todolist.base.RecyclerFragment;
-import com.yueyue.todolist.common.C;
+import com.yueyue.todolist.common.Constants;
 import com.yueyue.todolist.component.PreferencesManager;
 import com.yueyue.todolist.component.RxBus;
 import com.yueyue.todolist.event.MainTabsShowModeEvent;
@@ -74,9 +74,21 @@ public class MainTabsFragment extends RecyclerFragment {
         initArguments();
         setupView();
         initFab();
-        initAdapter();
+    }
+
+    @Override
+    protected void initData() {
+        super.initData();
+
+        boolean isFirst = PreferencesManager.getInstance().getIsFirst();
+        if (isFirst) {
+            NoteDbHelper.getInstance().initNote();
+            PreferencesManager.getInstance().saveIsFirst(false);
+        }
+
         registerMainTabsUpdateEvent();
         registerMainTabsShowModeEvent();
+        initAdapter();
         load();
     }
 
@@ -110,7 +122,7 @@ public class MainTabsFragment extends RecyclerFragment {
 
     private void changeShowMode(int mode) {
         RecyclerView.LayoutManager manager =
-                mode == C.STYLE_LINEAR ?
+                mode == Constants.STYLE_LINEAR ?
                         new LinearLayoutManager(getContext()) :
                         new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
 
@@ -120,9 +132,9 @@ public class MainTabsFragment extends RecyclerFragment {
 
 
     public void initAdapter() {
-        int mode = PreferencesManager.getInstance().getNoteListShowMode(C.STYLE_LINEAR);
+        int mode = PreferencesManager.getInstance().getNoteListShowMode(Constants.STYLE_LINEAR);
         RecyclerView.LayoutManager layoutManager;
-        if (mode == C.STYLE_LINEAR) {
+        if (mode == Constants.STYLE_LINEAR) {
             layoutManager = new LinearLayoutManager(getContext());
         } else {
             layoutManager = new StaggeredGridLayoutManager(2,
