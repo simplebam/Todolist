@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.MenuItem;
 
 import com.yueyue.todolist.R;
 import com.yueyue.todolist.base.BaseActivity;
@@ -32,5 +33,13 @@ public class SettingActivity extends BaseActivity {
                 .beginTransaction()
                 .replace(R.id.frameLayout, new SettingFragment())
                 .commit();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (android.R.id.home == item.getItemId()) {
+            onBackPressed();
+        }
+        return true;
     }
 }
