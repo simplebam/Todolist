@@ -11,7 +11,6 @@
 
 
 ### 项目截图
-### 项目截图
 <a href="../art/todo1.png"><img src="../art/todo1.png" width="40%"/></a><img height="0" width="8px"/><a href="../art/todo2.png"><img src="../art/todo2.png" width="40%"/></a>
 <a href="../art/todo3.png"><img src="../art/todo3.png" width="40%"/></a><img height="0" width="8px"/><a href="../art/todo4.png"><img src="../art/todo4.png" width="40%"/></a>
 
@@ -289,6 +288,14 @@ App体验：[Todolist - fir.im ](https://fir.im/tolist)
   其实这个问题我在伟大的[android - java.lang.Integer cannot be cast to java.lang.String on addPreferencesFromResource - Stack Overflow ](https://stackoverflow.com/questions/35833845/java-lang-integer-cannot-be-cast-to-java-lang-string-on-addpreferencesfromresour)
   里面找到了解决办法,我这里的问题是之前的缓存存储错误,存储到都是Boolean类型,但
   Fragment想拿Integer,那么就GG了,解决就是每次调试时候,手机先卸载旧版本
+* 我测试使用的手机小米4C安装到使用都没有什么问题,决定在掘金沸点宣传,但很遗憾得到
+  魅族手机 MX5 等机型会闪退崩溃
+  ```
+  android.view.InflateException: Binary XML file line #36: Error inflating class android.support.design.widget.FloatingActionButton
+  ```
+  之后我便在[InflateException with FloatingActionButton from Official Design Library](https://stackoverflow.com/questions/30870443/inflateexception-with-floatingactionbutton-from-official-design-library)
+  找到了解决办法,把FloatingActionButton的属性 "android:backgroundTint"
+   改为 "app:backgroundTint" 即可
 
 
 ### 项目中的缺点

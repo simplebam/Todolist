@@ -40,7 +40,7 @@
         app:layout_anchor="@id/container"
         app:layout_anchorGravity="end|bottom"
         android:layout_margin="16dp"
-        android:backgroundTint="@color/colorPrimary"
+        app:backgroundTint="@color/colorPrimary"
         app:srcCompat="@drawable/ic_add_white_24dp"
         app:rippleColor="@color/color_ff4081"/>
 
