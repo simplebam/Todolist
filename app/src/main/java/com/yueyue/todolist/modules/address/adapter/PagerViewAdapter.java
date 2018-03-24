@@ -15,6 +15,7 @@
  */
 package com.yueyue.todolist.modules.address.adapter;
 
+import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +48,7 @@ public class PagerViewAdapter<T extends View> extends PagerAdapter {
     }
 
     @Override
-    public Object instantiateItem(ViewGroup container, int position) {
+    public Object instantiateItem(@NonNull ViewGroup container, int position) {
         T t = mTList.get(position);
         container.addView(t);
         return t;
