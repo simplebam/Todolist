@@ -296,6 +296,12 @@ App体验：[Todolist - fir.im ](https://fir.im/tolist)
   之后我便在[InflateException with FloatingActionButton from Official Design Library](https://stackoverflow.com/questions/30870443/inflateexception-with-floatingactionbutton-from-official-design-library)
   找到了解决办法,把FloatingActionButton的属性 "android:backgroundTint"
    改为 "app:backgroundTint" 即可
+* 当用户选择地址时候出现一片空白,报错如下:
+  ```
+  Attempt to invoke virtual method 'java.lang.String com.yueyue.todolist.modules.address.b.a.a()' on a null object reference
+  at com.yueyue.todolist.modules.address.ui.AddressCheckActivity.a(AddressCheckActivity.java:264)
+  ```
+  这里当时没有考虑到地址为null选择的问题,现在做了判空处理,修复了这个问题
 
 
 ### 项目中的缺点

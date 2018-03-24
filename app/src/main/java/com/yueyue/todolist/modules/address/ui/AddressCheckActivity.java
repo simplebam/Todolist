@@ -242,31 +242,21 @@ public class AddressCheckActivity extends AppCompatActivity {
      * 选中。
      */
     private void setResultFinish(City province, City city, City district) {
-        ArrayList<City> cityArrayList = new ArrayList<>();
-        cityArrayList.add(province);
-        if (city != null)
-            cityArrayList.add(city);
-        if (district != null)
-            cityArrayList.add(district);
 
+        String districtName;
+        if (city == null && district == null) {
+            ToastUtils.showShort("程序出现错误,默认选择广州");
+            districtName = "广州";
+        } else if (district == null) {
+            districtName = city.getName();
+        } else {
+            districtName = district.getName();
+        }
 
-
-//        String tvAddress = "", lastId = "";
-//        if (cityList != null) {
-//            for (int i = 0; i < cityList.size(); i++) {
-//                City city = cityList.get(i);
-//                lastId = city.getId();
-//                tvAddress += city.getName();
-//            }
-//        }
-
-        String post=null;
-        String districtName = district.getName();
         if ("其它区".equals(districtName) || "经济技术开发区".equals(districtName)) {
             ToastUtils.showShort("无法识别,请选择其他区域");
             return;
         }
-
 
         Intent intent = new Intent();
         intent.putExtra(KEY_OUTPUT_PROVINCE_CITY_DISTRICT, districtName);

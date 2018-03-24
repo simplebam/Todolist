@@ -22,6 +22,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_LOGS"/>
 
+    <!--Android allowBackup属性 - 简书 https://www.jianshu.com/p/2cb6c55cab70-->
     <application
         android:name=".base.MainApplication"
         android:allowBackup="true"

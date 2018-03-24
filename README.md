@@ -30,10 +30,9 @@ App体验：[Todolist - fir.im ](https://fir.im/tolist)
 
 ### 数据支持
 * 天气:
- * 和风天气：[和风天气 | 好用的气象数据服务 天气数据分析 天气商业化解决方案](https://www.heweather.com/)
- * MobApi ：[Mob Api](http://api.mob.com/#/)
-* 更新:
- * [版本查询](https://fir.im/docs/version_detection)
+  * 和风天气：[和风天气 | 好用的气象数据服务 天气数据分析 天气商业化解决方案](https://www.heweather.com/)
+  * MobApi ：[Mob Api](http://api.mob.com/#/)
+* 更新:[版本查询](https://fir.im/docs/version_detection)
 
 PS : 考虑到后期接口更新带来json数据的改变,博主把json文件格式都保留一份在
      app/extra 文件夹里面
