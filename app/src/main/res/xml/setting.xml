@@ -8,14 +8,14 @@
         <Preference
             android:key="clear_recycle_in"
             android:title="清空回收站"/>
-
     </PreferenceCategory>
-    <PreferenceCategory android:title="天气">
+
+    <PreferenceCategory android:title="通知栏">
         <Preference
             android:key="change_update_time"
             android:title="自动刷新频率"/>
         <CheckBoxPreference
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:key="notification_model"
             android:title="通知栏常驻"/>
     </PreferenceCategory>

@@ -29,6 +29,7 @@
 
     <string name="setting">设置</string>
     <string name="about">关于</string>
+    <string name="today_plan">今日计划</string>
 
     <!-- MainActivity -->
     <string name="head_view_hint">干嘛戳人家屁股,哼</string>
@@ -38,8 +39,6 @@
     <!-- UserActionService -->
     <string name="save_success">保存成功</string>
     <string name="save_error">保存失败</string>
-
-    <!-- PlanTaskActivity -->
     <string name="title">标题</string>
     <string name="click_to_set_time">点击设置计划时间</string>
     <string name="click_to_save_plan">点击保存计划</string>

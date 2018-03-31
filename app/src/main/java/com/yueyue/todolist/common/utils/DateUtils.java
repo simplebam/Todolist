@@ -175,6 +175,16 @@ public class DateUtils {
         }
     }
 
+    public static Date string2Date(String format, String date) {
+        try {
+            DateFormat newFormat = new SimpleDateFormat(format);
+            return newFormat.parse(date);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
     public static String getBeforeDate(int days) {
         Calendar rightNow = Calendar.getInstance();

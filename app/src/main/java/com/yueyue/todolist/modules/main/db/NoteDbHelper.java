@@ -3,6 +3,7 @@ package com.yueyue.todolist.modules.main.db;
 import com.blankj.utilcode.util.TimeUtils;
 import com.blankj.utilcode.util.Utils;
 import com.yueyue.todolist.R;
+import com.yueyue.todolist.common.utils.DateUtils;
 import com.yueyue.todolist.component.PLog;
 import com.yueyue.todolist.modules.main.domain.NoteEntity;
 
@@ -10,6 +11,7 @@ import org.litepal.crud.DataSupport;
 import org.litepal.exceptions.DataSupportException;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -70,11 +72,44 @@ public class NoteDbHelper implements INoteModel<NoteEntity> {
                 .limit(10).offset(offset).find(NoteEntity.class);
     }
 
-    /**
-     * 方便测试使用
-     */
-    public List<NoteEntity> loadAll() throws DataSupportException {
-        return DataSupport.findAll(NoteEntity.class);
+    @Override
+    public int loadTodayNormalCount() {
+        try {
+            Date[] dates = loadToday();
+            return DataSupport
+                    .where("isPrivacy = ? and inRecycleBin = ? and modifiedTime>? and modifiedTime<?",
+                            "0", "0", "" + dates[0].getTime(), "" + dates[1].getTime())
+                    .count(NoteEntity.class);
+        } catch (DataSupportException e) {
+            PLog.e(TAG, "loadTodayNormalCount: " + e.toString());
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    @Override
+    public int loadTodayPrivacyCount() {
+        try {
+            Date[] dates = loadToday();
+            return DataSupport
+                    .where("isPrivacy = ? and inRecycleBin = ? and modifiedTime>? and modifiedTime<?",
+                            "1", "0", "" + dates[0].getTime(), "" + dates[1].getTime())
+                    .count(NoteEntity.class);
+        } catch (DataSupportException e) {
+            PLog.e(TAG, "loadTodayNormalCount: " + e.toString());
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public Date[] loadToday() throws DataSupportException {
+        Date date = new Date();
+        String startDateStr = DateUtils.date2String("yyyy-MM-dd 00:00:00", date);
+        String endDateStr = DateUtils.date2String("yyyy-MM-dd 23:59:59", date);
+        String formatValue = DateUtils.DateStyle.YYYY_MM_DD_HH_MM_SS.getValue();
+        Date startDate = DateUtils.string2Date(formatValue, startDateStr);
+        Date endDate = DateUtils.string2Date(formatValue, endDateStr);
+        return new Date[]{startDate, endDate};
     }
 
 

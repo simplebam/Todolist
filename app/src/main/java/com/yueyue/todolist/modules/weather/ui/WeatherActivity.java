@@ -21,7 +21,6 @@ import com.yueyue.todolist.R;
 import com.yueyue.todolist.base.BaseActivity;
 import com.yueyue.todolist.common.utils.Util;
 import com.yueyue.todolist.component.AMapLocationer;
-import com.yueyue.todolist.component.NotificationHelper;
 import com.yueyue.todolist.component.PreferencesManager;
 import com.yueyue.todolist.component.RetrofitSingleton;
 import com.yueyue.todolist.modules.address.ui.AddressCheckActivity;
@@ -176,7 +175,6 @@ public class WeatherActivity extends BaseActivity {
                     mWeather.dailyForecast = weather.dailyForecast;
                     mWeather.hourlyForecast = weather.hourlyForecast;
                     mAdapter.notifyDataSetChanged();
-                    NotificationHelper.showWeatherNotification(this, weather);
                 })
                 .doOnComplete(() -> {
                     changeSwipeRefreshState(false);

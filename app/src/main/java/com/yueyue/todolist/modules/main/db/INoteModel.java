@@ -17,6 +17,10 @@ public interface INoteModel<T> {
 
     List<T> loadNormalNoteList();
 
+    int loadTodayNormalCount();
+
+    int loadTodayPrivacyCount();
+
     void addNote(T note);
 
     void deleteNote(T note);

@@ -20,7 +20,6 @@
     <!--写入扩展存储，向扩展卡写入数据，用于写入缓存定位数据-->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_LOGS"/>
 
     <!--Android allowBackup属性 - 简书 https://www.jianshu.com/p/2cb6c55cab70-->
     <application
@@ -89,7 +88,9 @@
             android:name=".modules.setting.ui.SettingActivity"
             android:screenOrientation="portrait"/>
 
-        <service android:name=".modules.service.AutoUpdateService"/>
+        <service
+            android:name=".modules.service.AutoUpdateService"
+            android:exported="false"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"

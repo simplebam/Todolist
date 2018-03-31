@@ -15,7 +15,7 @@ public class PreferencesManager {
     private static final String VERSION_NAME = "version_name";
 
     private static final String WEATHER_CITY = "weather_city";
-    private static final String WEATHER_AUTO_UPDATE = "weather_update_time"; //天气自动更新时长
+    private static final String AUTO_UPDATE = "weather_update_time"; //天气自动更新时长
     private static final String NOTIFICATION_MODEL = "notification_model";//通知栏常驻
 
 
@@ -72,26 +72,26 @@ public class PreferencesManager {
 
 
     /**
-     * 天气自动更新时间 hours
+     * 后台更新Note通知栏/天气自动更新时间 hours
      */
     public void saveAutoUpdate(int t) {
-        PreferencesUtil.saveInt(WEATHER_AUTO_UPDATE, t);
+        PreferencesUtil.saveInt(AUTO_UPDATE, t);
     }
 
     public int getAutoUpdate() {
-        return PreferencesUtil.getInt(WEATHER_AUTO_UPDATE, 3);
+        return PreferencesUtil.getInt(AUTO_UPDATE, 3);
     }
 
 
     /**
-     * 通知栏模式 默认不常驻
+     * 通知栏模式 默认常驻
      */
     public void saveNotificationResident(boolean value) {
         PreferencesUtil.saveBoolean(NOTIFICATION_MODEL, value);
     }
 
     public boolean getNotificationResident() {
-        return PreferencesUtil.getBoolean(NOTIFICATION_MODEL,false);
+        return PreferencesUtil.getBoolean(NOTIFICATION_MODEL,true);
     }
 
     //----便签方面-----------

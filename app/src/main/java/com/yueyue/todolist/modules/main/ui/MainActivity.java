@@ -41,6 +41,7 @@ import com.yueyue.todolist.modules.lock.UnlockActivity;
 import com.yueyue.todolist.modules.main.component.WeatherExecutor;
 import com.yueyue.todolist.modules.main.db.NoteDbHelper;
 import com.yueyue.todolist.modules.main.domain.NoteEntity;
+import com.yueyue.todolist.modules.service.AutoUpdateService;
 import com.yueyue.todolist.modules.setting.ui.SettingActivity;
 import com.yueyue.todolist.modules.weather.ui.WeatherActivity;
 
@@ -112,11 +113,9 @@ public class MainActivity extends BaseActivity
         initToolbar();
         initNavigationView();
         initFragments(savedInstanceState);
-
         updateWeather();
         checkVersion();
-
-
+        AutoUpdateService.launch(MainActivity.this);
     }
 
 

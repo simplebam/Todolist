@@ -37,10 +37,10 @@ public class AMapLocationer {
 
     private void initClient(Context context) {
         mLocationClient = new AMapLocationClient(context);
-        mLocationClient.setLocationOption(initOption(context));
+        mLocationClient.setLocationOption(initOption());
     }
 
-    private AMapLocationClientOption initOption(Context context) {
+    private AMapLocationClientOption initOption() {
         AMapLocationClientOption locationOption = new AMapLocationClientOption();
         locationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Battery_Saving);
         locationOption.setNeedAddress(true);
