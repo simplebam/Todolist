@@ -3,7 +3,7 @@ package com.yueyue.todolist.modules.viewer;
 import android.Manifest;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -65,12 +65,12 @@ public class ViewerActivity extends BaseActivity {
     private boolean mIsFullPreView = false;
     private ImageEntity mImageEntity;
 
-    public static void launch(Context context, ImageEntity imageEntity) {
-        Intent intent = new Intent(context, ViewerActivity.class);
+    public static void launch(Activity activity, ImageEntity imageEntity,int requestCode) {
+        Intent intent = new Intent(activity, ViewerActivity.class);
         if (imageEntity != null) {
             intent.putExtra(VIEWER_IMAGE_ENTITY, imageEntity);
         }
-        context.startActivity(intent);
+        activity.startActivityForResult(intent,requestCode);
     }
 
     @Override
@@ -147,8 +147,6 @@ public class ViewerActivity extends BaseActivity {
     }
 
     private void deleteImage() {
-        mBitMapHelper.remove(mImageEntity.imageName);
-
         Intent intent = new Intent();
         intent.putExtra(VIEWER_IMAGE_ENTITY,mImageEntity);
         setResult(RESULT_OK,intent);

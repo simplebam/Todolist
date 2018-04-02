@@ -80,7 +80,6 @@ public class EditNoteActivity extends BaseActivity {
 
     private static final String TAG = EditNoteActivity.class.getSimpleName();
     public static final String EXTRA_NOTE_DATA = "extra_note_data";
-    public static final String EXTRA_ADAPTER_POSITION = "extra_adapter_position";
 
     // 图片距离左右的总距离
     private static final float IMAGE_MARGIN = SizeUtils.dp2px(32);
@@ -301,8 +300,7 @@ public class EditNoteActivity extends BaseActivity {
     }
 
     private void startViwerActivity(ImageEntity imageEntity) {
-        ViewerActivity.launch(EditNoteActivity.this, imageEntity);
-
+        ViewerActivity.launch(EditNoteActivity.this, imageEntity,VIEWER_ACTIVITY_REQUEST_CODE);
     }
 
 
@@ -342,6 +340,9 @@ public class EditNoteActivity extends BaseActivity {
     }
 
     private void deleteImage(ImageEntity imageEntity) {
+        if (imageEntity==null) {
+            return;
+        }
         mEtContent.getEditableText().replace(imageEntity.getStart(), imageEntity.getEnd() + 1, "");
         mBitMapHelper.remove(imageEntity.imageName);
     }
@@ -505,8 +506,8 @@ public class EditNoteActivity extends BaseActivity {
             items = new String[]{getString(R.string.share_by_picture)};
         }
 
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("分享")
+        new AlertDialog.Builder(this)
+                .setTitle(getString(R.string.share))
                 .setItems(items, (dialog, which) -> {
                     switch (which) {
                         case 0:
