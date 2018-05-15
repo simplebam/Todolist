@@ -130,7 +130,7 @@ App体验：[Todolist - fir.im ](https://fir.im/tolist)
    * 偶然在掘金看到也比较好的utils库:[linqssonny/Utils](https://github.com/linqssonny/Utils)
 * ButterKnife：
    * [ButterKnife8.5.1 使用方法教程总结 - CSDN博客](http://blog.csdn.net/niubitianping/article/details/54893571)
-   * [ButterKnife使用详解 - CSDN博客 ](https://blog.csdn.net/itjianghuxiaoxiong/article/details/50177549)   
+   * [ButterKnife使用详解 - CSDN博客 ](https://blog.csdn.net/itjianghuxiaoxiong/article/details/50177549)   
 * LitePal:
    * [Android数据库高手秘籍(一)——SQLite命令 - 郭霖的专栏 - CSDN博客](http://blog.csdn.net/guolin_blog/article/details/38461239)
      以及 [LitePal 1.6.0版本来袭，数据加解密功能保障你的应用数据安全](http://mp.weixin.qq.com/s/TSp36cnKLxUmAHjT86UCrQ)
